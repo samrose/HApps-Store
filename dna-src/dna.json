@@ -12,32 +12,32 @@
   },
   "Zomes": [
     {
-      "Name": "sampleZome",
-      "Description": "A sample zome",
+      "Name": "ratings",
+      "Description": "A ratings zome | used to rate an Item (Hash)",
       "RibosomeType": "js",
-      "CodeFile": "sampleZome.js",
+      "CodeFile": "ratings.js",
       "Entries": [
         {
-          "Name": "sampleEntry",
+          "Name": "ratings",
           "Required": true,
           "DataFormat": "json",
           "Sharing": "public",
-          "SchemaFile": "sampleEntry.json"
+          "SchemaFile": "ratings.json"
         },
         {
-          "Name": "sampleLink",
+          "Name": "ratingsLink",
           "DataFormat": "links",
           "Sharing": "public"
         }
       ],
       "Functions": [
         {
-          "Name": "sampleEntryCreate",
+          "Name": "createRatings",
           "CallingType": "json",
           "Exposure": "public"
         },
         {
-          "Name": "sampleEntryList",
+          "Name": "getRatings",
           "CallingType": "json",
           "Exposure": "public"
         }
