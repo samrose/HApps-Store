@@ -1,0 +1,20 @@
+{
+  "Tests": [{
+      "Convey": "test for createComments",
+      "Zome": "comments",
+      "FnName": "createComments",
+      "Input": {
+        "comment": "The first Comment",
+        "commentedOnHash": "%agent%"
+      },
+      "Output": "%h1%"
+    },
+    {
+      "Convey": "test for getComments",
+      "Zome": "comments",
+      "FnName": "getComments",
+      "Input": "%agent%",
+      "Regexp": "[{\"author\":\"\",\"comment\":,\"}]"
+    }
+  ]
+}

@@ -4,25 +4,26 @@ let module = {};
 // -----------------------------------------------------------------
 //  Public Functions
 // Author : Zo-El
-// -----------------------------------------------------------------
+//-----------------------------------------------------------------
 // Description :
-// This zome can be used to rate a Hash (The hash can refer to anything, like App ID Hash)
-// This ratings include the rate, review and the author
+// This zome can be used to add a comment to any hash in your App.
+// If you have a App hash you can tag a comment to this and have people to add comments about the app.
+// it can also be used to add comments to the previous comments.
 // -----------------------------------------------------------------
 
-function createRatings({ rate, review, reviewedHash }) {
-  const ratings = { rate, review, "author": App.Key.Hash };
-  const hash = commit("ratings", ratings);
-  commit("ratingsLink", {
+function createComments({ comment, commentedOnHash }) {
+  const comments = {comment, "author": App.Key.Hash}
+  const hash = commit("comments", comments);
+  commit("commentsLink", {
     Links: [
-      { Base: reviewedHash, Link: hash, Tag: 'ratings_tag' }
+      { Base: commentedOnHash, Link: hash, Tag: 'comments_tag' }
     ]
   });
   return hash;
 }
 
-function getRatings(reviewedHash) {
-  return getLinks(reviewedHash, "ratings_tag", { Load: true }).map(e => e.Entry);
+function getComments(commentedOnHash) {
+  return getLinks(commentedOnHash, "comments_tag", { Load: true }).map(e => e.Entry);
 }
 
 
@@ -41,9 +42,9 @@ function genesis() {
 function validateCommit(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratings":
+    case "comments":
       return true;
-    case "ratingsLink":
+    case "commentsLink":
       return true;
     default:
       return false;
@@ -53,9 +54,9 @@ function validateCommit(entryName, entry, header, pkg, sources) {
 function validatePut(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratings":
+    case "comments":
       return true;
-    case "ratingsLink":
+    case "commentsLink":
       return true;
     default:
       return false;
@@ -78,7 +79,7 @@ function validateDel(entryName, hash, pkg, sources) {
 function validateLink(entryName, baseHash, links, pkg, sources) {
   // debug("entryName: " + entryName + " baseHash: " + baseHash + " links: " + links + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratingsLink":
+    case "commentsLink":
       return true;
     default:
       return false;

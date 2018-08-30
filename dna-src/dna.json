@@ -12,6 +12,38 @@
   },
   "Zomes": [
     {
+      "Name": "comments",
+      "Description": "A comments zome | used to comments on an Item (Hash)",
+      "RibosomeType": "js",
+      "CodeFile": "comments.js",
+      "Entries": [
+        {
+          "Name": "comments",
+          "Required": true,
+          "DataFormat": "json",
+          "Sharing": "public",
+          "SchemaFile": "comments.json"
+        },
+        {
+          "Name": "commentsLink",
+          "DataFormat": "links",
+          "Sharing": "public"
+        }
+      ],
+      "Functions": [
+        {
+          "Name": "createComments",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "getComments",
+          "CallingType": "json",
+          "Exposure": "public"
+        }
+      ]
+    },
+    {
       "Name": "ratings",
       "Description": "A ratings zome | used to rate an Item (Hash)",
       "RibosomeType": "js",
