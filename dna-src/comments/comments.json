@@ -6,7 +6,8 @@
   "title": "The Root Schema",
   "required": [
     "comment",
-    "author"
+    "author",
+    "timestamp"
   ],
   "properties": {
     "comment": {
@@ -26,6 +27,16 @@
       "default": "",
       "examples": [
         "QuahfjvrioasdfcAfvrsaFAE"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "timestamp": {
+      "$id": "#/properties/timestamp",
+      "type": "string",
+      "title": "The Timestamp Schema",
+      "default": "",
+      "examples": [
+        ""
       ],
       "pattern": "^(.*)$"
     }

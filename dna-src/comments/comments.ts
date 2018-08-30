@@ -12,7 +12,7 @@ let module = {};
 // -----------------------------------------------------------------
 
 function createComments({ comment, commentedOnHash }) {
-  const comments = {comment, "author": App.Key.Hash}
+  const comments = { comment, "author": App.Key.Hash, "timestamp": new Date() }
   const hash = commit("comments", comments);
   commit("commentsLink", {
     Links: [
@@ -23,9 +23,24 @@ function createComments({ comment, commentedOnHash }) {
 }
 
 function getComments(commentedOnHash) {
-  return getLinks(commentedOnHash, "comments_tag", { Load: true }).map(e => e.Entry);
+  const comments = getLinkedEntrys(commentedOnHash);
+  debug("Comment List : " + JSON.stringify(comments))
+  return comments;
 }
 
+function getLinkedEntrys(commentedOnHash) {
+  let entries: any = {}
+  try {
+    entries = getLinks(commentedOnHash, "comments_tag", { Load: true }).map((e) => {
+      let entry = { comment: e.Entry, reply: getLinkedEntrys(e.Hash) }
+      //debug("Entry: "+JSON.stringify(entry));
+      return entry
+    });
+  } catch (e) {
+    return e
+  }
+  return entries
+}
 
 // -----------------------------------------------------------------
 //  The Genesis Function https://developer.holochain.org/genesis
