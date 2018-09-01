@@ -1,6 +1,6 @@
 # HCHC
 
-The Holochain of Holochain's
+The Holochain of Holochains
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/holochain/hc-ts-template.svg)
 ![GitHub](https://img.shields.io/github/license/holochain/hc-ts-template.svg)
@@ -32,8 +32,8 @@ and opening the browser to http://localhost:4141
 If you would like to persist data between sessions install to the local holochain directory by running the following from the project root directory:
 ```
 hcadmin init <id/name string>
-hcadmin join ./build/ minesweeper
-hcd minesweeper
+hcadmin join ./build/ <app name>
+hcd <app name>
 ```
 
 ## Built With
