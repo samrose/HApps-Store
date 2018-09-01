@@ -1,6 +1,6 @@
 # HCHC
 
-The Holochain of Holochain's
+The Holochain of Holochains
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/holo-host/HCHC.svg)
 ![GitHub](https://img.shields.io/github/license/holo-host/HCHC.svg)
