@@ -12,6 +12,21 @@
   },
   "Zomes": [
     {
+      "Name": "whoami",
+      "Description": "A whoami zome | used to retrive the agent identity",
+      "RibosomeType": "js",
+      "CodeFile": "whoami.js",
+      "Entries": [
+      ],
+      "Functions": [
+        {
+          "Name": "getAgent",
+          "CallingType": "json",
+          "Exposure": "public"
+        }
+      ]
+    },
+    {
       "Name": "comments",
       "Description": "A comments zome | used to comments on an Item (Hash)",
       "RibosomeType": "js",

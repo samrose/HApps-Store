@@ -2,8 +2,8 @@
 
 The Holochain of Holochain's
 
-![GitHub last commit](https://img.shields.io/github/last-commit/holochain/hc-ts-template.svg)
-![GitHub](https://img.shields.io/github/license/holochain/hc-ts-template.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/holo-host/HCHC.svg)
+![GitHub](https://img.shields.io/github/license/holo-host/HCHC.svg)
 
 ## Getting Started
 
@@ -32,8 +32,8 @@ and opening the browser to http://localhost:4141
 If you would like to persist data between sessions install to the local holochain directory by running the following from the project root directory:
 ```
 hcadmin init <id/name string>
-hcadmin join ./build/ minesweeper
-hcd minesweeper
+hcadmin join ./build/ HCHC
+hcd HCHC
 ```
 
 ## Built With
