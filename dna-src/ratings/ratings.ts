@@ -11,7 +11,7 @@ let module = {};
 // -----------------------------------------------------------------
 
 function createRatings({ rate, review, reviewedHash }) {
-  const ratings = { rate, review, "author": App.Key.Hash };
+  const ratings = { rate, review, "author": App.Key.Hash ,"timestamp":new Date()};
   const hash = commit("ratings", ratings);
   commit("ratingsLink", {
     Links: [
@@ -22,7 +22,9 @@ function createRatings({ rate, review, reviewedHash }) {
 }
 
 function getRatings(reviewedHash) {
-  return getLinks(reviewedHash, "ratings_tag", { Load: true }).map(e => e.Entry);
+  const ratings = getLinks(reviewedHash, "ratings_tag", { Load: true }).map(e => e.Entry);
+  debug(ratings);
+  return ratings;
 }
 
 

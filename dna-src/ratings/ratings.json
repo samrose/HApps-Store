@@ -3,11 +3,12 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://example.com/root.json",
   "type": "object",
-  "title": "The Ratings Schema", 
+  "title": "The Ratings Schema",
   "required": [
     "rate",
     "review",
-    "author"
+    "author",
+    "timestamp"
   ],
   "properties": {
     "rate": {
@@ -40,6 +41,15 @@
         "QWUAasdgraAFIdavrwADF"
       ],
       "pattern": "^(.*)$"
-    }
-  }
+    },
+    "timestamp": {
+      "$id": "#/properties/timestamp",
+      "type": "string",
+      "title": "The timestamp Schema",
+      "default": "",
+      "examples": [
+        "TIME"
+      ],
+      "pattern": "^(.*)$"
+    }  }
 }
