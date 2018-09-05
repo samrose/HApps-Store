@@ -83,7 +83,9 @@ class CreateReviewForm extends React.Component<any, CreateReviewFormState> {
       else if (review && rating) {
         const agentHash = agent.Hash
         {/* // BELOW> : The reviewedHash should instead be the App Hash (... not the whoami Hash). */}
-        fetchPOST('/fn/ratings/createRatings', {rating, review, agentHash})
+        const rate=rating;
+        const reviewedHash=agentHash;
+        fetchPOST('/fn/ratings/createRatings', {rate, review, reviewedHash})
           .then(response => {
             if (response.errorMessage) {
               // TODO: IMPROVE ERROR MESSAGE
@@ -94,8 +96,8 @@ class CreateReviewForm extends React.Component<any, CreateReviewFormState> {
               {/* // BELOW> : The reviewedHash should instead be the App Hash (... not the whoami Hash). */}
               // this.props.dispatch({ type: 'FETCH_REVIEWS', agentHash })
 
-              this.props.dispatch({ type: 'RETURN_STATE' })
-              this.props.toggleReviewForm()
+              // this.props.dispatch({ type: 'RETURN_STATE' })
+              this.props.onModalToggle()
             }
           })
         }

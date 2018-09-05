@@ -11,6 +11,7 @@ let module = {};
 // -----------------------------------------------------------------
 
 function createRatings({ rate, review, reviewedHash }) {
+  rate = parseInt(rate);
   const ratings = { rate, review, "author": App.Key.Hash };
   const hash = commit("ratings", ratings);
   commit("ratingsLink", {
