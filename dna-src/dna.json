@@ -10,29 +10,51 @@
   "DHTConfig": {
     "HashType": "sha2-256"
   },
-  "Zomes": [
+  "Zomes": [{
+      "Name": "tag",
+      "Description": "A tag zome | used to Create tags",
+      "RibosomeType": "js",
+      "CodeFile": "tag.js",
+      "Entries": [{
+          "Name": "tag_anchor",
+          "Required": true,
+          "DataFormat": "string",
+          "Sharing": "public"
+        },
+        {
+          "Name": "tagLink",
+          "DataFormat": "links",
+          "Sharing": "public"
+        }],
+      "Functions": [{
+        "Name": "addTag",
+        "CallingType": "json",
+        "Exposure": "public"
+      },
+      {
+        "Name": "getTaged",
+        "CallingType": "json",
+        "Exposure": "public"
+      }]
+    },
     {
       "Name": "whoami",
       "Description": "A whoami zome | used to retrive the agent identity",
       "RibosomeType": "js",
       "CodeFile": "whoami.js",
-      "Entries": [
-      ],
-      "Functions": [
-        {
-          "Name": "getAgent",
-          "CallingType": "json",
-          "Exposure": "public"
-        }
-      ]
+      "Entries": [],
+      "Functions": [{
+        "Name": "getAgent",
+        "CallingType": "json",
+        "Exposure": "public"
+      }]
     },
     {
       "Name": "comments",
       "Description": "A comments zome | used to comments on an Item (Hash)",
       "RibosomeType": "js",
       "CodeFile": "comments.js",
-      "Entries": [
-        {
+      "Entries": [{
           "Name": "comments",
           "Required": true,
           "DataFormat": "json",
@@ -45,8 +67,7 @@
           "Sharing": "public"
         }
       ],
-      "Functions": [
-        {
+      "Functions": [{
           "Name": "createComments",
           "CallingType": "json",
           "Exposure": "public"
@@ -63,8 +84,7 @@
       "Description": "A ratings zome | used to rate an Item (Hash)",
       "RibosomeType": "js",
       "CodeFile": "ratings.js",
-      "Entries": [
-        {
+      "Entries": [{
           "Name": "ratings",
           "Required": true,
           "DataFormat": "json",
@@ -77,8 +97,7 @@
           "Sharing": "public"
         }
       ],
-      "Functions": [
-        {
+      "Functions": [{
           "Name": "createRatings",
           "CallingType": "json",
           "Exposure": "public"
