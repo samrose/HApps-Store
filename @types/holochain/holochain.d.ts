@@ -77,6 +77,3 @@ interface HolochainAppGlobals {
     String: string;
   }
 }
-
-
-

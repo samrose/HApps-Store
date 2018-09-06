@@ -11,7 +11,7 @@ let module = {};
 // it can also be used to add comments to the previous comments.
 // -----------------------------------------------------------------
 
-function createComments({ comment, commentedOnHash }) {
+function createComments({ comment, commentedOnHash }:CreateCommentsParams):Hash {
   const comments = { comment, "author": App.Key.Hash, "timestamp": new Date() }
   const hash = commit("comments", comments);
   commit("commentsLink", {
@@ -22,7 +22,7 @@ function createComments({ comment, commentedOnHash }) {
   return hash;
 }
 
-function getComments(commentedOnHash) {
+function getComments({commentedOnHash}):Comment_Chain[] {
   const comments = getLinkedEntrys(commentedOnHash);
   debug("Comment List : " + JSON.stringify(comments))
   return comments;

@@ -9,8 +9,15 @@ let module = {};
 // This zome can be used to rate a Hash (The hash can refer to anything, like App ID Hash)
 // This ratings include the rate, review and the author
 // -----------------------------------------------------------------
+//
+// interface Ratings {
+//     author:string;
+//     rate:string;
+//     review:string;
+//     timestamp:string;
+// }
 
-function createRatings({ rate, review, reviewedHash }) {
+function createRatings({ rate, review, reviewedHash }:CreateRatingsParams):Hash {
   const ratings = { rate, review, "author": App.Key.Hash ,"timestamp":new Date()};
   const hash = commit("ratings", ratings);
   commit("ratingsLink", {
@@ -21,8 +28,8 @@ function createRatings({ rate, review, reviewedHash }) {
   return hash;
 }
 
-function getRatings(reviewedHash) {
-  const ratings = getLinks(reviewedHash, "ratings_tag", { Load: true }).map(e => e.Entry);
+function getRatings({reviewedHash}):Ratings[]{
+  const ratings:Ratings[] = getLinks(reviewedHash, "ratings_tag", { Load: true }).map(e => e.Entry);
   debug(ratings);
   return ratings;
 }
