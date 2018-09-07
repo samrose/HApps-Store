@@ -20,7 +20,7 @@ let module = {};
 function createRatings({ rate, review, reviewedHash }:CreateRatingsParams):Hash {
   const ratings = { rate, review, "author": App.Key.Hash ,"timestamp":new Date()};
   const hash = commit("ratings", ratings);
-  commit("ratingsLink", {
+  commit("ratings_link", {
     Links: [
       { Base: reviewedHash, Link: hash, Tag: 'ratings_tag' }
     ]
@@ -52,7 +52,7 @@ function validateCommit(entryName, entry, header, pkg, sources) {
   switch (entryName) {
     case "ratings":
       return true;
-    case "ratingsLink":
+    case "ratings_link":
       return true;
     default:
       return false;
@@ -64,7 +64,7 @@ function validatePut(entryName, entry, header, pkg, sources) {
   switch (entryName) {
     case "ratings":
       return true;
-    case "ratingsLink":
+    case "ratings_link":
       return true;
     default:
       return false;
@@ -87,7 +87,7 @@ function validateDel(entryName, hash, pkg, sources) {
 function validateLink(entryName, baseHash, links, pkg, sources) {
   // debug("entryName: " + entryName + " baseHash: " + baseHash + " links: " + links + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratingsLink":
+    case "ratings_link":
       return true;
     default:
       return false;

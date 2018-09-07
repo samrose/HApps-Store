@@ -12,9 +12,9 @@ let module = {};
 
 const BASE_TAG_STRING = "HCHC_TAGS"
 
-function addTag({ tag, hash }) {
+function addTag({ tag, hash }:AddTagParams):Hash {
   const base = makeHash("tag_anchor", BASE_TAG_STRING);
-  const commit_hash = commit("tagLink", { Links: [{ Base: base, Link: hash, Tag: tag }] });
+  const commit_hash = commit("tag_link", { Links: [{ Base: base, Link: hash, Tag: tag }] });
   return commit_hash;
 }
 
@@ -42,7 +42,7 @@ function validateCommit(entryName, entry, header, pkg, sources) {
   switch (entryName) {
   case "tag_anchor":
   return true;
-  case "tagLink":
+  case "tag_link":
   return true;
     default:
       return false;
@@ -54,7 +54,7 @@ function validatePut(entryName, entry, header, pkg, sources) {
   switch (entryName) {
   case "tag_anchor":
   return true;
-  case "tagLink":
+  case "tag_link":
   return true;
     default:
       return false;
@@ -77,7 +77,7 @@ function validateDel(entryName, hash, pkg, sources) {
 function validateLink(entryName, baseHash, links, pkg, sources) {
   // debug("entryName: " + entryName + " baseHash: " + baseHash + " links: " + links + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-  case "tagLink":
+  case "tag_link":
   return true;
     default:
       return false;

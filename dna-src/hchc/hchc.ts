@@ -25,7 +25,7 @@ function createApp({ title, description, thumbnail }) {
     thumbnail
   };
   const hash: Hash = commit("app", appParam);
-  commit("appLink", {
+  commit("app_link", {
     Links: [
       { Base: App.DNA.Hash, Link: hash, Tag: 'app_tag' }
     ]
@@ -44,7 +44,7 @@ function addAppCode({ dna, test, app_hash }) {
     test
   };
   const hash: Hash = commit("app_code", codeParam);
-  commit("appLink", {
+  commit("app_link", {
     Links: [
       { Base: app_hash, Link: hash, Tag: 'app_code_tag' }
     ]
@@ -65,7 +65,7 @@ function addUISkin({ title, link,thumbnail, app_hash }) {
     thumbnail
   };
   const hash: Hash = commit("ui_skin", uiSkinParams);
-  commit("appLink", {
+  commit("app_link", {
     Links: [
       { Base: app_hash, Link: hash, Tag: 'app_ui_code_tag' }
     ]
@@ -109,7 +109,7 @@ function validateCommit(entryName, entry, header, pkg, sources) {
       return true;
     case "app_code":
       return true;
-    case "appLink":
+    case "app_link":
       return true;
     case "ui_skin":
       return true;
@@ -125,7 +125,7 @@ function validatePut(entryName, entry, header, pkg, sources) {
       return true;
     case "app_code":
       return true;
-    case "appLink":
+    case "app_link":
       return true;
     case "ui_skin":
       return true; default:
@@ -149,7 +149,7 @@ function validateDel(entryName, hash, pkg, sources) {
 function validateLink(entryName, baseHash, links, pkg, sources) {
   // debug("entryName: " + entryName + " baseHash: " + baseHash + " links: " + links + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "appLink":
+    case "app_link":
       return true;
     default:
       return false;

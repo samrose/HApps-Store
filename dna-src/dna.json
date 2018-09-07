@@ -22,7 +22,7 @@
           "Sharing": "public"
         },
         {
-          "Name": "tagLink",
+          "Name": "tag_link",
           "DataFormat": "links",
           "Sharing": "public"
         }],
@@ -65,7 +65,7 @@
           "SchemaFile": "ui_skin.json"
         },
         {
-          "Name": "appLink",
+          "Name": "app_link",
           "DataFormat": "links",
           "Sharing": "public"
         }
@@ -127,7 +127,7 @@
           "SchemaFile": "comments.json"
         },
         {
-          "Name": "commentsLink",
+          "Name": "comments_link",
           "DataFormat": "links",
           "Sharing": "public"
         }
@@ -157,7 +157,7 @@
           "SchemaFile": "ratings.json"
         },
         {
-          "Name": "ratingsLink",
+          "Name": "ratings_link",
           "DataFormat": "links",
           "Sharing": "public"
         }

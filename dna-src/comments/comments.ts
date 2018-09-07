@@ -14,7 +14,7 @@ let module = {};
 function createComments({ comment, commentedOnHash }:CreateCommentsParams):Hash {
   const comments = { comment, "author": App.Key.Hash, "timestamp": new Date() }
   const hash = commit("comments", comments);
-  commit("commentsLink", {
+  commit("comments_link", {
     Links: [
       { Base: commentedOnHash, Link: hash, Tag: 'comments_tag' }
     ]
@@ -59,7 +59,7 @@ function validateCommit(entryName, entry, header, pkg, sources) {
   switch (entryName) {
     case "comments":
       return true;
-    case "commentsLink":
+    case "comments_link":
       return true;
     default:
       return false;
@@ -71,7 +71,7 @@ function validatePut(entryName, entry, header, pkg, sources) {
   switch (entryName) {
     case "comments":
       return true;
-    case "commentsLink":
+    case "comments_link":
       return true;
     default:
       return false;
@@ -94,7 +94,7 @@ function validateDel(entryName, hash, pkg, sources) {
 function validateLink(entryName, baseHash, links, pkg, sources) {
   // debug("entryName: " + entryName + " baseHash: " + baseHash + " links: " + links + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "commentsLink":
+    case "comments_link":
       return true;
     default:
       return false;

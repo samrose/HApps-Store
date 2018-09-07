@@ -2,8 +2,8 @@
 
 The Holochain of Holochains
 
-![GitHub last commit](https://img.shields.io/github/last-commit/holo-host/HCHC.svg)
-![GitHub](https://img.shields.io/github/license/holo-host/HCHC.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/Holo-Host/HCHC.svg)
+![GitHub](https://img.shields.io/github/license/Holo-Host/HCHC.svg)
 
 ## Getting Started
 
@@ -25,10 +25,9 @@ The app can now be started for development purposes using
 ```
 npm run hc:dev
 ```
-and opening the browser to http://localhost:4141
+and opening the browser to http://localhost:3000
 
------
-
+---
 If you would like to persist data between sessions install to the local holochain directory by running the following from the project root directory:
 ```
 hcadmin init <id/name string>

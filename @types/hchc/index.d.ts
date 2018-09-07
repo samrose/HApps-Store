@@ -1,3 +1,22 @@
+/*Comments Zome*/
+interface CreateCommentsParams {
+  comment: "string";
+  commentedOnHash: "string";
+}
+
+interface Comments {
+  author: "string";
+  comment: "string";
+  timestamp: "string"
+}
+
+type Reply = Comment_Chain[]
+
+interface Comment_Chain {
+  comment: Comment;
+  reply: Reply;
+}
+
 /*Ratings Zome*/
 interface CreateRatingsParams {
   rate: string;
@@ -12,24 +31,11 @@ interface Ratings {
   timestamp: string;
 }
 
-/*Comments Zome*/
-interface CreateCommentsParams {
-  comment:"string";
-  commentedOnHash:Hash;
+/*Tag Zome*/
+interface AddTagParams{
+  tag:string;
+  hash:string;
 }
-
-type Comment_Chain = {
-  comment:Comment;
-  reply:Reply;
-};
-
-interface Comments {
-    author:"string";
-    comment:"string";
-    timestamp:"string"
-}
-
-type Reply = Comment_Chain[]
 
 /*HCHC Zome Params*/
 interface CreateAppParams {
