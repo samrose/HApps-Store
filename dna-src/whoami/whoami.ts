@@ -29,10 +29,6 @@ function genesis() {
 function validateCommit(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratings":
-      return true;
-    case "ratingsLink":
-      return true;
     default:
       return false;
   }
@@ -41,10 +37,6 @@ function validateCommit(entryName, entry, header, pkg, sources) {
 function validatePut(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratings":
-      return true;
-    case "ratingsLink":
-      return true;
     default:
       return false;
   }
@@ -66,8 +58,6 @@ function validateDel(entryName, hash, pkg, sources) {
 function validateLink(entryName, baseHash, links, pkg, sources) {
   // debug("entryName: " + entryName + " baseHash: " + baseHash + " links: " + links + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratingsLink":
-      return true;
     default:
       return false;
   }
