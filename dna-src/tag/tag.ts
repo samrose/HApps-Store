@@ -6,19 +6,30 @@ let module = {};
 // Author : Zo-El
 // -----------------------------------------------------------------
 // Description :
-// This zome can be used to get the users hash or profile details
+// This zome can be used to tag a Hash (The hash can refer to anything, like App ID Hash)
+// This Tag can then be used to catogorize entries so thats Its easies to retirve data back
 // -----------------------------------------------------------------
 
-function getAgent(): any {
-  return {Hash : App.Agent.Hash,
-  Name: App.Agent.String
-  };
+const BASE_TAG_STRING = "HCHC_TAGS"
+
+function addTag({ tag, hash }) {
+  const base = makeHash("tag_anchor", BASE_TAG_STRING);
+  const commit_hash = commit("tagLink", { Links: [{ Base: base, Link: hash, Tag: tag }] });
+  return commit_hash;
+}
+
+function getTaged({ tag }) {
+  const base = makeHash("tag_anchor", BASE_TAG_STRING);
+  const apps = getLinks(base, tag, { Load: true }).map(e => e.Entry);
+  debug(apps);
+  return apps;
 }
 // -----------------------------------------------------------------
 //  The Genesis Function https://developer.holochain.org/genesis
 // -----------------------------------------------------------------
 
 function genesis() {
+  commit("tag_anchor", BASE_TAG_STRING)
   return true;
 }
 
@@ -29,6 +40,10 @@ function genesis() {
 function validateCommit(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
+  case "tag_anchor":
+  return true;
+  case "tagLink":
+  return true;
     default:
       return false;
   }
@@ -37,6 +52,10 @@ function validateCommit(entryName, entry, header, pkg, sources) {
 function validatePut(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
+  case "tag_anchor":
+  return true;
+  case "tagLink":
+  return true;
     default:
       return false;
   }
@@ -58,6 +77,8 @@ function validateDel(entryName, hash, pkg, sources) {
 function validateLink(entryName, baseHash, links, pkg, sources) {
   // debug("entryName: " + entryName + " baseHash: " + baseHash + " links: " + links + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
+  case "tagLink":
+  return true;
     default:
       return false;
   }

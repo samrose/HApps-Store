@@ -1,0 +1,17 @@
+{
+  "Tests": [{
+      "Convey": "test to add a tag to an agent",
+      "Zome": "tag",
+      "FnName": "addTag",
+      "Input": {"tag":"friends","hash":"%agent%"},
+      "Output": "%h%"
+    },
+    {
+        "Convey": "test to get the hash using the tags",
+        "Zome": "tag",
+        "FnName": "getTaged",
+        "Input": {"tag":"friends"},
+        "Regexp": "[{\"Identity\":\"\",\"PublicKey\":,\"Revocation\":\"\"}]"
+      }
+  ]
+}
