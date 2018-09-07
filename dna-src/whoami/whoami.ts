@@ -6,8 +6,7 @@ let module = {};
 // Author : Zo-El
 // -----------------------------------------------------------------
 // Description :
-// This zome can be used to rate a Hash (The hash can refer to anything, like App ID Hash)
-// This ratings include the rate, review and the author
+// This zome can be used get the profile of the user 
 // -----------------------------------------------------------------
 
 function getAgent(): any {
@@ -30,10 +29,6 @@ function genesis() {
 function validateCommit(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratings":
-      return true;
-    case "ratingsLink":
-      return true;
     default:
       return false;
   }
@@ -42,10 +37,6 @@ function validateCommit(entryName, entry, header, pkg, sources) {
 function validatePut(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratings":
-      return true;
-    case "ratingsLink":
-      return true;
     default:
       return false;
   }
@@ -67,8 +58,6 @@ function validateDel(entryName, hash, pkg, sources) {
 function validateLink(entryName, baseHash, links, pkg, sources) {
   // debug("entryName: " + entryName + " baseHash: " + baseHash + " links: " + links + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratingsLink":
-      return true;
     default:
       return false;
   }
