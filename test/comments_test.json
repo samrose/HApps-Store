@@ -43,7 +43,7 @@
       "Convey": "test for getComments",
       "Zome": "comments",
       "FnName": "getComments",
-      "Input": "%agent%",
+      "Input": {"commentedOnHash":"%agent%"},
       "Regexp": "[{\"author\":\"\",\"comment\":,\"}]"
     }
   ]
