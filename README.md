@@ -1,9 +1,17 @@
-# HCHC
+# HApps-Store
 
-The Holochain of Holochains
+![GitHub last commit](https://img.shields.io/github/last-commit/Holo-Host/HApps-Store.svg)
+![GitHub](https://img.shields.io/github/license/Holo-Host/HApps-Store.svg)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/Holo-Host/HCHC.svg)
-![GitHub](https://img.shields.io/github/license/Holo-Host/HCHC.svg)
+---
+The Holochain of Holochains Directory
+This is the App store that all the users  would use to Check out all the HApps that are Available on the HCHC
+
+> Notes:
+> Will be able to be run the HC Admin GUI for installing apps.
+> Otherwise should not control your system
+
+---
 
 ## Getting Started
 
@@ -25,7 +33,7 @@ The app can now be started for development purposes using
 ```
 npm run hc:dev
 ```
-and opening the browser to http://localhost:3000
+and opening the browser to http://localhost:4141
 
 ---
 If you would like to persist data between sessions install to the local holochain directory by running the following from the project root directory:

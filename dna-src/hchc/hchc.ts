@@ -16,6 +16,7 @@ let module = {};
 // - adding UI-Skins for apps
 // -----------------------------------------------------------------
 
+//TODO : Decde if all the apps need to be linked to the App.DNA.Hash
 function createApp({ title, description, thumbnail }) {
   const appParam = {
     uuid: uuidGenerator(),
@@ -38,23 +39,23 @@ function getApps() {
   return getLinks(App.DNA.Hash, "app_tag", { Load: true }).map(e => e.Entry);
 }
 
-function addAppCode({ dna, test, app_hash }) {
+function addAppCode({ dna_code_hash, app_hash }) {
   const codeParam = {
-    dna,
-    test
+    dna_code_hash
   };
-  const hash: Hash = commit("app_code", codeParam);
+  const hash: Hash = commit("dna_app_code", codeParam);
   commit("app_link", {
     Links: [
-      { Base: app_hash, Link: hash, Tag: 'app_code_tag' }
+      { Base: app_hash, Link: hash, Tag: 'dna_code_tag' }
     ]
   });
   return hash;
 }
 
+//TODO : Get the actual code for the DNA Code from the HCHC App
 // To get all apps in the HC
 function getAppCode(app_hash) {
-  return getLinks(app_hash, "app_code_tag", { Load: true }).map(e => e.Entry);
+  return getLinks(app_hash, "dna_code_tag", { Load: true }).map(e => e.Entry);
 }
 
 function addUISkin({ title, link,thumbnail, app_hash }) {
@@ -107,7 +108,7 @@ function validateCommit(entryName, entry, header, pkg, sources) {
   switch (entryName) {
     case "app":
       return true;
-    case "app_code":
+    case "dna_app_code":
       return true;
     case "app_link":
       return true;
@@ -123,7 +124,7 @@ function validatePut(entryName, entry, header, pkg, sources) {
   switch (entryName) {
     case "app":
       return true;
-    case "app_code":
+    case "dna_app_code":
       return true;
     case "app_link":
       return true;

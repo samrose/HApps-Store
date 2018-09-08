@@ -51,11 +51,11 @@
           "SchemaFile": "app.json"
         },
         {
-          "Name": "app_code",
+          "Name": "dna_app_code",
           "Required": true,
           "DataFormat": "json",
           "Sharing": "public",
-          "SchemaFile": "app_code.json"
+          "SchemaFile": "dna_app_code.json"
         },
         {
           "Name": "ui_skin",

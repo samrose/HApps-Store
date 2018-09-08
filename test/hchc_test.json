@@ -21,7 +21,7 @@
      "Convey": "test for Adding a code for the app",
      "Zome": "hchc",
      "FnName": "addAppCode",
-     "Input":{"dna":"file://dna/","test":"file://test/","app_hash":"%r2%"},
+     "Input":{"dna_code_hash":"QwoaFRVuasduaginygiCWYgvaryngFWYG","app_hash":"%r2%"},
      "Output": "%h1%"
    },
    {
@@ -29,7 +29,7 @@
     "Zome": "hchc",
     "FnName": "getAppCode",
     "Input":"%r3%",
-    "Regexp": "[{\"dna\":\"\",\"test\":,\"\"}]"
+    "Regexp": "[{\"dna_code_hash\":,\"\"}]"
   }
   ]
 }
