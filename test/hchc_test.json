@@ -11,11 +11,11 @@
       "Output": "%h1%"
     },
     {
-      "Convey": "test for Adding a new app",
+      "Convey": "test for getting all apps added",
       "Zome": "hchc",
-      "FnName": "getApps",
+      "FnName": "getAllApps",
       "Input": "",
-      "Regexp": "[{\"author\":\"\",\"title\":,\"description\":\"\"}]"
+      "Regexp": "[{\"Entry\":\"\",\"Hash\":}]"
     },
     {
      "Convey": "test for Adding a code for the app",

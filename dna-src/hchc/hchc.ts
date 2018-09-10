@@ -35,9 +35,24 @@ function createApp({ title, description, thumbnail }) {
 }
 
 // To get all apps in the HC
-function getApps() {
-  return getLinks(App.DNA.Hash, "app_tag", { Load: true }).map(e => e.Entry);
+function getAllApps() {
+  //
+  // debug("-->"+JSON.stringify(getLinks(App.DNA.Hash, "app_tag", { Load: true }).map((e)=>{return{
+  //   "Entry":e.Entry,
+  //   "Hash":e.Hash
+  // }})));
+  return getLinks(App.DNA.Hash, "app_tag", { Load: true }).map((e) => {
+    return {
+      "Entry": e.Entry,
+      "Hash": e.Hash
+    }
+  });
 }
+
+function getApp({ app_hash }): GetResponse {
+  return get(app_hash, { GetMask: HC.GetMask.Entry });
+}
+
 
 function addAppCode({ dna_code_hash, app_hash }) {
   const codeParam = {
@@ -58,11 +73,11 @@ function getAppCode(app_hash) {
   return getLinks(app_hash, "dna_code_tag", { Load: true }).map(e => e.Entry);
 }
 
-function addUISkin({ title, link,thumbnail, app_hash }) {
-  const uiSkinParams= {
+function addUISkin({ title, link, thumbnail, app_hash }) {
+  const uiSkinParams = {
     title,
     link,
-    author:App.Key.Hash,
+    author: App.Key.Hash,
     thumbnail
   };
   const hash: Hash = commit("ui_skin", uiSkinParams);

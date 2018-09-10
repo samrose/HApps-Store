@@ -18,18 +18,11 @@
       "Regexp": "[{\"author\":\"\",\"title\":,\"description\":\"\"}]"
     },
     {
-     "Convey": "test for Adding a code for the app",
-     "Zome": "hchc",
-     "FnName": "addUISkin",
-     "Input":{"title":"UI_TITLE","link":"file://ui/","thumbnail":"image.jpg","app_hash":"%r2%"},
-     "Output": "%h1%"
-   },
-   {
-    "Convey": "test for Adding a code for the app",
-    "Zome": "hchc",
-    "FnName": "getUISkin",
-    "Input":"%r3%",
-    "Regexp": "[{\"title\":\"\",\"link\":,\"\"thumbnail\":\"\",\"author\":\"\"}]"
-  }
+      "Convey": "test for getting one app details",
+      "Zome": "hchc",
+      "FnName": "getApp",
+      "Input": {"app_hash":"%r2%"},
+      "Regexp": "[{\"author\":\"\",\"title\":,\"description\":\"\",\"thumbnail\":\"\",\"title\":\"\",\"uuid\":\"\"}]"
+    }
   ]
 }
