@@ -17,20 +17,21 @@ let module = {};
 // -----------------------------------------------------------------
 
 //TODO : Decde if all the apps need to be linked to the App.DNA.Hash
-function createApp({ title, description, thumbnail }) {
-  const appParam = {
-    uuid: uuidGenerator(),
-    title,
-    author: App.Key.Hash,
-    description,
-    thumbnail
-  };
+function createApp({ appParam }) {
+  // const appParam = {
+  //   uuid: uuidGenerator(),
+  //   title,
+  //   author: App.Key.Hash,
+  //   description,
+  //   thumbnail
+  // };
   const hash: Hash = commit("app", appParam);
   commit("app_link", {
     Links: [
       { Base: App.DNA.Hash, Link: hash, Tag: 'app_tag' }
     ]
   });
+  //debug("")
   return hash;
 }
 

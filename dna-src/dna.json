@@ -1,9 +1,9 @@
 {
   "Version": 1,
   "UUID": "4a4beb46-a3cf-476f-8593-e30155186707",
-  "Name": "HCHC",
+  "Name": "HApps-Store",
   "Properties": {
-    "description": "The Holochain of Holochains",
+    "description": "The Holochain App Store",
     "language": "en"
   },
   "PropertiesSchemaFile": "properties_schema.json",
@@ -11,6 +11,24 @@
     "HashType": "sha2-256"
   },
   "Zomes": [{
+      "Name": "bridge_replies",
+      "Description": "A bridge_replies zome | used to bridge",
+      "RibosomeType": "js",
+      "CodeFile": "bridge_replies.js",
+      "BridgeFuncs": ["addAppDetails", "getAppDetails"],
+      "Entries": [],
+      "Functions": [{
+        "Name": "addAppDetails",
+        "CallingType": "json",
+        "Exposure": "public"
+      },
+      {
+        "Name": "getAppDetails",
+        "CallingType": "json",
+        "Exposure": "public"
+      }]
+    },
+    {
       "Name": "tag",
       "Description": "A tag zome | used to Create tags",
       "RibosomeType": "js",
@@ -25,25 +43,26 @@
           "Name": "tag_link",
           "DataFormat": "links",
           "Sharing": "public"
-        }],
+        }
+      ],
       "Functions": [{
-        "Name": "addTag",
-        "CallingType": "json",
-        "Exposure": "public"
-      },
-      {
-        "Name": "getTaged",
-        "CallingType": "json",
-        "Exposure": "public"
-      }]
+          "Name": "addTag",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "getTaged",
+          "CallingType": "json",
+          "Exposure": "public"
+        }
+      ]
     },
     {
       "Name": "hchc",
       "Description": "A main zome | used to add Apps to the HC of HCs",
       "RibosomeType": "js",
       "CodeFile": "hchc.js",
-      "Entries": [
-        {
+      "Entries": [{
           "Name": "app",
           "Required": true,
           "DataFormat": "json",
@@ -70,8 +89,7 @@
           "Sharing": "public"
         }
       ],
-      "Functions": [
-        {
+      "Functions": [{
           "Name": "createApp",
           "CallingType": "json",
           "Exposure": "public"
@@ -107,7 +125,7 @@
           "Exposure": "public"
         }
       ]
-    },{
+    }, {
       "Name": "whoami",
       "Description": "A whoami zome | used to retrive the agent identity",
       "RibosomeType": "js",
