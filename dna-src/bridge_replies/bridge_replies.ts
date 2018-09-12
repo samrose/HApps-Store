@@ -9,7 +9,7 @@ let module = {};
 // -----------------------------------------------------------------
 
 function addAppDetails({ appParam }) {
-  const hash = JSON.parse(call("hchc", "createApp", { appParam }));
+  const hash = JSON.parse(call("happs", "createApp", { appParam }));
   // Used for testing the reviews over the bridge
   // call("ratings", "createRatings", { rate: 4, review: "This is the reviews", reviewedHash: hash });
   // call("ratings", "createRatings", { rate: 5, review: "This is the reviews", reviewedHash: hash });
@@ -18,7 +18,7 @@ function addAppDetails({ appParam }) {
 
 function getAppDetails({ app_hash }) {
   // get details
-  const details = JSON.parse(call("hchc", "getApp", { app_hash }));
+  const details = JSON.parse(call("happs", "getApp", { app_hash }));
   // get Reviews
   const reviews = JSON.parse(call("ratings", "getRatings", { "reviewedHash": app_hash }));
   // Get Other stats

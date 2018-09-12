@@ -58,10 +58,10 @@
       ]
     },
     {
-      "Name": "hchc",
+      "Name": "happs",
       "Description": "A main zome | used to add Apps to the HC of HCs",
       "RibosomeType": "js",
-      "CodeFile": "hchc.js",
+      "CodeFile": "happs.js",
       "Entries": [{
           "Name": "app",
           "Required": true,

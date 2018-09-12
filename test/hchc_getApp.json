@@ -1,25 +1,27 @@
 {
   "Tests": [{
       "Convey": "test for Adding a new app",
-      "Zome": "hchc",
+      "Zome": "happs",
       "FnName": "createApp",
-      "Input": {
+      "Input": {"appParam":{
         "title": "Sakura",
         "description": "The is the details for the first app",
-        "thumbnail": "IMG.jpg"
-      },
+        "thumbnail": "IMG.jpg",
+        "author":"%agent%",
+        "uuid":"12341234-12543123-12341234-12341234"
+      }},
       "Output": "%h1%"
     },
     {
       "Convey": "test for Adding a new app",
-      "Zome": "hchc",
+      "Zome": "happs",
       "FnName": "getAllApps",
       "Input": "",
       "Regexp": "[{\"author\":\"\",\"title\":,\"description\":\"\"}]"
     },
     {
       "Convey": "test for getting one app details",
-      "Zome": "hchc",
+      "Zome": "happs",
       "FnName": "getApp",
       "Input": {"app_hash":"%r2%"},
       "Regexp": "[{\"author\":\"\",\"title\":,\"description\":\"\",\"thumbnail\":\"\",\"title\":\"\",\"uuid\":\"\"}]"

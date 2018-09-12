@@ -1,32 +1,34 @@
 {
   "Tests": [{
       "Convey": "test for Adding a new app",
-      "Zome": "hchc",
+      "Zome": "happs",
       "FnName": "createApp",
-      "Input": {
+      "Input": {"appParam":{
         "title": "Sakura",
         "description": "The is the details for the first app",
-        "thumbnail": "IMG.jpg"
-      },
+        "thumbnail": "IMG.jpg",
+        "author":"%agent%",
+        "uuid":"12341234-12543123-12341234-12341234"
+      }},
       "Output": "%h1%"
     },
     {
       "Convey": "test for getting all apps added",
-      "Zome": "hchc",
+      "Zome": "happs",
       "FnName": "getAllApps",
       "Input": "",
       "Regexp": "[{\"Entry\":\"\",\"Hash\":}]"
     },
     {
      "Convey": "test for Adding a code for the app",
-     "Zome": "hchc",
+     "Zome": "happs",
      "FnName": "addAppCode",
      "Input":{"dna_code_hash":"QwoaFRVuasduaginygiCWYgvaryngFWYG","app_hash":"%r2%"},
      "Output": "%h1%"
    },
    {
     "Convey": "test for Adding a code for the app",
-    "Zome": "hchc",
+    "Zome": "happs",
     "FnName": "getAppCode",
     "Input":"%r3%",
     "Regexp": "[{\"dna_code_hash\":,\"\"}]"
