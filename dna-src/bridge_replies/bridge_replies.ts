@@ -17,7 +17,7 @@ function addAppDetails({ appParam }) {
 function getAppDetails({ app_hash }) {
   // get details
   debug("Bridged to getAppDetails: "+ app_hash)
-  const details = call("hchc", "getApp", { app_hash });
+  const details = JSON.parse(call("hchc", "getApp", { app_hash }));
   // get Reviews
   //const reviews = call("ratings", "getRatings", { "reviewedHash": app_hash });
   // get tags
