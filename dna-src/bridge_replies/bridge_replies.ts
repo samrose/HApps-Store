@@ -9,23 +9,32 @@ let module = {};
 // -----------------------------------------------------------------
 
 function addAppDetails({ appParam }) {
-  const hash = call("hchc", "createApp", { appParam });
-  debug("addAppDetails: " + hash);
+  const hash = JSON.parse(call("hchc", "createApp", { appParam }));
+  // Used for testing the reviews over the bridge
+  // call("ratings", "createRatings", { rate: 4, review: "This is the reviews", reviewedHash: hash });
+  // call("ratings", "createRatings", { rate: 5, review: "This is the reviews", reviewedHash: hash });
   return hash;
 }
 
 function getAppDetails({ app_hash }) {
   // get details
-  debug("Bridged to getAppDetails: "+ app_hash)
   const details = JSON.parse(call("hchc", "getApp", { app_hash }));
   // get Reviews
-  //const reviews = call("ratings", "getRatings", { "reviewedHash": app_hash });
-  // get tags
-  //const tag = call("tag","",)
+  const reviews = JSON.parse(call("ratings", "getRatings", { "reviewedHash": app_hash }));
   // Get Other stats
-  return { details }
+  const ratings=calculateStars(reviews);
+  // TODO: Decide on other States that need to be displayed (number of installed .etc)
+  // TODO: get tags
+  return { details, reviews , ratings }
 }
 
+function calculateStars(reviews) {
+  let rating = 0;
+  for (let entry of reviews) {
+    rating += entry.rate;
+  }
+  return rating/reviews.length;
+}
 // -----------------------------------------------------------------
 //  The Genesis Function https://developer.holochain.org/genesis
 // -----------------------------------------------------------------

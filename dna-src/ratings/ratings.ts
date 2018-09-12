@@ -9,13 +9,6 @@ let module = {};
 // This zome can be used to rate a Hash (The hash can refer to anything, like App ID Hash)
 // This ratings include the rate, review and the author
 // -----------------------------------------------------------------
-//
-// interface Ratings {
-//     author:string;
-//     rate:string;
-//     review:string;
-//     timestamp:string;
-// }
 
 function createRatings({ rate, review, reviewedHash }:CreateRatingsParams):Hash {
   const ratings = { rate, review, "author": App.Key.Hash ,"timestamp":new Date()};
