@@ -18,20 +18,6 @@
       "FnName": "getAllApps",
       "Input": "",
       "Regexp": "[{\"Entry\":\"\",\"Hash\":}]"
-    },
-    {
-     "Convey": "test for Adding a code for the app",
-     "Zome": "happs",
-     "FnName": "addAppCode",
-     "Input":{"dna_code_hash":"QwoaFRVuasduaginygiCWYgvaryngFWYG","app_hash":"%r2%"},
-     "Output": "%h1%"
-   },
-   {
-    "Convey": "test for Adding a code for the app",
-    "Zome": "happs",
-    "FnName": "getAppCode",
-    "Input":"%r3%",
-    "Regexp": "[{\"dna_code_hash\":,\"\"}]"
-  }
+    }
   ]
 }

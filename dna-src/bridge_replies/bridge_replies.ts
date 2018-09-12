@@ -50,8 +50,9 @@ function bridgeGenesis(side, dna, appData) {
 
 // -----------------------------------------------------------------
 //  Validation functions for every change to the local chain or DHT
+// > Note this functions are not needed
 // -----------------------------------------------------------------
-
+/*
 function validateCommit(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
@@ -100,3 +101,4 @@ function validateDelPkg(entryName) {
 function validateLinkPkg(entryName) {
   return null;
 }
+*/

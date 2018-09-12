@@ -29,6 +29,41 @@
       }]
     },
     {
+      "Name": "happs",
+      "Description": "A main zome | used to add Apps to the HC of HCs",
+      "RibosomeType": "js",
+      "CodeFile": "happs.js",
+      "Entries": [{
+          "Name": "app",
+          "Required": true,
+          "DataFormat": "json",
+          "Sharing": "public",
+          "SchemaFile": "app.json"
+        },
+        {
+          "Name": "app_link",
+          "DataFormat": "links",
+          "Sharing": "public"
+        }
+      ],
+      "Functions": [{
+          "Name": "createApp",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "getAllApps",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "getApp",
+          "CallingType": "json",
+          "Exposure": "public"
+        }
+      ]
+    },
+    {
       "Name": "tag",
       "Description": "A tag zome | used to Create tags",
       "RibosomeType": "js",
@@ -56,76 +91,7 @@
           "Exposure": "public"
         }
       ]
-    },
-    {
-      "Name": "happs",
-      "Description": "A main zome | used to add Apps to the HC of HCs",
-      "RibosomeType": "js",
-      "CodeFile": "happs.js",
-      "Entries": [{
-          "Name": "app",
-          "Required": true,
-          "DataFormat": "json",
-          "Sharing": "public",
-          "SchemaFile": "app.json"
-        },
-        {
-          "Name": "dna_app_code",
-          "Required": true,
-          "DataFormat": "json",
-          "Sharing": "public",
-          "SchemaFile": "dna_app_code.json"
-        },
-        {
-          "Name": "ui_skin",
-          "Required": true,
-          "DataFormat": "json",
-          "Sharing": "public",
-          "SchemaFile": "ui_skin.json"
-        },
-        {
-          "Name": "app_link",
-          "DataFormat": "links",
-          "Sharing": "public"
-        }
-      ],
-      "Functions": [{
-          "Name": "createApp",
-          "CallingType": "json",
-          "Exposure": "public"
-        },
-        {
-          "Name": "getAllApps",
-          "CallingType": "json",
-          "Exposure": "public"
-        },
-        {
-          "Name": "getApp",
-          "CallingType": "json",
-          "Exposure": "public"
-        },
-        {
-          "Name": "addAppCode",
-          "CallingType": "json",
-          "Exposure": "public"
-        },
-        {
-          "Name": "getAppCode",
-          "CallingType": "json",
-          "Exposure": "public"
-        },
-        {
-          "Name": "addUISkin",
-          "CallingType": "json",
-          "Exposure": "public"
-        },
-        {
-          "Name": "getUISkin",
-          "CallingType": "json",
-          "Exposure": "public"
-        }
-      ]
-    }, {
+    },{
       "Name": "whoami",
       "Description": "A whoami zome | used to retrive the agent identity",
       "RibosomeType": "js",
