@@ -11,6 +11,24 @@
     "HashType": "sha2-256"
   },
   "Zomes": [{
+      "Name": "bridge_request",
+      "Description": "A bridge_request zome | used to bridge",
+      "RibosomeType": "js",
+      "CodeFile": "bridge_request.js",
+      "Entries": [],
+      "Functions": [{
+          "Name": "getAppDNA",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "getAppUISkin",
+          "CallingType": "json",
+          "Exposure": "public"
+        }
+      ]
+    },
+    {
       "Name": "bridge_replies",
       "Description": "A bridge_replies zome | used to bridge",
       "RibosomeType": "js",
@@ -18,15 +36,16 @@
       "BridgeFuncs": ["addAppDetails", "getAppDetails"],
       "Entries": [],
       "Functions": [{
-        "Name": "addAppDetails",
-        "CallingType": "json",
-        "Exposure": "public"
-      },
-      {
-        "Name": "getAppDetails",
-        "CallingType": "json",
-        "Exposure": "public"
-      }]
+          "Name": "addAppDetails",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "getAppDetails",
+          "CallingType": "json",
+          "Exposure": "public"
+        }
+      ]
     },
     {
       "Name": "happs",
@@ -60,6 +79,16 @@
           "Name": "getApp",
           "CallingType": "json",
           "Exposure": "public"
+        },
+        {
+          "Name": "getAppDNA",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "getAppUISkin",
+          "CallingType": "json",
+          "Exposure": "public"
         }
       ]
     },
@@ -91,7 +120,7 @@
           "Exposure": "public"
         }
       ]
-    },{
+    }, {
       "Name": "whoami",
       "Description": "A whoami zome | used to retrive the agent identity",
       "RibosomeType": "js",
