@@ -71,6 +71,23 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
     };
   }
 
+  public onComponentDidMount = () => {
+    this.props.fetchAgent();
+    this.renderWelcomeMsgs();
+  }
+
+  public renderWelcomeMsgs = () => {
+    const { agent } = this.props.currentAgent!;
+    const waitGreeting1: WelcomeMsg = `${agent.Name}`;
+    const waitGreeting2: WelcomeMsg = "Welcome to the Holo App Store";
+    return (
+      <div>
+        <h1 className="welecome-message-1">{ waitGreeting1 }</h1>
+        <h1 className="welecome-message-2">{ waitGreeting2 }</h1>
+      </div>
+    )
+  }
+
   public handleOnClick = e => {
     const panelType = e.target.className;
     this.handleToggle(panelType);
@@ -176,6 +193,11 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
   }
 
   public render(){
+    if (!this.props.currentAgent) {
+      return <div/>
+    }
+
+// Layer 1 of App Cats:
     const panels1 = this.state.panels1.map((panel, i) => {
       i=i+1;
       let toggleState;
@@ -194,6 +216,7 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
     )
   });
 
+// layer 2 of App Cats:
     const panels2 = this.state.panels2.map((panel, i) => {
       i=i+1;
       let toggleState
@@ -225,26 +248,14 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
   }
 }
 
-const mapStateToProps = ({ allApps, currentAgent }) => ({ allApps, currentAgent });
+const mapStateToProps = ({ currentAgent }) => ({ currentAgent });
 const mapDispatchToProps = dispatch => ({
 fetchAgent: () => {
-fetchPOST('/fn/whoami/getAgent')
-  .then(agent => {
-    dispatch({ type: 'FETCH_AGENT', agent })
-  })
-},
-bridgetoAppDetails: (appHash) => {
-fetchPOST('/fn/bridge_request/getApp', appHash)
-  .then( appDetials => {
-    dispatch({ type: 'VIEW_APP', appDetials })
-  })
-},
-fetchAllApps: () => {
-fetchPOST('/fn/hchc/getAllApps')
-  .then(() => {
-    dispatch({ type: 'FETCH_ALL_APPS' })
-  })
-}
+  fetchPOST('/fn/whoami/getAgent')
+    .then(agent => {
+      dispatch({ type: 'FETCH_AGENT', agent })
+    })
+  },
 });
 
 

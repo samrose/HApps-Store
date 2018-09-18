@@ -2,72 +2,109 @@ import * as React from 'react';
 import * as redux from 'redux';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Map } from 'immutable';
-import './AllAppsPage.css';
-
-import JdenticonPlaceHolder from '../components/JdenticonFiller';
 
 import store from '../store'
 import { fetchPOST } from '../utils'
 import { ReduxAction } from '../../../types';
-
 import { Hash } from '../../../holochain';
+import { Map } from 'immutable';
+
+import './AllAppsPage.css';
+import JdenticonPlaceHolder from '../components/JdenticonFiller';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Row, Col, Button } from 'reactstrap';
+
+
+type AllCategoriesPageState = {
+  categories: Array<any>,
+}
 
 type AllCategoriesPageProps = {
   allApps: Map<Hash,{ title: string, icon: string }>,
   currentAgent: {agent: {Hash: Hash, Name: string}},
+  AppsByCategory: Array<{category: string, appTitle: string, icon: string }>
   fetchAgent: () => void,
   fetchAllApps: () => void,
-  fetchAppDetails: () => void
+  fetchAppDetails: (appHash) => void,
+  getAppsByCategory: (cateogry) => void,
 }
 
-class AllCategoriesPage extends React.Component<AllCategoriesPageProps, {}> {
+class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCategoriesPageState> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      categories: ["Games", "Admin Tools", "Dev Tools", "Top Downloads", "Categories",
+       "Movies", "Educational", "Finance", "Leisure", "Music"],
+    };
+  }
+
   public componentDidMount() {
     this.props.fetchAgent();
-    setInterval(this.props.fetchAllApps, 500);
+    this.props.fetchAllApps();
   }
 
-  public handleSelectApp = () => {
-    // this.props.fetchAppDetails();
+  public handleSelectApp = e => {
+    const currentApp = e.target.className
+    this.props.fetchAppDetails(currentApp);
   }
+
+  public renderApps = (apps, category) => {
+    apps.forEach = (app) => {
+      return (
+        <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash}>
+          <div className={app.Hash} onClick={this.handleSelectApp}>
+            {/* appstore-app-icons */}
+            <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
+            <h4 style={{ textAlign: 'center' }}>{app.Title}</h4>
+          </div>
+        </Link>
+      )
+    }
+  }
+
 
   public render() {
-    const greeting: string = "Welcome to your HCHC App Store";
     if (!this.props.currentAgent) {
       return <div>
-        <h4 className="loading-text">Loading...</h4>
+        <h4 style={{ textAlign: 'center' }} className="loading-text">Fetching all app categories...</h4>
       </div>
     }
-    else {
-      const { agent } = this.props.currentAgent;
-      return (
-          <div style={{ textAlign: 'center' }}>
-            <h1 className="all-apps-header">{ greeting }</h1>
-            <img className="app-logo" src="/holo-logo.png" />
 
-            <hr/>
-            <Link to={`/appstore/${agent.Hash}`}>
-            <div className="appstore-app-icons" onClick={this.handleSelectApp}>
-              {/* // BELOW> : The App Icon should instead pass the App Hash into the hash prop,... (not the whoami Hash). */}
-              <JdenticonPlaceHolder className="jdenticon" size={150} hash={ agent.Hash } />
-            </div>
-            </Link>
-            {/* // BELOW> : This should instead be the App Hash (... not the whoami Hash). */}
-            <Link to={`/appstore/${agent.Hash}`}>
-            <div className="appstore-app-icons" onClick={this.handleSelectApp}>
-              {/* // BELOW> : The App Icon should instead pass the App Hash into the hash prop,... (not the whoami Hash). */}
-              <JdenticonPlaceHolder className="jdenticon" size={150} hash={ agent.Hash } />
-            </div>
-          </Link>
+    const categoriesDisplay = this.state.categories.map((category, i) => {
+        i=i+1;
+        let apps: Array<any> = [];
+        const renderCategoryApps = () => {
+          fetchPOST('/fn/happs/getAppsByCategory', category)
+            .then(response => {
+              if (!response.errorMessage) {
+                apps = this.props.AppsByCategory;
+                this.renderApps(apps, category);
+            }});
+        }
 
-        </div>
-      );
-    }
+        return (
+          <Row key={i+category.name} className="category-container">
+            <Col>
+              <h2>{category.name}</h2>
+              <hr/>
+              {renderCategoryApps}
+            </Col>
+          </Row>
+      )
+    });
+
+    const greeting: string = "Check Out the Categories Below";
+    return (
+        <Container style={{ textAlign: 'center' }}>
+          <h1 className="all-apps-header">{ greeting }</h1>
+          <hr/>
+          {categoriesDisplay}
+      </Container>
+    );
   }
 }
 
-
-const mapStateToProps = ({ allApps, currentAgent }) => ({ allApps, currentAgent });
+const mapStateToProps = ({ allApps, currentAgent, AppsByCategory }) => ({ allApps, currentAgent, AppsByCategory });
 const mapDispatchToProps = dispatch => ({
   fetchAgent: () => {
     fetchPOST('/fn/whoami/getAgent')
@@ -75,13 +112,26 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: 'FETCH_AGENT', agent })
       })
   },
-  fetchAppDetails: () => {
-    fetchPOST('/fn/applications/getAppHash')
+  // >>> The response returned from the fetchPOST is the  following obejct:
+  //  {"Entry": e.Entry,"Hash": e.Hash}
+  fetchAllApps: () => {
+    fetchPOST('/fn/happs/getAllApps')
+      .then(response => {
+        dispatch({ type: 'FETCH_ALL_APPS', response })
+    })
+},
+  fetchAppDetails: (appHash) => {
+    fetchPOST('/fn/happs/getApp', appHash)
       .then( appHash => {
         dispatch({ type: 'VIEW_APP', appHash })
       })
   },
-  fetchAllApps: () => dispatch({ type: 'FETCH_ALL_APPS' }),
+  getAppsByCategory: (category) => {
+    fetchPOST('/fn/happs/getAppsByCategory', category)
+      .then( AppsByCategory => {
+        dispatch({ type: 'GET_APP_BY_CATEGORY', AppsByCategory })
+      })
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllCategoriesPage);

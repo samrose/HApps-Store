@@ -1,4 +1,6 @@
 import * as React from "react";
+import { connect } from 'react-redux';
+import { fetchPOST } from '../utils'
 import "./Nav.css";
 import SearchBar from "./SearchBar";
 
@@ -22,7 +24,11 @@ class Nav extends React.Component<any, {}> {
   // }
 
   public render() {
+    if (!this.props.currentAgent) {
+      return <div/>
+    }
     // const searchTerm = _.debounce(term => {this.appSearch(term)}, 300);
+    const { agent } = this.props.currentAgent!;
     return (
       <nav className="nav nav-pills flex-column flex-sm-row">
           <div className="fade-in-logo"><img className="app-logo brand-logo" src="/holo-logo.png" /></div>
@@ -31,10 +37,27 @@ class Nav extends React.Component<any, {}> {
             Search Bar
             {/* <SearchBar onSearchTermUpdate={ searchTerm } /> */}
           </a>
-          <a className="flex-sm-fill text-sm-center nav-link active" href="#">My Profile</a>
+          <a className="flex-sm-fill text-sm-center nav-link active" href={`/profile/${agent.Hash}`}>{`${agent.Name}'s Profile`}</a>
       </nav>
     )
   }
 }
 
-export default Nav;
+const mapStateToProps = ({ currentAgent }) => ({ currentAgent });
+const mapDispatchToProps = dispatch => ({
+fetchAgent: () => {
+  fetchPOST('/fn/whoami/getAgent')
+    .then(agent => {
+      dispatch({ type: 'FETCH_AGENT', agent })
+    })
+  },
+  //TODO : REQUEST THE SEARCH QUERY / SEARCH CATEGORY FUNCTION FROM Backend....
+searchCategories: (category) => {
+  fetchPOST('/fn/bridgeToCategories/getAppByCategory', category)
+    .then(apps => {
+      dispatch({ type: 'SEARCH_BY_CATEGORY', apps })
+    })
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);
