@@ -7,7 +7,10 @@
         "title": "Sakura",
         "description": "The is the details for the first app",
         "thumbnail": "IMG.jpg",
-        "author":"%agent%",
+        "author":{
+          "Hash":"%agent%",
+          "Name":"%agentstr%"
+          },
         "uuid":"12341234-12543123-12341234-12341234"
       }},
       "Output": "%h1%"
