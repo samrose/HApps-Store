@@ -1,0 +1,28 @@
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row !important;
+  padding-left: 0;
+  padding-bottom: 0;
+  list-style: none;
+  padding: 50px 15px;
+}
+
+.nav-link {
+  color: #29a19e !important;
+  border-radius: .25rem;
+  text-align: center !important;
+  padding: .5rem 1rem;
+  display: block;
+  flex: 1 1 auto !important;
+  text-decoration: none;
+}
+
+.nav-link.active {
+  color: white !important;
+  background-color:#0c5e5b !important; /*alternative color: #275756 */
+}
+
+.nav-link.disabled {
+  color: #6c757d;
+}

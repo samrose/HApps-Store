@@ -16,7 +16,7 @@ let module = {};
 // - adding UI-Skins for apps
 // -----------------------------------------------------------------
 
-//TODO : Decde if all the apps need to be linked to the App.DNA.Hash
+//TODO : Decide if all the apps need to be linked to the App.DNA.Hash
 function createApp({ appParam }) {
   // const appParam = {
   //   uuid: uuidGenerator(),
