@@ -41,8 +41,6 @@ class AllAppsPage extends React.Component<AllAppsPageProps, {}> {
       return (
           <div style={{ textAlign: 'center' }}>
             <h1 className="all-apps-header">{ greeting }</h1>
-            <img className="app-logo" src="/holo-logo.png" />
-
             <hr/>
             <Link to={`/appstore/${agent.Hash}`}>
             <div className="appstore-app-icons" onClick={this.handleSelectApp}>
@@ -83,6 +81,26 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllAppsPage);
+
+// constructor(props) {
+//   super(props);
+//   this.state = {
+//     allAppCategories: [],
+//     selectedApp: null,
+//   };
+// }
+
+  // public appSearch = (appSearchTerm) => {
+  //   JSONFETCH ({url: URL_BASE_HERE, term: appSearchTerm}, (data) => {
+  //       console.log(data);
+  //       this.setState({
+  //           allAppCategories: data,
+  //           selectedApp: data[0]
+  //       });
+  //     });
+  // }
+
+// const searchTerm = _.debounce(term => {this.appSearch(term)}, 300);
 
 {/* <a className="flex-sm-fill text-sm-center nav-link" href="#"> */}
   {/* <SearchBar onSearchTermUpdate={ searchTerm } /> */}

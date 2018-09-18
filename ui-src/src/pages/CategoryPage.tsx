@@ -43,8 +43,6 @@ class CategoryPage extends React.Component <CategoryPageProps, {}> {
       return (
           <div style={{ textAlign: 'center' }}>
             <h1 className="all-apps-header">{ greeting }</h1>
-            <img className="app-logo" src="/holo-logo.png" />
-
             <hr/>
             <Link to={`/appstore/${agent.Hash}`}>
             <div className="appstore-app-icons" onClick={this.handleSelectApp}>

@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 
 import './SplashScreen.css';
-import Icon from '@material-ui/core/Icon';
-import { VideogameAsset, StarRate, Code, Timeline, List } from '@material-ui/icons';
-
-// import { Array,Map } from "immutable"
 import JdenticonPlaceHolder from '../components/JdenticonFiller';
+
+// import Icon from '@material-ui/core/Icon';
+// import { VideogameAsset, StarRate, Code, Timeline, List } from '@material-ui/icons';
+// import { Array,Map } from "immutable"
 
 import store from '../store'
 import { fetchPOST } from '../utils'
@@ -45,18 +45,18 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
     super(props);
     this.state = {
       panels1: [
-        {name: 'Games', icon: "VideogameAsset", btn: "Play"},
-        {name: 'Admin Tools', icon: "Timeline", btn: "Browse"},
-        {name: 'Dev Tools', icon: "Code", btn: "Dive In"},
-        {name: 'Top Downloads', icon: "StarRate", btn: "Visit"},
-        {name: 'Categories', icon: "List", btn: "See"},
+        {name: 'Games', icon: "videogame_asset", btn: "Play"},
+        {name: 'Admin Tools', icon: "timeline", btn: "Browse"},
+        {name: 'Dev Tools', icon: "code", btn: "Dive In"},
+        {name: 'Top Downloads', icon: "stars", btn: "Visit"},
+        {name: 'Categories', icon: "format_list_bulleted", btn: "See"},
       ],
       panels2: [
-        {name: 'Movies', icon: "Movie", btn: "Watch"},
-        {name: 'Educational', icon: "Pencil", btn: "Learn"},
-        {name: 'Finance', icon: "Coin", btn: "Budget"},
-        {name: 'Leisure', icon: "Sun", btn: "Travel"},
-        {name: 'Recommended', icon: "List", btn: "Check Out"},
+        {name: 'Movies', icon: "movie_filter", btn: "Watch"},
+        {name: 'Educational', icon: "book", btn: "Learn"},
+        {name: 'Finance', icon: "attach_money", btn: "Save"},
+        {name: 'Leisure', icon: "language", btn: "Travel"},
+        {name: 'Music', icon: "music_note", btn: "Listen"},
       ],
       toggle1: false,
       toggle2: false,
@@ -123,7 +123,7 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
             toggle9 : !this.state.toggle9,
           })
           break;
-        case "Recommended":
+        case "Music":
           this.setState({
             toggle10 : !this.state.toggle10,
           })
@@ -185,10 +185,10 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
       this.chooseToggleState1(i, cb);
       return (
         <div key={panel.name} className={toggleState ? `panel panel${i} open open-active` :` panel panel${i}` } onClick={this.handleOnClick}>
-          <p><Icon>{panel.icon}</Icon></p>
-          <p className={panel.name}>{panel.name}</p>
+          <p>{panel.name}</p>
+          <p className={panel.name}><i className="material-icons">{panel.icon}</i></p>
           <p><a href={`/appstore/${panel.name}`}>
-            <button>{panel.btn}</button>
+            <button className="icon-btn">{panel.btn}</button>
           </a></p>
         </div>
     )
@@ -203,10 +203,10 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
       this.chooseToggleState2(i, cb);
       return (
         <div key={panel.name} className={toggleState ? `panel panel${i} open open-active` :` panel panel${i}` } onClick={this.handleOnClick}>
-          <p><Icon>{panel.icon}</Icon></p>
-          <p className={panel.name}>{panel.name}</p>
+          <p>{panel.name}</p>
+          <p className={panel.name}><i className="material-icons">{panel.icon}</i></p>
           <p><a href={`/appstore/${panel.name}`}>
-            <button>{panel.btn}</button>
+            <button className="icon-btn">{panel.btn}</button>
           </a></p>
         </div>
     )

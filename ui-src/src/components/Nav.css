@@ -16,6 +16,8 @@
   display: block;
   flex: 1 1 auto !important;
   text-decoration: none;
+  height: 36px;
+  animation: fade-in-zoom-out 2s 2s 1 ease both
 }
 
 .nav-link.active {
@@ -25,4 +27,33 @@
 
 .nav-link.disabled {
   color: #6c757d;
+}
+
+.app-logo {
+  animation: App-logo-spin  2s 6s 1 linear;
+  height: 110px;
+  margin: -35px 5px 10px 5px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.fade-in-logo {
+  animation: fade-in-zoom-out 2s 2s 1 ease both
+}
+
+@keyframes fade-in-zoom-out {
+  0% {
+    transform: translateZ(500px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateZ(0px);
+    opacity: 1;
+  }
 }

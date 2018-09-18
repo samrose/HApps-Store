@@ -33,13 +33,18 @@
   margin: auto;
   text-align: center;
 }
-
+/*
 .app-logo {
   animation: App-logo-spin .48 5s linear;
   animation-delay: 2000;
   height: 150px;
   margin: 0px 5px 10px 5px;
-}
+} */
+/*
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+} */
 
 .app-title {
   font-size: 1.5em;
@@ -47,11 +52,6 @@
 
 .app-intro {
   font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
 
 .appstore-app-icons {

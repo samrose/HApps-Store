@@ -22,7 +22,7 @@ const App = () =>
       <Switch>
         <Route exact={exact} path="/" component={SplashScreen} />
         <Route exact={exact} path="/appstore" component={AllApps} />
-        <Route exact={exact} path="/appstore/play/Categories" component={AllCategories} />
+        <Route exact={exact} path="/appstore/Categories" component={AllCategories} />
         <Route exact={exact} path="/appstore/:category" component={Category} />
         <Route exact={exact} path="/appstore/:category/:id" component={Detail} />
         <Route exact={exact} path="/produceapp" component={UploadNewApp} />
