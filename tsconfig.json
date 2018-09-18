@@ -27,7 +27,7 @@
   ],
   "exclude": [
     "node_modules",
-    "build",
+    "build-HApps",
     "scripts",
     "acceptance-tests",
     "webpack",
