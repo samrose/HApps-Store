@@ -6,28 +6,35 @@ let module = {};
 // Author : Zo-El
 // -----------------------------------------------------------------
 // Description :
-// This zome can be used to rate a Hash (The hash can refer to anything, like App ID Hash)
-// This ratings include the rate, review and the author
 // -----------------------------------------------------------------
 
-function createRatings({ rate, review, reviewedHash }:CreateRatingsParams):Hash {
-  const ratings = { rate, review, "author": App.Key.Hash ,"timestamp":new Date()};
-  const hash = commit("ratings", ratings);
-  commit("ratings_link", {
-    Links: [
-      { Base: reviewedHash, Link: hash, Tag: 'ratings_tag' }
-    ]
-  });
+function addAppDetails({ appParam }) {
+  const hash = JSON.parse(call("happs", "createApp", { appParam }));
+  // Used for testing the reviews over the bridge
+  // call("ratings", "createRatings", { rate: 4, review: "This is the reviews", reviewedHash: hash });
+  // call("ratings", "createRatings", { rate: 5, review: "This is the reviews", reviewedHash: hash });
   return hash;
 }
 
-function getRatings({reviewedHash}):Ratings[]{
-  const ratings:Ratings[] = getLinks(reviewedHash, "ratings_tag", { Load: true }).map(e => e.Entry);
-  debug(ratings);
-  return ratings;
+function getAppDetails({ app_hash }) {
+  // get details
+  const details = JSON.parse(call("happs", "getApp", { app_hash }));
+  // get Reviews
+  const reviews = JSON.parse(call("ratings", "getRatings", { "reviewedHash": app_hash }));
+  // Get Other stats
+  const ratings=calculateStars(reviews);
+  // TODO: Decide on other States that need to be displayed (number of installed .etc)
+  // TODO: get tags
+  return { details, reviews , ratings }
 }
 
-
+function calculateStars(reviews) {
+  let rating = 0;
+  for (let entry of reviews) {
+    rating += entry.rate;
+  }
+  return rating/reviews.length;
+}
 // -----------------------------------------------------------------
 //  The Genesis Function https://developer.holochain.org/genesis
 // -----------------------------------------------------------------
@@ -36,17 +43,19 @@ function genesis() {
   return true;
 }
 
+function bridgeGenesis(side, dna, appData) {
+  debug("HApps: " + side + " " + dna + " " + appData);
+  return true;
+}
+
 // -----------------------------------------------------------------
 //  Validation functions for every change to the local chain or DHT
+// > Note this functions are not needed
 // -----------------------------------------------------------------
-
+/*
 function validateCommit(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratings":
-      return true;
-    case "ratings_link":
-      return true;
     default:
       return false;
   }
@@ -55,10 +64,6 @@ function validateCommit(entryName, entry, header, pkg, sources) {
 function validatePut(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratings":
-      return true;
-    case "ratings_link":
-      return true;
     default:
       return false;
   }
@@ -80,8 +85,6 @@ function validateDel(entryName, hash, pkg, sources) {
 function validateLink(entryName, baseHash, links, pkg, sources) {
   // debug("entryName: " + entryName + " baseHash: " + baseHash + " links: " + links + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-    case "ratings_link":
-      return true;
     default:
       return false;
   }
@@ -98,3 +101,4 @@ function validateDelPkg(entryName) {
 function validateLinkPkg(entryName) {
   return null;
 }
+*/

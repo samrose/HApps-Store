@@ -2,12 +2,14 @@ agent.txt
 priv.key
 
 build/
+build-HApps/
 ui/
 dna/
 node_modules/
 .dist/
 .cache/
 npm-debug.log
+HApps/
 
 # OS generated files #
 ######################
