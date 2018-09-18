@@ -30,6 +30,19 @@ function getAllApps() {
   });
 }
 
+// Public functions to get the app code
+function getAppDNA({ app_hash }) {
+  const details = call("bridge_request", "getAppDNA", { app_hash })
+  return details;
+}
+
+
+// Public functions to get the app code
+function getAppUISkin({ app_hash }) {
+  const details = call("bridge_request", "getAppUISkin", { app_hash })
+  return details;
+}
+
 // -----------------------------------------------------------------
 //  Non-Exposed Public Functions
 // -----------------------------------------------------------------
