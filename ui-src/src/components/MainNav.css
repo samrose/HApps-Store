@@ -17,12 +17,12 @@
   flex: 1 1 auto !important;
   text-decoration: none;
   height: 36px;
-  animation: fade-in-zoom-out 2s 2s 1 ease both
+  animation: fade-in-zoom-out .5s .5s 1 ease both
 }
 
 .nav-link.active {
   color: white !important;
-  background-color:#0c5e5b !important; /*alternative color: #275756 */
+  background-color:#075250 !important; /*alternative color: #0c5e5b , #367780, #275756 */
 }
 
 .nav-link.disabled {
@@ -30,18 +30,12 @@
 }
 
 .app-logo {
-  animation: App-logo-spin  2s 6s 1 linear;
-  height: 110px;
-  margin: -35px 5px 10px 5px;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  height: 75px;
+  margin: -20px 5px 10px 5px;
 }
 
 .fade-in-logo {
-  animation: fade-in-zoom-out 2s 2s 1 ease both
+  animation: fade-in-zoom-out .5s .5s 1 ease both
 }
 
 @keyframes fade-in-zoom-out {

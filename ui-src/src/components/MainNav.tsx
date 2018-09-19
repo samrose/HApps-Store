@@ -1,10 +1,10 @@
 import * as React from "react";
 import { connect } from 'react-redux';
 import { fetchPOST } from '../utils'
-import "./Nav.css";
+import "./MainNav.css";
 import SearchBar from "./SearchBar";
 
-class Nav extends React.Component<any, {}> {
+class MainNav extends React.Component<any, {}> {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,15 +29,21 @@ class Nav extends React.Component<any, {}> {
     }
     // const searchTerm = _.debounce(term => {this.appSearch(term)}, 300);
     const { agent } = this.props.currentAgent!;
+    let agentName = agent.Name;
+    if (agentName.length > 15 ) {
+      // agentName = agentName.substring(0,15) + "...";
+      // TODO: REMOVE THE FOLLWOWING LINE, and uncomment the one above..
+      agentName = "Lisa";
+    }
     return (
       <nav className="nav nav-pills flex-column flex-sm-row">
           <div className="fade-in-logo"><img className="app-logo brand-logo" src="/holo-logo.png" /></div>
-          <a className="flex-sm-fill text-sm-center nav-link" href="/appstore/Categories">All Apps</a>
+          <a className="flex-sm-fill text-sm-center nav-link" href="/appstore">App Store</a>
           <a className="flex-sm-fill text-sm-center nav-link" href="#">
             Search Bar
             {/* <SearchBar onSearchTermUpdate={ searchTerm } /> */}
           </a>
-          <a className="flex-sm-fill text-sm-center nav-link active" href={`/profile/${agent.Hash}`}>{`${agent.Name}'s Profile`}</a>
+          <a className="flex-sm-fill text-sm-center nav-link" href={`/profile/${agent.Hash}`}>{`${agentName}'s Profile`}</a>
       </nav>
     )
   }
@@ -51,7 +57,7 @@ fetchAgent: () => {
       dispatch({ type: 'FETCH_AGENT', agent })
     })
   },
-  //TODO : REQUEST THE SEARCH QUERY / SEARCH CATEGORY FUNCTION FROM Backend....
+  //  TODO : REQUEST THE SEARCH QUERY / SEARCH CATEGORY FUNCTION FROM Backend....
 searchCategories: (category) => {
   fetchPOST('/fn/bridgeToCategories/getAppByCategory', category)
     .then(apps => {
@@ -60,4 +66,4 @@ searchCategories: (category) => {
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Nav);
+export default connect(mapStateToProps, mapDispatchToProps)(MainNav);

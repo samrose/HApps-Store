@@ -2,9 +2,8 @@ import * as React from 'react';
 import * as redux from 'redux';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
-
+import SplashNav from "../components/SplashNav";
 import './SplashScreen.css';
-import JdenticonPlaceHolder from '../components/JdenticonFiller';
 
 // import Icon from '@material-ui/core/Icon';
 // import { VideogameAsset, StarRate, Code, Timeline, List } from '@material-ui/icons';
@@ -71,21 +70,8 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
     };
   }
 
-  public onComponentDidMount = () => {
+  public componentDidMount() {
     this.props.fetchAgent();
-    this.renderWelcomeMsgs();
-  }
-
-  public renderWelcomeMsgs = () => {
-    const { agent } = this.props.currentAgent!;
-    const waitGreeting1: WelcomeMsg = `${agent.Name}`;
-    const waitGreeting2: WelcomeMsg = "Welcome to the Holo App Store";
-    return (
-      <div>
-        <h1 className="welecome-message-1">{ waitGreeting1 }</h1>
-        <h1 className="welecome-message-2">{ waitGreeting2 }</h1>
-      </div>
-    )
   }
 
   public handleOnClick = e => {
@@ -194,7 +180,23 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
 
   public render(){
     if (!this.props.currentAgent) {
+      console.log("agent,when no agent: ", this.props.currentAgent);
       return <div/>
+    }
+
+    console.log("agent: ", this.props.currentAgent);
+    const renderWelcomeMsgs = () => {
+      {console.log("inside renderWelcomeMsessage;")}
+      const { agent } = this.props.currentAgent!;
+      // const waitGreeting1: WelcomeMsg = `Hello ${agent.Name}`
+      const waitGreeting1: WelcomeMsg = `Hello Lisa`;
+      const waitGreeting2: WelcomeMsg = "Welcome to the Holo App Store";
+      return (
+        <div>
+          <h1 className="welcome-message-1">{ waitGreeting1 }</h1>
+          <h1 className="welcome-message-2">{ waitGreeting2 }</h1>
+        </div>
+      )
     }
 
 // Layer 1 of App Cats:
@@ -210,7 +212,7 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
           <p>{panel.name}</p>
           <p className={panel.name}><i className="material-icons">{panel.icon}</i></p>
           <p><a href={`/appstore/${panel.name}`}>
-            <button className="icon-btn">{panel.btn}</button>
+            <button className="icon-btn"><h4 className="btn-text">{panel.btn}</h4></button>
           </a></p>
         </div>
     )
@@ -229,20 +231,26 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
           <p>{panel.name}</p>
           <p className={panel.name}><i className="material-icons">{panel.icon}</i></p>
           <p><a href={`/appstore/${panel.name}`}>
-            <button className="icon-btn">{panel.btn}</button>
+            <button className="icon-btn"><h4 className="btn-text">{panel.btn}</h4></button>
           </a></p>
         </div>
     )
   });
 
     return (
-      <div className="splash-screen-container" style={{ textAlign: 'center' }}>
+      <div>
+        <SplashNav/>
+        {renderWelcomeMsgs()}
+        <div className="splash-screen-container" style={{ textAlign: 'center' }}>
+          <h1 className="app-store-header">App Store</h1>
+          <hr className="app-store-header-underline"/>
           <div className="panels panel-row-1">
             {panels1}
           </div>
           <div className="panels panel-row-2">
             {panels2}
           </div>
+        </div>
       </div>
     );
   }
@@ -250,13 +258,12 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
 
 const mapStateToProps = ({ currentAgent }) => ({ currentAgent });
 const mapDispatchToProps = dispatch => ({
-fetchAgent: () => {
-  fetchPOST('/fn/whoami/getAgent')
-    .then(agent => {
-      dispatch({ type: 'FETCH_AGENT', agent })
-    })
+  fetchAgent: () => {
+    fetchPOST('/fn/whoami/getAgent')
+      .then(agent => {
+        dispatch({ type: 'FETCH_AGENT', agent })
+      })
   },
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen);

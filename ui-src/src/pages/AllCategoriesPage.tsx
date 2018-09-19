@@ -11,6 +11,7 @@ import { Map } from 'immutable';
 
 import './AllAppsPage.css';
 import JdenticonPlaceHolder from '../components/JdenticonFiller';
+import MainNav from "../components/MainNav";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Button } from 'reactstrap';
 
@@ -43,11 +44,6 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
     this.props.fetchAllApps();
   }
 
-  public handleSelectApp = e => {
-    const currentApp = e.target.className
-    this.props.fetchAppDetails(currentApp);
-  }
-
   public renderApps = (apps, category) => {
     apps.forEach = (app) => {
       return (
@@ -61,6 +57,10 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
       )
     }
   }
+  public handleSelectApp = e => {
+    const currentApp = e.target.className
+    this.props.fetchAppDetails(currentApp);
+  }
 
 
   public render() {
@@ -70,6 +70,9 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
       </div>
     }
 
+    console.log("agent: ", this.props.currentAgent);
+
+    const greeting: string = "Check Out the Categories Below";
     const categoriesDisplay = this.state.categories.map((category, i) => {
         i=i+1;
         let apps: Array<any> = [];
@@ -81,25 +84,26 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
                 this.renderApps(apps, category);
             }});
         }
-
         return (
-          <Row key={i+category.name} className="category-container">
+          <Row key={i+category} className="category-container">
             <Col>
-              <h2>{category.name}</h2>
+              <h2>{category}</h2>
               <hr/>
-              {renderCategoryApps}
+              {/* {renderCategoryApps()} */}
             </Col>
           </Row>
       )
     });
 
-    const greeting: string = "Check Out the Categories Below";
     return (
+      <div>
+        <MainNav/>
         <Container style={{ textAlign: 'center' }}>
-          <h1 className="all-apps-header">{ greeting }</h1>
-          <hr/>
-          {categoriesDisplay}
-      </Container>
+            <h1 className="all-apps-header">{ greeting }</h1>
+            <hr/>
+            {categoriesDisplay}
+        </Container>
+      </div>
     );
   }
 }
@@ -122,8 +126,8 @@ const mapDispatchToProps = dispatch => ({
 },
   fetchAppDetails: (appHash) => {
     fetchPOST('/fn/happs/getApp', appHash)
-      .then( appHash => {
-        dispatch({ type: 'VIEW_APP', appHash })
+      .then( appDetails => {
+        dispatch({ type: 'VIEW_APP', appDetails })
       })
   },
   getAppsByCategory: (category) => {

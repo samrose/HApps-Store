@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as redux from 'redux';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Nav from "./components/Nav";
+// import SplashNav from "./components/SplashNav";
 
 import ScaffoldRef from "./pages/ReferencePage";
 
@@ -19,7 +19,7 @@ const exact: boolean = true;
 const App = () =>
   <Router>
     <div>
-      <Nav/>
+      {/* <SplashNav/> */}
       <Switch>
         <Route exact={exact} path="/" component={SplashScreen} />
         <Route exact={exact} path="/appstore" component={SplashScreen} />

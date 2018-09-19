@@ -1,0 +1,28 @@
+.category-header {
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  text-align: center;
+  padding: 20px 50px 0px 50px;
+  margin: 50px;
+  margin-bottom: 25px;
+  color: #d7e0e0; /* #a9dee4 */
+  animation: fade-in-zoom-out 2s .5 1 ease both
+}
+
+.category-header-line {
+  animation: fade-in-zoom-out 2s .5 1 ease both
+}
+
+@keyframes fade-in-zoom-out {
+  0% {
+    transform: translateZ(500px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateZ(0px);
+    opacity: 1;
+  }
+}

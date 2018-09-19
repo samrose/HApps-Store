@@ -3,7 +3,8 @@ import * as redux from 'redux';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
-import './AllAppsPage.css';
+import MainNav from "../components/MainNav";
+import './CategoryPage.css';
 
 import JdenticonPlaceHolder from '../components/JdenticonFiller';
 
@@ -32,7 +33,7 @@ class CategoryPage extends React.Component <CategoryPageProps, {}> {
   }
 
   public render() {
-    const greeting: string = "Welcome to your HCHC App Store";
+    const greeting: string = "Category Page";
     if (!this.props.currentAgent) {
       return <div>
         <h4 className="loading-text">Loading...</h4>
@@ -41,23 +42,25 @@ class CategoryPage extends React.Component <CategoryPageProps, {}> {
     else {
       const { agent } = this.props.currentAgent;
       return (
-          <div style={{ textAlign: 'center' }}>
-            <h1 className="all-apps-header">{ greeting }</h1>
-            <hr/>
-            <Link to={`/appstore/${agent.Hash}`}>
-            <div className="appstore-app-icons" onClick={this.handleSelectApp}>
-              {/* // BELOW> : The App Icon should instead pass the App Hash into the hash prop,... (not the whoami Hash). */}
-              <JdenticonPlaceHolder className="jdenticon" size={150} hash={ agent.Hash } />
-            </div>
+          <div>
+            <MainNav/>
+            <div style={{ textAlign: 'center' }}>
+              <h1 className="category-header">{ greeting }</h1>
+              <hr className="category-header-line"/>
+              <Link to={`/appstore/${agent.Hash}`}>
+              <div className="appstore-app-icons" onClick={this.handleSelectApp}>
+                {/* // BELOW> : The App Icon should instead pass the App Hash into the hash prop,... (not the whoami Hash). */}
+                <JdenticonPlaceHolder className="jdenticon" size={150} hash={ agent.Hash } />
+              </div>
+              </Link>
+              {/* // BELOW> : This should instead be the App Hash (... not the whoami Hash). */}
+              <Link to={`/appstore/${agent.Hash}`}>
+              <div className="appstore-app-icons" onClick={this.handleSelectApp}>
+                {/* // BELOW> : The App Icon should instead pass the App Hash into the hash prop,... (not the whoami Hash). */}
+                <JdenticonPlaceHolder className="jdenticon" size={150} hash={ agent.Hash } />
+              </div>
             </Link>
-            {/* // BELOW> : This should instead be the App Hash (... not the whoami Hash). */}
-            <Link to={`/appstore/${agent.Hash}`}>
-            <div className="appstore-app-icons" onClick={this.handleSelectApp}>
-              {/* // BELOW> : The App Icon should instead pass the App Hash into the hash prop,... (not the whoami Hash). */}
-              <JdenticonPlaceHolder className="jdenticon" size={150} hash={ agent.Hash } />
-            </div>
-          </Link>
-
+          </div>
         </div>
       );
     }
