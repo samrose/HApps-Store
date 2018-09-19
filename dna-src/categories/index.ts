@@ -12,7 +12,47 @@ let module = {};
 
 const BASE_TAG_STRING = "HCHC_TAGS"
 
-function addTag({ tag, hash }:AddTagParams):Hash {
+
+function addCategory({ category, tags, hash }) {
+  const category_base = anchor(category, "");
+  const tag_base = anchor(category, tags);
+  const commit_hash = commit("tag_link", {
+    Links: [{ Base: category_base, Link: hash, Tag: "category" },
+    { Base: tag_base, Link: hash, Tag: "tag_category" },
+    { Base: hash, Link: tag_base, Tag: "app_category" }]
+  });
+  return commit_hash;
+}
+
+
+function getAppsByCategories({ category }) {
+  if (anchorExists(category, "") == "true") {
+    const base = anchor(category, "");
+    const apps = getLinks(base, "category", { Load: true }).map(e => e.Entry);
+    debug(apps);
+    return base;
+  } else {
+    return { error: "ERROR: Category Doen't Exist" }
+  }
+}
+
+function getAppCategories({ hash }) {
+  let categories: string[] = [];
+  let tags: string[] = [];
+  getLinks(hash, "app_category", { Load: true }).forEach(e => {
+    if ((categories.filter(x => x == e.Entry.anchorType).length == 0)) {
+      categories.push(e.Entry.anchorType);
+    }
+    if ((tags.filter(x => x == e.Entry.anchorText).length) == 0) {
+      tags.push(e.Entry.anchorText);
+    }
+  });
+  return { categories, tags };
+}
+
+// Old way to add tags to the hashs
+/*
+function addTag({ tag, hash }: AddTagParams): Hash {
   const base = makeHash("tag_anchor", BASE_TAG_STRING);
   const commit_hash = commit("tag_link", { Links: [{ Base: base, Link: hash, Tag: tag }] });
   return commit_hash;
@@ -24,12 +64,35 @@ function getTaged({ tag }) {
   debug(apps);
   return apps;
 }
+*/
+// -----------------------------------------------------------------
+//  The Helper Functions
+// -----------------------------------------------------------------
+
+function anchor(anchorType, anchorText) {
+  return call('anchors', 'anchor', {
+    anchorType: anchorType,
+    anchorText: anchorText
+  }).replace(/"/g, '');
+}
+
+
+function getAnchors({ type }) {
+  const a = call('anchors', 'anchors', { type })
+  return a;
+}
+
+function anchorExists(anchorType, anchorText) {
+  return call('anchors', 'exists', {
+    anchorType: anchorType,
+    anchorText: anchorText
+  });
+}
 // -----------------------------------------------------------------
 //  The Genesis Function https://developer.holochain.org/genesis
 // -----------------------------------------------------------------
 
 function genesis() {
-  commit("tag_anchor", BASE_TAG_STRING)
   return true;
 }
 
@@ -40,10 +103,10 @@ function genesis() {
 function validateCommit(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-  case "tag_anchor":
-  return true;
-  case "tag_link":
-  return true;
+    case "tag_anchor":
+      return true;
+    case "tag_link":
+      return true;
     default:
       return false;
   }
@@ -52,10 +115,10 @@ function validateCommit(entryName, entry, header, pkg, sources) {
 function validatePut(entryName, entry, header, pkg, sources) {
   // debug("entryName: " + entryName + " entry: " + entry + " header: " + header + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-  case "tag_anchor":
-  return true;
-  case "tag_link":
-  return true;
+    case "tag_anchor":
+      return true;
+    case "tag_link":
+      return true;
     default:
       return false;
   }
@@ -77,8 +140,8 @@ function validateDel(entryName, hash, pkg, sources) {
 function validateLink(entryName, baseHash, links, pkg, sources) {
   // debug("entryName: " + entryName + " baseHash: " + baseHash + " links: " + links + " pkg: " + pkg + " sources: " + sources)
   switch (entryName) {
-  case "tag_link":
-  return true;
+    case "tag_link":
+      return true;
     default:
       return false;
   }

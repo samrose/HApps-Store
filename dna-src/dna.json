@@ -93,16 +93,11 @@
       ]
     },
     {
-      "Name": "tag",
-      "Description": "A tag zome | used to Create tags",
+      "Name": "categories",
+      "Description": "A Categories zome | used to Create Categoriess",
       "RibosomeType": "js",
-      "CodeFile": "tag.js",
-      "Entries": [{
-          "Name": "tag_anchor",
-          "Required": true,
-          "DataFormat": "string",
-          "Sharing": "public"
-        },
+      "CodeFile": "index.js",
+      "Entries": [
         {
           "Name": "tag_link",
           "DataFormat": "links",
@@ -110,12 +105,17 @@
         }
       ],
       "Functions": [{
-          "Name": "addTag",
+          "Name": "addCategory",
           "CallingType": "json",
           "Exposure": "public"
         },
         {
-          "Name": "getTaged",
+          "Name": "getAppsByCategories",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "getAppCategories",
           "CallingType": "json",
           "Exposure": "public"
         }
@@ -189,6 +189,39 @@
           "Name": "getRatings",
           "CallingType": "json",
           "Exposure": "public"
+        }
+      ]
+    },
+    {
+      "Name": "anchors",
+      "Description": "anchors mixin",
+      "RibosomeType": "js",
+      "CodeFile": "anchors.js",
+      "Config": {
+        "ErrorHandling": "throwErrors"
+      },
+      "Entries": [{
+          "Name": "anchor",
+          "DataFormat": "json",
+          "SchemaFile": "anchor.json",
+          "Sharing": "public"
+        },
+        {
+          "Name": "anchor_link",
+          "DataFormat": "links"
+        }
+      ],
+      "Functions": [{
+          "Name": "anchor",
+          "CallingType": "json"
+        },
+        {
+          "Name": "exists",
+          "CallingType": "json"
+        },
+        {
+          "Name": "anchors",
+          "CallingType": "json"
         }
       ]
     }
