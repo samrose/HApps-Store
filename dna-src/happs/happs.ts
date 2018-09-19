@@ -64,6 +64,19 @@ function createApp({ appParam }) {
 // -----------------------------------------------------------------
 
 function genesis() {
+  // const errand_hash=createApp({appParam:{uuid:"1234-612-161346",title:"Errand",author:{Hash:App.Agent.Hash,Name:"zo-el"},description:"A Holochain Version of Trello",thumbnail:"/imp1.jpg"}});
+  // const clutter_hash=createApp({appParam:{uuid:"1234-612-161341",title:"Clutter",author:{Hash:App.Agent.Hash,Name:"zippy"},description:"A Holochain Version of Twiter",thumbnail:"/imp2.jpg"}});
+  // const holochat_hash=createApp({appParam:{uuid:"1234-612-161342",title:"HoloChat",author:{Hash:App.Agent.Hash,Name:"Nico L"},description:"A Holochain Version of Slack",thumbnail:"/imp3.jpg"}});
+  // const holovolt_hash=createApp({appParam:{uuid:"1234-612-161343",title:"HoloVolt",author:{Hash:App.Agent.Hash,Name:"Phlip"},description:"A Holochain Version of the your volt",thumbnail:"/imp4.jpg"}});
+  // const netflix_hash=createApp({appParam:{uuid:"1234-612-161347",title:"netflix",author:{Hash:App.Agent.Hash,Name:App.Agent.String},description:"A Holochain Version of the your netflix",thumbnail:"/imp5.jpg"}});
+  // const mario_hash=createApp({appParam:{uuid:"1234-612-161347",title:"Mario",author:{Hash:App.Agent.Hash,Name:App.Agent.String},description:"A Holochain Version of the your Mario",thumbnail:"/impF.jpg"}});
+  // debug("Errant Initialized: "+JSON.stringify(getApp({app_hash:errand_hash})));
+  // debug("Clutter Initialized: "+JSON.stringify(getApp({app_hash:clutter_hash})));
+  // debug("HoloChat  Initialized: "+JSON.stringify(getApp({app_hash:holochat_hash})));
+  // debug("HoloVolt Initialized: "+JSON.stringify(getApp({app_hash:holovolt_hash})));
+  // debug("Netflix  Initialized: "+JSON.stringify(getApp({app_hash:netflix_hash})));
+  // debug("Mario  Initialized: "+JSON.stringify(getApp({app_hash:mario_hash})));
+
   return true;
 }
 

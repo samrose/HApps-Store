@@ -11,6 +11,14 @@
     "HashType": "sha2-256"
   },
   "Zomes": [{
+      "Name": "testZome",
+      "Description": "A test zome | used to bridge",
+      "RibosomeType": "js",
+      "CodeFile": "index.js",
+      "Entries": [],
+      "Functions": [
+      ]
+    },{
       "Name": "bridge_request",
       "Description": "A bridge_request zome | used to bridge",
       "RibosomeType": "js",
