@@ -1,17 +1,44 @@
 {
   "Tests": [{
       "Convey": "test to add a tag to an agent",
-      "Zome": "tag",
+      "Zome": "categories",
       "FnName": "addCategory",
-      "Input": {"category":"Games","tags":"friends","hash":"%agent%"},
+      "Input": {"category":"Games","tags":"First Player","hash":"%agent%"},
       "Output": "%h%"
+    },{
+        "Convey": "test to add a tag to an agent",
+        "Zome": "categories",
+        "FnName": "addCategory",
+        "Input": {"category":"Games","tags":"Stratergie","hash":"%agent%"},
+        "Output": "%h%"
+      },
+    {
+        "Convey": "test to add a tag to an agent",
+        "Zome": "categories",
+        "FnName": "addCategory",
+        "Input": {"category":"Games","tags":"Second Playes","hash":"%key%"},
+        "Output": "%h%"
     },
     {
-        "Convey": "test to get the hash using the tags",
-        "Zome": "tag",
+        "Convey": "test to get the hash using the categories",
+        "Zome": "categories",
         "FnName": "getAppsByCategories",
         "Input": {"category":"Games"},
         "Regexp": "[{\"Identity\":\"\",\"PublicKey\":,\"Revocation\":\"\"}]"
-      }
+    },
+    {
+        "Convey": "test to get the catogories that dont exist",
+        "Zome": "categories",
+        "FnName": "getAppsByCategories",
+        "Input": {"category":"Utils"},
+        "Output": {"error":"ERROR: Category Doen't Exist"}
+    },
+    {
+        "Convey": "test to get the hash using the tags",
+        "Zome": "categories",
+        "FnName": "getAppCategories",
+        "Input": {"hash":"%agent%"},
+        "Output": {"categories":["Games"],"tags":["First Player","Stratergie"]}
+    }
   ]
 }

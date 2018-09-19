@@ -93,16 +93,11 @@
       ]
     },
     {
-      "Name": "tag",
-      "Description": "A tag zome | used to Create tags",
+      "Name": "categories",
+      "Description": "A Categories zome | used to Create Categoriess",
       "RibosomeType": "js",
-      "CodeFile": "tag.js",
-      "Entries": [{
-          "Name": "tag_anchor",
-          "Required": true,
-          "DataFormat": "string",
-          "Sharing": "public"
-        },
+      "CodeFile": "index.js",
+      "Entries": [
         {
           "Name": "tag_link",
           "DataFormat": "links",
@@ -116,6 +111,11 @@
         },
         {
           "Name": "getAppsByCategories",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "getAppCategories",
           "CallingType": "json",
           "Exposure": "public"
         }

@@ -1,0 +1,38 @@
+{
+  "Tests": [{
+      "Convey": "test to anchor",
+      "Zome": "anchors",
+      "FnName": "anchor",
+      "Input": {"anchorType":"Games","anchorText":"First PLayers"},
+      "Output": "%h1%"
+    },
+    {
+        "Convey": "test to anchor",
+        "Zome": "anchors",
+        "FnName": "anchor",
+        "Input": {"anchorType":"Games","anchorText":"Second PLayers"},
+        "Output": "%h1%"
+    },
+    {
+        "Convey": "test to check if it exists",
+        "Zome": "anchors",
+        "FnName": "exists",
+        "Input": {"anchorType":"Games","anchorText":"First PLayers"},
+        "Output": true
+    },
+    {
+        "Convey": "test to check if anchors exist",
+        "Zome": "anchors",
+        "FnName": "exists",
+        "Input": {"anchorType":"Games","anchorText":""},
+        "Output": true
+    },
+    {
+        "Convey": "test to get the anchors back",
+        "Zome": "anchors",
+        "FnName": "anchors",
+        "Input": {"type":"Games"},
+        "Output": true
+    }
+  ]
+}

@@ -14,18 +14,40 @@ const BASE_TAG_STRING = "HCHC_TAGS"
 
 
 function addCategory({ category, tags, hash }) {
-  const base = anchor(category, tags);
-  const commit_hash = commit("tag_link", { Links: [{ Base: base, Link: hash, Tag: "category" }] });
+  const category_base = anchor(category, "");
+  const tag_base = anchor(category, tags);
+  const commit_hash = commit("tag_link", {
+    Links: [{ Base: category_base, Link: hash, Tag: "category" },
+    { Base: tag_base, Link: hash, Tag: "tag_category" },
+    { Base: hash, Link: tag_base, Tag: "app_category" }]
+  });
   return commit_hash;
 }
 
 
 function getAppsByCategories({ category }) {
-  const base = anchor(category, "");
-  debug("-->"+JSON.stringify(getAnchors({"type":category})));
-  const apps = getLinks(base, "category", { Load: true }).map(e => e.Entry);
-  debug(apps);
-  return apps;
+  if (anchorExists(category, "") == "true") {
+    const base = anchor(category, "");
+    const apps = getLinks(base, "category", { Load: true }).map(e => e.Entry);
+    debug(apps);
+    return base;
+  } else {
+    return { error: "ERROR: Category Doen't Exist" }
+  }
+}
+
+function getAppCategories({ hash }) {
+  let categories: string[] = [];
+  let tags: string[] = [];
+  getLinks(hash, "app_category", { Load: true }).forEach(e => {
+    if ((categories.filter(x => x == e.Entry.anchorType).length == 0)) {
+      categories.push(e.Entry.anchorType);
+    }
+    if ((tags.filter(x => x == e.Entry.anchorText).length) == 0) {
+      tags.push(e.Entry.anchorText);
+    }
+  });
+  return { categories, tags };
 }
 
 // Old way to add tags to the hashs
@@ -55,9 +77,8 @@ function anchor(anchorType, anchorText) {
 }
 
 
-function getAnchors({type}) {
-  const a=call('anchors', 'anchors', type)
-debug("->"+JSON.stringify(a))
+function getAnchors({ type }) {
+  const a = call('anchors', 'anchors', { type })
   return a;
 }
 
