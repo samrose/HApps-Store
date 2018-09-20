@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {connect} from 'react-redux'
 
-import * as actions from "../actions"
 import { fetchPOST, fetchFormPOST } from '../utils';
 import JdenticonPlaceHolder from '../components/JdenticonFiller';
 
+import * as utils from '../utils';  // the file upload resource code is located in this file...
 import Dropzone from 'react-dropzone';
 import * as express from 'express'
 import * as multer from 'multer'

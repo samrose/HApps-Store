@@ -9,13 +9,13 @@ import { Map } from "immutable"
 export type WelcomeMsg = string;
 
 export type HCHCAppState = {
-  numClicks: number,
   currentAgent: {agent: string} | null,
-  allApps: Map<Hash,string>, // pairing of the app hash and the an obj with its title and icon url
+  allApps: Map<Hash,string>, // pairing of the app hash and the an obj with its title and thumbanil url path
+  AppsByCategory: Map<string, Array<{Hash,string}>>, // A map parigin of the category string AND the array of app hashes and names(titles), belonging to that app Category...
   currentApp: AppDetailState | null,
   appCode: AppDNACode | null,
-  // reviewEntries: List<ReviewLog>,
   reviewEntries: [{}],
+  // reviewEntries: List<ReviewLog>,
 };
 
 export type AppDetailState = {
@@ -51,21 +51,20 @@ export type ReviewLog = {
 // ================================
 
 export type ReduxAction
-  = {type: 'INCREMENT'}
-  | {type: 'DECREMENT'}
-  | {type: 'RETURN_STATE'}
+  = {type: 'RETURN_STATE'}
+  | { type: 'FETCH_AGENT', agent: string }
 
-  | { type: 'VIEW_APP', details: AppDetailState }
-  | { type: 'FETCH_APP_CODE', code: AppDNACode }
-  | { type: 'CREATE_NEW_APP_DETAILS', params: AppParams }
-  | { type: 'CREATE_NEW_APP_CODE', params: CodeParams }
   | { type: 'FETCH_ALL_APPS', allApps: Map< Hash,string> }  // {Hash:Hash, icon: string}
+  | { type: 'GET_APP_BY_CATEGORY', category :string, AppsByCategory: Map< Hash,string> }
+  | { type: 'VIEW_APP', appDetails: AppDetailState }
+  | { type: 'FETCH_APP_CODE', code: AppDNACode }
 
   | { type: 'CREATE_REVIEW', params: ReviewParams }
   | { type: 'FETCH_REVIEWS', reviewEntries: [{}]}
 
+  | { type: 'CREATE_NEW_APP_DETAILS', params: AppParams }
+  | { type: 'CREATE_NEW_APP_CODE', params: CodeParams }
   | { type: 'SET_CURRENT_APP', agent: string }
-  | { type: 'FETCH_AGENT', agent: string }
 
 
 export interface AppParams {

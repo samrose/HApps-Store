@@ -42,6 +42,10 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
   public componentDidMount() {
     this.props.fetchAgent();
     this.props.fetchAllApps();
+    fetchPOST('/fn/happs/getAppsByCategories', "Dev Tools")
+      .then(response => {
+        console.log("AppsByCategory Response (Dev Tools Example) : ", response);
+      });
   }
 
   public renderApps = (apps, category) => {
@@ -75,15 +79,15 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
     const greeting: string = "Check Out the Categories Below";
     const categoriesDisplay = this.state.categories.map((category, i) => {
         i=i+1;
-        let apps: Array<any> = [];
-        const renderCategoryApps = () => {
-          fetchPOST('/fn/happs/getAppsByCategory', category)
-            .then(response => {
-              if (!response.errorMessage) {
-                apps = this.props.AppsByCategory;
-                this.renderApps(apps, category);
-            }});
-        }
+        const apps: Array<any> = [];
+        // const renderCategoryApps = () => {
+        //   fetchPOST('/fn/happs/getAppsByCategories', category)
+        //     .then(response => {
+        //       if (!response.errorMessage) {
+        //         apps = this.props.AppsByCategory;
+        //         this.renderApps(apps, category);
+        //     }});
+        // }
         return (
           <Row key={i+category} className="category-container">
             <Col>
@@ -120,8 +124,8 @@ const mapDispatchToProps = dispatch => ({
   //  {"Entry": e.Entry,"Hash": e.Hash}
   fetchAllApps: () => {
     fetchPOST('/fn/happs/getAllApps')
-      .then(response => {
-        dispatch({ type: 'FETCH_ALL_APPS', response })
+      .then(allApps => {
+        dispatch({ type: 'FETCH_ALL_APPS', allApps })
     })
 },
   fetchAppDetails: (appHash) => {
@@ -131,9 +135,9 @@ const mapDispatchToProps = dispatch => ({
       })
   },
   getAppsByCategory: (category) => {
-    fetchPOST('/fn/happs/getAppsByCategory', category)
+    fetchPOST('/fn/happs/getAppsByCategories', category)
       .then( AppsByCategory => {
-        dispatch({ type: 'GET_APP_BY_CATEGORY', AppsByCategory })
+        dispatch({ type: 'FETCH_APP_BY_CATEGORY', category, AppsByCategory })
       })
   }
 });

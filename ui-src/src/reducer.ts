@@ -5,9 +5,9 @@ import {HCHCAppState, AppDetailState, AppDNACode, ReduxAction} from "../../types
 
 
 const defaultState: HCHCAppState = {
-  numClicks: 0,
   currentAgent: null,
   allApps: Map({}),
+  AppsByCategory: Map({}),
   currentApp: null,
   appCode: null,
   reviewEntries:[{}],
@@ -19,14 +19,75 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
   };
 
   switch (action.type) {
-    case 'INCREMENT': {
-      state.numClicks += 1;
-      break;
+    case 'RETURN_STATE': {
+      // tslint:disable-next-line:no-console
+      console.log({ ...state });
+      return state;
     }
 
-    case 'DECREMENT': {
-      state.numClicks -= 1;
-      break;
+    case 'CREATE_NEW_APP_DETAILS': {
+      return state;
+    }
+
+    case 'CREATE_NEW_APP_CODE': {
+      return state;
+    }
+
+    case 'CREATE_REVIEW': {
+      // const { appId } = state.currentApp;
+      // tslint:disable-next-line:no-console
+      console.log("action.params.appHash", action.params.appHash);
+      // if (appId === null || appId !== action.params.appHash ){
+      //   break;
+      // }
+      let newReview;
+      const { reviewEntries } = state;
+      console.log("action.params", action.params);
+      // const check = Object.entries(reviewEntries)[0]
+      const check = Object.keys(reviewEntries).length;
+      // console.log(">>> reviewEntires.size", reviewEntries.size);
+      // console.log(">>> reviewEntires.keys", Object.keys(reviewEntries));
+      console.log(">>> reviewEntires.keys.length", check);
+      // if ( check === 0 )
+      if ( check === 0 || reviewEntries === null || reviewEntries === undefined ) {
+        newReview = {};
+        newReview = {
+          authorHash: action.params.authorHash,
+          authorName: action.params.authorName,
+          rate: action.params.rating,
+          review: action.params.review,
+          timestamp: "Now"
+        };
+        newReview = [ newReview ];
+        console.log("line 109 newReview", newReview);
+        // tslint:disable-next-line:no-console
+        // console.log({ newReview });
+
+        return {
+          ...state,
+          reviewEntries: newReview,
+        };
+      }
+      else {
+        newReview = [{}];
+        newReview = state.reviewEntries;
+        newReview.push({
+          authorHash: action.params.authorHash,
+          authorName: action.params.authorName,
+          rate: action.params.rating,
+          review: action.params.review,
+          timestamp: "Now"
+        });
+        // newReview = List(newReview);
+
+        // tslint:disable-next-line:no-console
+        // console.log( "newReview (List Version of newReview) >>> " );
+        console.log({ newReview });
+        return {
+          ...state,
+          reviewEntries: newReview
+        };
+      }
     }
 
     case 'FETCH_REVIEWS': {
@@ -92,80 +153,9 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
       // For REVEIW, maybe use with comments? >>> : state.texts = action.entries.map(entry => entry.text);
     }
 
-    case 'RETURN_STATE': {
-      // tslint:disable-next-line:no-console
-      console.log({ ...state });
-      return state;
-    }
-
-    case 'CREATE_NEW_APP_DETAILS': {
-      return state;
-    }
-
-    case 'CREATE_NEW_APP_CODE': {
-      return state;
-    }
-
     case 'FETCH_ALL_APPS': {
       console.log(">>ln 86 in reducer, allApps : ", action.allApps);
       return { ...state, allApps: Map(action.allApps) };
-    }
-
-    case 'CREATE_REVIEW': {
-      // const { appId } = state.currentApp;
-      // tslint:disable-next-line:no-console
-      console.log("action.params.appHash", action.params.appHash);
-      // if (appId === null || appId !== action.params.appHash ){
-      //   break;
-      // }
-      let newReview;
-      const { reviewEntries } = state;
-      console.log("action.params", action.params);
-      // const check = Object.entries(reviewEntries)[0]
-      const check = Object.keys(reviewEntries).length;
-      // console.log(">>> reviewEntires.size", reviewEntries.size);
-      // console.log(">>> reviewEntires.keys", Object.keys(reviewEntries));
-      console.log(">>> reviewEntires.keys.length", check);
-      // if ( check === 0 )
-      if ( check === 0 || reviewEntries === null || reviewEntries === undefined ) {
-        newReview = {};
-        newReview = {
-          authorHash: action.params.authorHash,
-          authorName: action.params.authorName,
-          rate: action.params.rating,
-          review: action.params.review,
-          timestamp: "Now"
-        };
-        newReview = [ newReview ];
-        console.log("line 109 newReview", newReview);
-        // tslint:disable-next-line:no-console
-        // console.log({ newReview });
-
-        return {
-          ...state,
-          reviewEntries: newReview,
-        };
-      }
-      else {
-        newReview = [{}];
-        newReview = state.reviewEntries;
-        newReview.push({
-          authorHash: action.params.authorHash,
-          authorName: action.params.authorName,
-          rate: action.params.rating,
-          review: action.params.review,
-          timestamp: "Now"
-        });
-        // newReview = List(newReview);
-
-        // tslint:disable-next-line:no-console
-        // console.log( "newReview (List Version of newReview) >>> " );
-        console.log({ newReview });
-        return {
-          ...state,
-          reviewEntries: newReview
-        };
-      }
     }
 
     case 'FETCH_AGENT': {

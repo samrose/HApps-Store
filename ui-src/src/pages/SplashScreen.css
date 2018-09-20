@@ -8,6 +8,7 @@
   padding: 20px 50px 0px 50px;
   margin-bottom: 25px;
   color: #d7e0e0; /* #a9dee4 */
+  text-shadow:0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
   animation: fade-in-zoom-out 3s 4s 1 ease both
 }
 
@@ -122,6 +123,7 @@
 
 .panel-row-1 {
   margin-top: 6%;
+  margin-bottom: 40px;
 }
 .panel-row-2 {
   margin-bottom: 80px !important;
@@ -186,7 +188,7 @@
   text-transform: uppercase;
   font-family: 'Poppins', cursive;
   text-shadow:0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
-  font-size: 1.5em;
+  font-size: 1.1em;
   padding: 0px 5px;
 }
 
