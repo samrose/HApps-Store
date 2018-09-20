@@ -33,7 +33,7 @@
       "Description": "A bridge_replies zome | used to bridge",
       "RibosomeType": "js",
       "CodeFile": "bridge_replies.js",
-      "BridgeFuncs": ["addAppDetails", "getAppDetails"],
+      "BridgeFuncs": ["addAppDetails", "getAppDetails","replyToAddCategories","replyToGetAppCategories"],
       "Entries": [],
       "Functions": [{
           "Name": "addAppDetails",
@@ -42,6 +42,16 @@
         },
         {
           "Name": "getAppDetails",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "replyToAddCategories",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "replyToGetAppCategories",
           "CallingType": "json",
           "Exposure": "public"
         }

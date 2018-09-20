@@ -22,10 +22,10 @@ function getAppDetails({ app_hash }) {
   // get Reviews
   const reviews = JSON.parse(call("ratings", "getRatings", { "reviewedHash": app_hash }));
   // Get Other stats
-  const ratings=calculateStars(reviews);
+  const ratings = calculateStars(reviews);
   // TODO: Decide on other States that need to be displayed (number of installed .etc)
   // TODO: get tags
-  return { details, reviews , ratings }
+  return { details, reviews, ratings }
 }
 
 function calculateStars(reviews) {
@@ -33,8 +33,17 @@ function calculateStars(reviews) {
   for (let entry of reviews) {
     rating += entry.rate;
   }
-  return rating/reviews.length;
+  return rating / reviews.length;
 }
+
+function replyToAddCategories(payload) {
+  return JSON.parse(call("categories", "addCategory", payload));
+}
+
+function replyToGetAppCategories(payload) {
+  return JSON.parse(call("categories", "getAppCategories", payload));
+}
+
 // -----------------------------------------------------------------
 //  The Genesis Function https://developer.holochain.org/genesis
 // -----------------------------------------------------------------

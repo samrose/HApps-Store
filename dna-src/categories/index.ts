@@ -10,12 +10,11 @@ let module = {};
 // This Tag can then be used to catogorize entries so thats Its easies to retirve data back
 // -----------------------------------------------------------------
 
-const BASE_TAG_STRING = "HCHC_TAGS"
-
-
 function addCategory({ category, tags, hash }) {
+  // debug("Catagory : "+category+" | "+"tag"+tags)
   const category_base = anchor(category, "");
   const tag_base = anchor(category, tags);
+  // debug("Catagory_base: "+category_base+" | "+"tag_base: "+tag_base)
   const commit_hash = commit("tag_link", {
     Links: [{ Base: category_base, Link: hash, Tag: "category" },
     { Base: tag_base, Link: hash, Tag: "tag_category" },
@@ -52,6 +51,8 @@ function getAppCategories({ hash }) {
 
 // Old way to add tags to the hashs
 /*
+const BASE_TAG_STRING = "HCHC_TAGS"
+
 function addTag({ tag, hash }: AddTagParams): Hash {
   const base = makeHash("tag_anchor", BASE_TAG_STRING);
   const commit_hash = commit("tag_link", { Links: [{ Base: base, Link: hash, Tag: tag }] });
