@@ -20,10 +20,11 @@ import { Container, Row, Col } from 'reactstrap';
 
 type AllCategoriesPageState = {
   categories: Array<any>,
+  errorMessage: string | null,
 }
 
 type AllCategoriesPageProps = {
-  allApps: Map<Hash,{ title: string, icon: string }>,
+  AllApps: Array<{Entry:{}, Hash: Hash}>,
   currentAgent: {agent: {Hash: Hash, Name: string}},
   appsByCategory: Array<{Hash,string}>,
   // appsByCategory: Array<{category: string, appTitle: string, icon: string }>
@@ -39,47 +40,20 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
     this.state = {
       categories: ["Games", "Admin Tools", "Dev Tools", "Top Downloads", "Categories",
        "Movies", "Educational", "Finance", "Leisure", "Music"],
+       errorMessage: null,
     };
   }
-
 
 public componentDidMount() {
     this.props.fetchAgent();
     this.props.fetchAllApps();
-
-    const hashVAR = {app_hash: "QmU3yxTLW3st9h3TmTBHimmTu32NofqMsX77og82dVEbSE"};
-    JSON.stringify(hashVAR);
-    console.log("hashVAR", hashVAR);
-    fetchPOST('/fn/happs/getApp', hashVAR)
-      .then(appDetails => {
-        console.log("App Details", appDetails);
-      });
-
-      const catVAR = {category: "Top Downloads"};
-      JSON.stringify(catVAR);
-      console.log("catVAR",catVAR );
-      fetchPOST('/fn/categories/getAppsByCategories', catVAR)
-      .then(response => {
-        console.log("getAppsByCategories response : ", response);
-      });
   }
 
-  public renderApps = (apps, category) => {
-    apps.forEach = (app) => {
-      return (
-        <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash}>
-          <div className={app.Hash} onClick={this.handleSelectApp}>
-            {/* className for above: appstore-app-icons */}
-            <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
-            <h4 style={{ textAlign: 'center' }}>{app.Title}</h4>
-          </div>
-        </Link>
-      )
-    }
-  }
   public handleSelectApp = e => {
-    const currentApp = e.target.className
-    this.props.fetchAppDetails(currentApp);
+    const currentApphash = e.target.className
+    JSON.stringify(currentApphash);
+    console.log("currentApphash (hashVAR) for App Detail Call", currentApphash);
+    this.props.fetchAppDetails(currentApphash);
   }
 
 
@@ -90,30 +64,55 @@ public componentDidMount() {
       </div>
     }
     console.log("agent: ", this.props.currentAgent);
-
     const greeting: string = "Check Out the Categories Below";
+
+
     const categoriesDisplay = this.state.categories.map((category, i) => {
         i=i+1;
-        let apps: Array<any> = [];
-
-        const renderCategoryApps = () => {
-          fetchPOST('/fn/happs/getAppsByCategories', category)
-            .then(response => {
-              console.log("getAppsByCategories response : ", response);
-              if (!response.errorMessage) {
-                apps = this.props.appsByCategory;
-                this.renderApps(apps, category);
-            }});
-        }
-        return (
-          <Row key={i+category} className="category-container">
-            <Col>
-              <h2>{category}</h2>
-              <hr/>
-              {renderCategoryApps()}
-            </Col>
-          </Row>
-      )
+        const parsedCategory = { category };
+        JSON.stringify(parsedCategory);
+        // console.log("parsedCategory",parsedCategory );
+        fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
+          .then(response => {
+            console.log("getAppsByCategories() response : ", response);
+            if (!response.error) {
+              const apps: Array<any> = [response];
+              apps.forEach = (app) => {
+                 let appHash: string = "";
+                 const {AllApps} = this.props;
+                 AllApps.forEach((appDetail) => {
+                    if (appDetail.Entry === app ) {
+                      appHash = appDetail.Hash;
+                    }
+                 })
+                 return (
+                  <Row key={i+category} className="currentCategory-container">
+                    <Col>
+                      <h2>{category}</h2>
+                      <hr/>
+                      <Link to={`/appstore/${category}/${appHash}`} key={appHash}>
+                        <div className={appHash} onClick={this.handleSelectApp}>
+                          <JdenticonPlaceHolder className="jdenticon" size={150} hash={ appHash } />
+                          <h4 style={{ textAlign: 'center' }}>{app}</h4>
+                        </div>
+                      </Link>
+                    </Col>
+                  </Row>
+              )}
+            }
+            else {
+                this.setState({errorMessage: "No apps exist for this category."});
+                return (
+                  <Row key={i+category} className="category-container">
+                    <Col>
+                      <h2>{category}</h2>
+                      <hr/>
+                      <h4>{this.state.errorMessage}</h4>
+                    </Col>
+                  </Row>
+                )
+            }
+        });
     });
 
     return (
@@ -129,7 +128,7 @@ public componentDidMount() {
   }
 }
 
-const mapStateToProps = ({ allApps, currentAgent, appsByCategory }) => ({ allApps, currentAgent, appsByCategory });
+const mapStateToProps = ({ AllApps, currentAgent, appsByCategory }) => ({ AllApps, currentAgent, appsByCategory });
 const mapDispatchToProps = dispatch => ({
   fetchAgent: () => {
     fetchPOST('/fn/whoami/getAgent')
@@ -160,7 +159,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllCategoriesPage);
-
-// const zippyHash = hc.makeHash("App.Key.Hash", {Name: "Zippy"});
-// const apphash = hc.makeHash("appParam", {uuid:"1234-612-161341", title:"Clutter", author:{Hash:zippyHash,Name:"Zippy"}, description:"A Holochain Version of Twiter", thumbnail:"/imp2.jpg"});
-// console.log("appHash : ", apphash);
