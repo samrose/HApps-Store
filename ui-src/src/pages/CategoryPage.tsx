@@ -17,9 +17,11 @@ import { Hash } from '../../../holochain';
 type CategoryPageProps = {
   allApps: Map<Hash,{ title: string, icon: string }>,
   currentAgent: {agent: {Hash: Hash, Name: string}},
+  appsByCategory: Map<string, Array<{Hash,string}>>,
+  currentCategory: string,
   fetchAgent: () => void,
   fetchAllApps: () => void,
-  fetchAppDetails: () => void
+  fetchAppDetails: () => void,
 }
 
 class CategoryPage extends React.Component <CategoryPageProps, {}> {
@@ -54,7 +56,7 @@ class CategoryPage extends React.Component <CategoryPageProps, {}> {
               </div>
               </Link>
               {/* // BELOW> : This should instead be the App Hash (... not the whoami Hash). */}
-              <Link to={`/appstore/${agent.Hash}`}>
+              <Link to={`/appstore/${this.props.currentCategory}/${agent.Hash}`}>
               <div className="appstore-app-icons" onClick={this.handleSelectApp}>
                 {/* // BELOW> : The App Icon should instead pass the App Hash into the hash prop,... (not the whoami Hash). */}
                 <JdenticonPlaceHolder className="jdenticon" size={150} hash={ agent.Hash } />
@@ -68,7 +70,7 @@ class CategoryPage extends React.Component <CategoryPageProps, {}> {
 }
 
 
-const mapStateToProps = ({ allApps, currentAgent }) => ({ allApps, currentAgent });
+const mapStateToProps = ({ allApps, currentAgent, appsByCategory, currentCategory }) => ({ allApps, currentAgent, appsByCategory, currentCategory });
 const mapDispatchToProps = dispatch => ({
   fetchAgent: () => {
     fetchPOST('/fn/whoami/getAgent')
@@ -76,13 +78,18 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: 'FETCH_AGENT', agent })
       })
   },
-  fetchAppDetails: () => {
-    fetchPOST('/fn/applications/getAppHash')
-      .then( appHash => {
-        dispatch({ type: 'VIEW_APP', appHash })
+  fetchAppDetails: (appHash) => {
+    fetchPOST('/fn/happs/getApp', appHash)
+      .then( appDetails => {
+        dispatch({ type: 'VIEW_APP', appDetails })
       })
   },
-  fetchAllApps: () => dispatch({ type: 'FETCH_ALL_APPS' }),
+  getAppsByCategory: (category) => {
+    fetchPOST('/fn/happs/getAppsByCategories', category)
+      .then( appsByCategory => {
+        dispatch({ type: 'FETCH_APP_BY_CATEGORY', category, appsByCategory })
+      })
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryPage);

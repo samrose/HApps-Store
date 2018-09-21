@@ -58,12 +58,12 @@ fetchAgent: () => {
     })
   },
   //  TODO : REQUEST THE SEARCH QUERY / SEARCH CATEGORY FUNCTION FROM Backend....
-searchCategories: (category) => {
-  fetchPOST('/fn/bridgeToCategories/getAppByCategory', category)
-    .then(apps => {
-      dispatch({ type: 'SEARCH_BY_CATEGORY', apps })
-    })
-    },
+  getAppsByCategory: (category) => {
+    fetchPOST('/fn/happs/getAppsByCategories', category)
+      .then( AppsByCategory => {
+        dispatch({ type: 'FETCH_APP_BY_CATEGORY', category, AppsByCategory })
+      })
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SplashNav);

@@ -32,7 +32,7 @@ function getAppsByCategories({ category }) {
     const base = anchor(category, "");
     const apps = getLinks(base, "category", { Load: true }).map(e => e.Entry);
     debug(apps);
-    return base;
+    return apps;
   } else {
     return { error: "ERROR: This category doesn't exist..." }
   }

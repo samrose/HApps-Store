@@ -7,13 +7,15 @@ import store from '../store'
 import { fetchPOST } from '../utils'
 import { ReduxAction } from '../../../types';
 import { Hash } from '../../../holochain';
+// import * as hc from "../../../holochain";
+
 import { Map } from 'immutable';
 
 import './AllAppsPage.css';
 import JdenticonPlaceHolder from '../components/JdenticonFiller';
 import MainNav from "../components/MainNav";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Button } from 'reactstrap';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Row, Col } from 'reactstrap';
 
 
 type AllCategoriesPageState = {
@@ -23,11 +25,12 @@ type AllCategoriesPageState = {
 type AllCategoriesPageProps = {
   allApps: Map<Hash,{ title: string, icon: string }>,
   currentAgent: {agent: {Hash: Hash, Name: string}},
-  AppsByCategory: Array<{category: string, appTitle: string, icon: string }>
+  appsByCategory: Array<{Hash,string}>,
+  // appsByCategory: Array<{category: string, appTitle: string, icon: string }>
   fetchAgent: () => void,
   fetchAllApps: () => void,
   fetchAppDetails: (appHash) => void,
-  getAppsByCategory: (cateogry) => void,
+  getappsByCategory: (cateogry) => void,
 }
 
 class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCategoriesPageState> {
@@ -39,12 +42,25 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
     };
   }
 
-  public componentDidMount() {
+
+public componentDidMount() {
     this.props.fetchAgent();
     this.props.fetchAllApps();
-    fetchPOST('/fn/happs/getAppsByCategories', "Dev Tools")
+
+    const hashVAR = {app_hash: "QmU3yxTLW3st9h3TmTBHimmTu32NofqMsX77og82dVEbSE"};
+    JSON.stringify(hashVAR);
+    console.log("hashVAR", hashVAR);
+    fetchPOST('/fn/happs/getApp', hashVAR)
+      .then(appDetails => {
+        console.log("App Details", appDetails);
+      });
+
+      const catVAR = {category: "Top Downloads"};
+      JSON.stringify(catVAR);
+      console.log("catVAR",catVAR );
+      fetchPOST('/fn/categories/getAppsByCategories', catVAR)
       .then(response => {
-        console.log("AppsByCategory Response (Dev Tools Example) : ", response);
+        console.log("getAppsByCategories response : ", response);
       });
   }
 
@@ -53,7 +69,7 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
       return (
         <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash}>
           <div className={app.Hash} onClick={this.handleSelectApp}>
-            {/* appstore-app-icons */}
+            {/* className for above: appstore-app-icons */}
             <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
             <h4 style={{ textAlign: 'center' }}>{app.Title}</h4>
           </div>
@@ -73,27 +89,28 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
         <h4 style={{ textAlign: 'center' }} className="loading-text">Fetching all app categories...</h4>
       </div>
     }
-
     console.log("agent: ", this.props.currentAgent);
 
     const greeting: string = "Check Out the Categories Below";
     const categoriesDisplay = this.state.categories.map((category, i) => {
         i=i+1;
-        const apps: Array<any> = [];
-        // const renderCategoryApps = () => {
-        //   fetchPOST('/fn/happs/getAppsByCategories', category)
-        //     .then(response => {
-        //       if (!response.errorMessage) {
-        //         apps = this.props.AppsByCategory;
-        //         this.renderApps(apps, category);
-        //     }});
-        // }
+        let apps: Array<any> = [];
+
+        const renderCategoryApps = () => {
+          fetchPOST('/fn/happs/getAppsByCategories', category)
+            .then(response => {
+              console.log("getAppsByCategories response : ", response);
+              if (!response.errorMessage) {
+                apps = this.props.appsByCategory;
+                this.renderApps(apps, category);
+            }});
+        }
         return (
           <Row key={i+category} className="category-container">
             <Col>
               <h2>{category}</h2>
               <hr/>
-              {/* {renderCategoryApps()} */}
+              {renderCategoryApps()}
             </Col>
           </Row>
       )
@@ -112,7 +129,7 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
   }
 }
 
-const mapStateToProps = ({ allApps, currentAgent, AppsByCategory }) => ({ allApps, currentAgent, AppsByCategory });
+const mapStateToProps = ({ allApps, currentAgent, appsByCategory }) => ({ allApps, currentAgent, appsByCategory });
 const mapDispatchToProps = dispatch => ({
   fetchAgent: () => {
     fetchPOST('/fn/whoami/getAgent')
@@ -134,12 +151,16 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: 'VIEW_APP', appDetails })
       })
   },
-  getAppsByCategory: (category) => {
-    fetchPOST('/fn/happs/getAppsByCategories', category)
-      .then( AppsByCategory => {
-        dispatch({ type: 'FETCH_APP_BY_CATEGORY', category, AppsByCategory })
+  getappsByCategory: (category) => {
+    fetchPOST('/fn/categories/getAppsByCategories', category)
+      .then( appsByCurrentCategory => {
+        dispatch({ type: 'FETCH_APPS_BY_CATEGORY', category, appsByCurrentCategory })
       })
   }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllCategoriesPage);
+
+// const zippyHash = hc.makeHash("App.Key.Hash", {Name: "Zippy"});
+// const apphash = hc.makeHash("appParam", {uuid:"1234-612-161341", title:"Clutter", author:{Hash:zippyHash,Name:"Zippy"}, description:"A Holochain Version of Twiter", thumbnail:"/imp2.jpg"});
+// console.log("appHash : ", apphash);

@@ -81,7 +81,6 @@ td {
 .loading-text {
 	color: white;
 	font-size: 3em;
-	position: absolute;
+	position: relative;
 	top: 30%;
-	left: 42.5%;
 }

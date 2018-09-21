@@ -9,20 +9,22 @@ import { Map } from "immutable"
 export type WelcomeMsg = string;
 
 export type HCHCAppState = {
-  currentAgent: {agent: string} | null,
-  allApps: Map<Hash,string>, // pairing of the app hash and the an obj with its title and thumbanil url path
-  AppsByCategory: Map<string, Array<{Hash,string}>>, // A map parigin of the category string AND the array of app hashes and names(titles), belonging to that app Category...
-  currentApp: AppDetailState | null,
+  AllApps: [{}, string] | null, // pairing of the app hash and the an obj with its title and thumbanil url path
+  currentAgent: {agent: {Hash: Hash, Name: string}}| null,
+  currentCategory: string | null,
+  appsByCategory: Array<{Hash,string}> | null, // A map parigin of the category string AND the array of app hashes and names(titles), belonging to that app Category...
+  currentAppDetails: Map<{Entry: AppDetailState}, Hash> | null,
   appCode: AppDNACode | null,
   reviewEntries: [{}],
   // reviewEntries: List<ReviewLog>,
 };
 
 export type AppDetailState = {
-  appId: Hash,
   author: Map<Hash, string>,
-  thumbnail: string, // url for the image //(thumbnail)
+  thumbnail: string, // url for the image
   description: HTMLInputElement | string,
+  title: string,
+  uuid: string,
   // created: number, // date
   // updated: number, // date
   // uploads: number,
@@ -52,11 +54,11 @@ export type ReviewLog = {
 
 export type ReduxAction
   = {type: 'RETURN_STATE'}
-  | { type: 'FETCH_AGENT', agent: string }
+  | { type: 'FETCH_AGENT', agent: {Hash: Hash, Name: string}}
 
-  | { type: 'FETCH_ALL_APPS', allApps: Map< Hash,string> }  // {Hash:Hash, icon: string}
-  | { type: 'GET_APP_BY_CATEGORY', category :string, AppsByCategory: Map< Hash,string> }
-  | { type: 'VIEW_APP', appDetails: AppDetailState }
+  | { type: 'FETCH_ALL_APPS', allApps: [{}, string] }  // {Hash:Hash, icon: string}
+  | { type: 'GET_APPS_BY_CATEGORY', category :string, appsByCurrentCategory: Array<{Hash,string}> }
+  | { type: 'VIEW_APP', currentAppDetails: Map<{Entry: AppDetailState}, Hash> }
   | { type: 'FETCH_APP_CODE', code: AppDNACode }
 
   | { type: 'CREATE_REVIEW', params: ReviewParams }
