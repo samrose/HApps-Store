@@ -1,17 +1,18 @@
 import { Hash } from '../../holochain';
 // import { List, Map } from "immutable"
 import { Map } from "immutable"
-import {HCHCAppState, AppDetailState, AppDNACode, ReduxAction} from "../../types";
+import {HCHCAppState, AppDetailState, AppDNACode, ReviewLog, ReduxAction} from "../../types";
 
 
 const defaultState: HCHCAppState = {
   currentAgent: null,
   AllApps: null,
   currentCategory: null,
+  currentAppHash: "null",
   appsByCategory: null,
   currentAppDetails: null,
   appCode: null,
-  reviewEntries:[{}],
+  reviewEntries:[null],
 };
 
 export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCHCAppState => {
@@ -24,6 +25,18 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
       // tslint:disable-next-line:no-console
       console.log({ ...state });
       return state;
+    }
+
+    case 'REGISTER_CATEGORY': {
+      const currentCategory = action.category;
+      console.log("INSIDE REDUCER, currentCategory :", currentCategory);
+      return {...state, currentCategory}
+    }
+
+    case 'REGISTER_APP_HASH': {
+      const currentAppHash = action.appHash;
+      console.log("INSIDE REDUCER, appHash", currentAppHash);
+      return {...state, currentAppHash}
     }
 
     case 'CREATE_NEW_APP_DETAILS': {
@@ -98,11 +111,12 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     }
 
     case 'FETCH_REVIEWS': {
-      const reviews = action.reviewEntries;
-      // tslint:disable-next-line:no-console
+      const reviews: [ReviewLog] = action.reviewEntries;
       console.log(action);
-      console.log("action.reviewEntries", action.reviewEntries);
-      return { ...state, reviewEntries: reviews };
+      console.log("reviews", reviews);
+      const reviewEntries: [ReviewLog] = reviews;
+      
+      return { ...state, reviewEntries};
     }
 
     case 'FETCH_APP_CODE' : {
@@ -131,34 +145,22 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     case 'VIEW_APP': {
       if (state.currentAppDetails) {
         console.log("state.currentAppDetails", state.currentAppDetails);
-        // if there is a currentAppDetails, then remove it to replace with following app (that was just clicked on...)
-        state.currentAppDetails = null;
+        state.currentAppDetails = null;// if there is a currentAppDetails, then remove it to replace with following app (that was just clicked on...)
       }
-      console.log("the App Details (VIEW_APP) ACTION payload", action);
-      // ???? const { details } = action;
-      // TODO: const appDetails = state.getAppDetails.get(hash); //use the app hash to locate the appDetails of app, including: author name, icon url, description, date created, etc..
-      // const { author, icon, description, created, updated, uploads, fileload } = action;
-      const Entry:  AppDetailState = {
-        author: Map({}),
-        thumbnail: "icon-url-string",
-        description: "app-description",
-        title: "title",
-        uuid: "uuid",
-        }
-// Remove above iteration and uncomment below, once the fn for the appDetails is created...
-        // author,
-        // thumbnail,
-        // description,
-        // title,
-        // uuid,
-        // Hash,
-
-      // const Hash = action.Hash;
-      // const currentAppDetails = Map(Entry, Hash);
-      // return {...state, currentAppDetails}
-      return {...state}
-      // For REVEIW, maybe use with comments? >>> : state.texts = action.entries.map(entry => entry.text);
+      console.log("the App Details (VIEW_APP) ACTION payload", action.details);
+      const { author, thumbnail, description, title, uuid } = action.details;
+      const Entry:AppDetailState = {
+        author,
+        thumbnail,
+        description,
+        title,
+        uuid,
+      }
+      const appHash = state.currentAppHash;
+      const currentAppDetails = {Entry, Hash:appHash};
+      return {...state, currentAppDetails}
     }
+    // For REVEIW, maybe use with comments? >>> : state.texts = action.entries.map(entry => entry.text);
 
     case 'FETCH_ALL_APPS': {
       console.log(">>ln 164 in reducer, ALL APPs Action !!!!: ", action.allApps);

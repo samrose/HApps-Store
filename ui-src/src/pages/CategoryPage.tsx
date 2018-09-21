@@ -15,19 +15,28 @@ import { ReduxAction } from '../../../types';
 import { Hash } from '../../../holochain';
 
 type CategoryPageProps = {
-  allApps: Map<Hash,{ title: string, icon: string }>,
+  AllApps: Array<{Entry:{
+     author: {Hash:Hash, Name:string},
+     thumbnail: string,
+     description: HTMLInputElement | string,
+     title: string,
+     uuid: string,}
+  ,Hash: Hash}>,
   currentAgent: {agent: {Hash: Hash, Name: string}},
-  appsByCategory: Map<string, Array<{Hash,string}>>,
   currentCategory: string,
+  currentAppHash: string,
+  appsByCategory: Array<{Hash,string}>,
   fetchAgent: () => void,
   fetchAllApps: () => void,
   fetchAppDetails: () => void,
+  registerCurrentAppHash: (appHash) => void,
+  getappsByCategory: (cateogry) => void,
 }
 
 class CategoryPage extends React.Component <CategoryPageProps, {}> {
   public componentDidMount() {
     this.props.fetchAgent();
-    setInterval(this.props.fetchAllApps, 500);
+    setInterval(this.props.fetchAllApps(), 500);
   }
 
   public handleSelectApp = () => {
@@ -36,41 +45,43 @@ class CategoryPage extends React.Component <CategoryPageProps, {}> {
 
   public render() {
     const greeting: string = "Category Page";
-    if (!this.props.currentAgent) {
+    if (!this.props.currentAgent || !this.props.AllApps) {
       return <div>
         <h4 className="loading-text">Loading...</h4>
       </div>
     }
-    else {
-      const { agent } = this.props.currentAgent;
+
+    console.log("this.props.currentCategory", this.props.currentCategory);
+    const { agent } = this.props.currentAgent;
+    const { currentCategory, AllApps} = this.props;
+
+    const renderApps = AllApps.map(app => {
+      console.log("this.props.AllApps app .Entry.title", app.Entry.title);
       return (
-          <div>
-            <MainNav/>
-            <div style={{ textAlign: 'center' }}>
-              <h1 className="category-header">{ greeting }</h1>
-              <hr className="category-header-line"/>
-              <Link to={`/appstore/${agent.Hash}`}>
-              <div className="appstore-app-icons" onClick={this.handleSelectApp}>
-                {/* // BELOW> : The App Icon should instead pass the App Hash into the hash prop,... (not the whoami Hash). */}
-                <JdenticonPlaceHolder className="jdenticon" size={150} hash={ agent.Hash } />
-              </div>
-              </Link>
-              {/* // BELOW> : This should instead be the App Hash (... not the whoami Hash). */}
-              <Link to={`/appstore/${this.props.currentCategory}/${agent.Hash}`}>
-              <div className="appstore-app-icons" onClick={this.handleSelectApp}>
-                {/* // BELOW> : The App Icon should instead pass the App Hash into the hash prop,... (not the whoami Hash). */}
-                <JdenticonPlaceHolder className="jdenticon" size={150} hash={ agent.Hash } />
-              </div>
-            </Link>
-          </div>
+        <Link to={`/appstore/${`Admin Tools`}/${app.Hash}`} key={app.Hash}>
+        <div className="appstore-app-icons" onClick={this.handleSelectApp}>
+          <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
+          <h4>{app.Entry.title}</h4>
         </div>
-      );
-    }
+        </Link>
+      )
+    })
+
+    return (
+      <div>
+        <MainNav/>
+        <div style={{ textAlign: 'center' }}>
+          <h1 className="category-header">{ greeting }</h1>
+          <hr className="category-header-line"/>
+          {renderApps}
+        </div>
+      </div>
+    );
   }
 }
 
 
-const mapStateToProps = ({ allApps, currentAgent, appsByCategory, currentCategory }) => ({ allApps, currentAgent, appsByCategory, currentCategory });
+const mapStateToProps = ({ AllApps, currentAgent, appsByCategory, currentCategory, currentAppHash }) => ({ AllApps, currentAgent, appsByCategory, currentCategory, currentAppHash });
 const mapDispatchToProps = dispatch => ({
   fetchAgent: () => {
     fetchPOST('/fn/whoami/getAgent')
@@ -78,16 +89,22 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: 'FETCH_AGENT', agent })
       })
   },
+  fetchAllApps: () => {
+    fetchPOST('/fn/happs/getAllApps')
+      .then(allApps => {
+        dispatch({ type: 'FETCH_ALL_APPS', allApps })
+    })
+},
   fetchAppDetails: (appHash) => {
     fetchPOST('/fn/happs/getApp', appHash)
       .then( appDetails => {
         dispatch({ type: 'VIEW_APP', appDetails })
       })
   },
-  getAppsByCategory: (category) => {
-    fetchPOST('/fn/happs/getAppsByCategories', category)
-      .then( appsByCategory => {
-        dispatch({ type: 'FETCH_APP_BY_CATEGORY', category, appsByCategory })
+  getappsByCategory: (category) => {
+    fetchPOST('/fn/categories/getAppsByCategories', category)
+      .then( appsByCurrentCategory => {
+        dispatch({ type: 'FETCH_APPS_BY_CATEGORY', category, appsByCurrentCategory })
       })
   }
 });

@@ -26,8 +26,8 @@ function genesis(){
   debug("Netflix  Initialized: "+netflix_hash);
   debug("Mario  Initialized: "+mario_hash);
   call("categories", "addCategory", { category:"Admin Tools", tags:"", hash:errand_hash });
-  call("categories", "addCategory", { category:"Dev Tools", tags:"", hash:errand_hash });
-  call("categories", "addCategory", { category:"Top Downloads", tags:"", hash:errand_hash });
+  call("categories", "addCategory", { category:"Dev Tools", tags:"", hash:clutter_hash });
+  call("categories", "addCategory", { category:"Top Downloads", tags:"", hash:holovolt_hash });
   // call("categories", "addCategory", { category:"Educational", tags:"", hash:errand_hash });
   // call("categories", "addCategory", { category:"Top Downloads", tags:"", hash:clutter_hash });
   // call("categories", "addCategory", { category:"Leisure", tags:"", hash:clutter_hash });

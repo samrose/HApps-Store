@@ -24,8 +24,13 @@ class ReviewList extends React.Component<any, any>  {
   public componentDidMount() {
     const { agent } = this.props.currentAgent;
     const agentHash = agent.Hash;
-    // TODO: USE this instead: this.props.fetchAppReviews(appHash);
-    this.props.fetchAppReviewsTemporary(agentHash);
+
+    // this.props.fetchAppReviewsTemporary(agentHash);
+    const appHash = this.props.currentAppsDetails.Hash;
+    const currentAppHash = {reviewedHash: appHash }
+    JSON.stringify(currentAppHash);
+    console.log("currentApphash for App Detail Call", currentAppHash);
+    this.props.fetchAppReviews(currentAppHash);
   }
 
   public renderCurrentReviewList() {

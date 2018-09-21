@@ -16,15 +16,15 @@ import { WelcomeMsg, ReduxAction } from '../../../types';
 import { Hash } from '../../../holochain';
 
 type SplashScreenProps = {
-  allApps: Map<Hash,{ title: string, icon: string }>,
-  currentAgent: {agent: {Hash: Hash, Name: string}},
   fetchAgent: () => void,
-  fetchAllApps: () => void,
-  fetchAppDetails: () => void
+  currentAgent: {agent: {Hash: Hash, Name: string}},
+  currentCategory: string,
+  registerCategoryType: (category) => void,
 }
 
 
 type SplashScreenState = {
+  toggleMessage: boolean,
   panels1: Array<any>,
   panels2: Array<any>,
   toggle1: boolean,
@@ -43,6 +43,7 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
   constructor(props) {
     super(props);
     this.state = {
+      toggleMessage: true,
       panels1: [
         {name: 'Games', icon: "videogame_asset", btn: "Play"},
         {name: 'Admin Tools', icon: "timeline", btn: "Browse"},
@@ -74,9 +75,16 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
     this.props.fetchAgent();
   }
 
+  public registerCategory = (category) => {
+    console.log("category chosen:", category );
+    this.props.registerCategoryType(category);
+    console.log("this.props.currentCategory", this.props.currentCategory);
+  }
+
   public handleOnClick = e => {
     const panelType = e.target.className;
     this.handleToggle(panelType);
+    this.registerCategory(panelType);
   }
 
   public handleToggle = (panelType: string) => {
@@ -178,25 +186,30 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
     cb(toggle);
   }
 
+
+  public removeMessages = () => {
+    console.log("SET THE STATE TO FALSE");
+    this.setState({toggleMessage: false });
+  }
+
   public render(){
     if (!this.props.currentAgent) {
-      console.log("agent,when no agent: ", this.props.currentAgent);
       return <div/>
     }
-
-    console.log("agent: ", this.props.currentAgent);
     const renderWelcomeMsgs = () => {
-      {console.log("inside renderWelcomeMsessage;")}
       const { agent } = this.props.currentAgent!;
       // const waitGreeting1: WelcomeMsg = `Hello ${agent.Name}`
       const waitGreeting1: WelcomeMsg = `Hello Lisa`;
       const waitGreeting2: WelcomeMsg = "Welcome to the Holo App Store";
-      return (
-        <div>
-          <h1 className="welcome-message-1">{ waitGreeting1 }</h1>
-          <h1 className="welcome-message-2">{ waitGreeting2 }</h1>
-        </div>
-      )
+      if (this.state.toggleMessage === true) {
+        setInterval(() => {this.removeMessages()}, 6150);
+        return (
+          <div>
+            <h1 className={`${this.state.toggleMessage ? `welcome-message-1` : `welcome-message-1 no-show`}`}>{ waitGreeting1 }</h1>
+            <h1 className={`${this.state.toggleMessage ? `welcome-message-2` : `welcome-message-2 no-show`}`}>{ waitGreeting2 }</h1>
+          </div>
+        )
+      }
     }
 
 // Layer 1 of App Cats:
@@ -211,7 +224,7 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
         <div key={panel.name} className={toggleState ? `panel panel${i} open open-active` :` panel panel${i}` } onClick={this.handleOnClick}>
           <p>{panel.name}</p>
           <p className={panel.name}><i className="material-icons">{panel.icon}</i></p>
-          <p><a href={`/appstore/${panel.name}`}>
+          <p><a className={panel.name} href={`/appstore/${panel.name}`}>
             <button className="icon-btn"><h4 className="btn-text">{panel.btn}</h4></button>
           </a></p>
         </div>
@@ -230,7 +243,7 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
         <div key={panel.name} className={toggleState ? `panel panel${i} open open-active` :` panel panel${i}` } onClick={this.handleOnClick}>
           <p>{panel.name}</p>
           <p className={panel.name}><i className="material-icons">{panel.icon}</i></p>
-          <p><a href={`/appstore/${panel.name}`}>
+          <p><a className={panel.name} href={`/appstore/${panel.name}`}>
             <button className="icon-btn"><h4 className="btn-text">{panel.btn}</h4></button>
           </a></p>
         </div>
@@ -256,13 +269,16 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
   }
 }
 
-const mapStateToProps = ({ currentAgent }) => ({ currentAgent });
+const mapStateToProps = ({ currentAgent, currentCategory }) => ({ currentAgent, currentCategory });
 const mapDispatchToProps = dispatch => ({
   fetchAgent: () => {
     fetchPOST('/fn/whoami/getAgent')
       .then(agent => {
         dispatch({ type: 'FETCH_AGENT', agent })
       })
+  },
+  registerCategoryType: (category) => {
+    dispatch({ type: 'REGISTER_CATEGORY', category })
   },
 });
 

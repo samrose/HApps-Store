@@ -50,8 +50,10 @@ class Profile extends React.Component<any, {}> {
                         </main>
                      ) : (
                        <div>
-                          <h3 className="text-center">No Profile Yet to Display</h3>
-                          <button><a href="#">Create a Profile (Disabled) </a></button>
+                         <div className="profile-conatiner">
+                            <h3 className="text-center">No Profile Yet to Display</h3>
+                        </div>
+                        {/* <button><a href="#">Create a Profile (Disabled) </a></button> */}
                       </div>
                      )}
                    </div>

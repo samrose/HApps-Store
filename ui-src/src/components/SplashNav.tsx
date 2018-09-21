@@ -38,12 +38,12 @@ class SplashNav extends React.Component<any, {}> {
     return (
       <nav className="nav nav-pills flex-column flex-sm-row">
           <div className="fade-in-logo"><img className="app-logo brand-logo" src="/holo-logo.png" /></div>
-          <a className="flex-sm-fill text-sm-center nav-link active" href="/appstore">App Store</a>
+          <a className="flex-sm-fill text-sm-center nav-link" href={`/profile/${agent.Hash}`}>{`${agentName}'s Profile`}</a>
           <a className="flex-sm-fill text-sm-center nav-link" href="#">
             Search Bar
             {/* <SearchBar onSearchTermUpdate={ searchTerm } /> */}
           </a>
-          <a className="flex-sm-fill text-sm-center nav-link" href={`/profile/${agent.Hash}`}>{`${agentName}'s Profile`}</a>
+          <a className="flex-sm-fill text-sm-center nav-link active" href="/appstore">App Store</a>
       </nav>
     )
   }
@@ -58,12 +58,6 @@ fetchAgent: () => {
     })
   },
   //  TODO : REQUEST THE SEARCH QUERY / SEARCH CATEGORY FUNCTION FROM Backend....
-  getAppsByCategory: (category) => {
-    fetchPOST('/fn/happs/getAppsByCategories', category)
-      .then( AppsByCategory => {
-        dispatch({ type: 'FETCH_APP_BY_CATEGORY', category, AppsByCategory })
-      })
-  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SplashNav);

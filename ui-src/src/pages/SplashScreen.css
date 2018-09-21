@@ -17,9 +17,9 @@
 }
 
 .welcome-message-1 {
-  /* position: relative; */
-  position: absolute;
-  left: 28%;
+  position: relative;
+  /* position: absolute; */
+  /* left: 20vw; */
   font-family: 'Poppins', sans-serif;
   font-size: 3rem;
   text-align: center;
@@ -31,9 +31,9 @@
 }
 
 .welcome-message-2 {
-  /* position: relative; */
-  position: absolute;
-  left: 15%;
+  position: relative;
+  /* position: absolute; */
+  /* left: 20vw; */
   font-family: 'Poppins', sans-serif;
   font-size: 2rem;
   text-align: center;
@@ -46,48 +46,56 @@
 
 @keyframes drop-down-message1 {
   0% {
-    top: 50px;
+    top: -80px;
     opacity: 0;
   }
   2% {
-    top: 50px;
+    top: -80px;
     opacity: 1;
   }
   10% {
-    top: 150px;
+    top: -30px;
     opacity: 1;
   }
   75% {
-    top: 150px;
+    top: -30px;
     opacity: 0;
   }
   100% {
-    top: 150px;
+    top: -30px;
     opacity: 0;
   }
 }
 
 @keyframes drop-down-message2 {
   0% {
-    top: 180px;
+    top: -80px;
     opacity: 0;
   }
   2% {
-    top: 180px;
+    top: -80px;
     opacity: 1;
   }
   10% {
-    top: 215px;
+    top: -30px;
     opacity: 1;
   }
   75% {
-    top: 215px;
+    top: -30px;
     opacity: 0;
   }
   100% {
-    top: 215px;
+    top: -30px;
     opacity: 0;
   }
+}
+
+.welcome-message-1.no-show {
+  position: absolute;
+}
+
+.welcome-message-2.no-show {
+  position: absolute;
 }
 
 @keyframes fade-in-zoom-out {

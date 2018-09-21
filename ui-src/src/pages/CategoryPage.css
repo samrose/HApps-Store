@@ -26,3 +26,11 @@
     opacity: 1;
   }
 }
+
+.loading-text {
+  margin-top: 15%;
+}
+
+.appstore-app-icons {
+  display: inline-block; 
+}
