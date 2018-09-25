@@ -68,10 +68,6 @@ public componentDidMount() {
     this.props.registerCurrentAppHash(currentApp);
     console.log("this.props.currentAppHash",this.props.currentAppHash);
     this.props.fetchAppDetails(currentApp);
-    // fetchPOST('/fn/happs/getApp', currentApp)
-    //   .then(appDetails => {
-    //     console.log("App Details", appDetails);
-    // });
   }
 
   public renderCategoryApps = (parsedCategory, category) => {
