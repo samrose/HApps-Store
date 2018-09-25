@@ -63,8 +63,8 @@ public componentDidMount() {
   }
 
   public renderApps = (apps, category) => {
-    console.log("renderApps apps param", apps);
-    console.log("this.props.currentCategory", this.props.currentCategory);
+    // console.log("renderApps apps param", apps);
+    // console.log("this.props.currentCategory", this.props.currentCategory);
     apps.map(app => {
       return (
         <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash} onClick={this.handleSelectApp}>
@@ -93,40 +93,47 @@ public componentDidMount() {
 
 
   public render() {
+     // console.log("Testing . . . . ",this.props.getappsByCategory("Dev Tools"))
+     // console.log("Category: ",this.props.getappsByCategory("Admin Tools"))
+     // return (<div/>)
+
     if (!this.props.currentAgent) {
       return <div>
         <h4 style={{ textAlign: 'center', marginTop: '20%' }} className="loading-text">Fetching all app categories...</h4>
       </div>
     }
-
+    console.log("-------------############------------------------");
     console.log("agent: ", this.props.currentAgent);
     const greeting: string = "All Categories";
 
+    const renderCategoryApps = (parsedCategory) => {
+      fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
+        .then(response => {
+          console.log("getAppsByCategories response : ", response);
+          if (!response.error) {
+             const apps = response;
+             console.log("CHECKING THIS OUT: ",this.renderApps(apps, parsedCategory))
+             this.renderApps(apps, parsedCategory);
+          }  else {
+            // this.setState({errorMessage: "Sorry there are no apps yet for this category."});
+          }
+        });
+    }
+
     const categoriesDisplay = this.state.categories.map((category, i) => {
         i=i+1;
-        let apps: Array<any> = [];
+        // let apps: Array<any> = [];
         const parsedCategory = {category};
-        JSON.stringify(parsedCategory);
-        console.log("parsedCategory",parsedCategory );
-
-        const renderCategoryApps = () => {
-          fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
-            .then(response => {
-              console.log("getAppsByCategories response : ", response);
-              if (!response.error) {
-                apps = response;
-                this.renderApps(apps, category);
-              }  else {
-                this.setState({errorMessage: "Sorry there are no apps yet for this category."});
-              }
-            });
-        }
+        // JSON.stringify(parsedCategory);
+        console.log("parsedCategory"+i+" : ",parsedCategory );
+        const categoryApps = renderCategoryApps(parsedCategory);
+        console.log("returned from renderCategoryApps : ",categoryApps);
         return (
           <Row key={i+category} className="category-container">
             <Col className="category-header-name">
               <h3>{category}</h3>
               <hr/>
-              {renderCategoryApps()}
+              {categoryApps}
               <h4 className="no-app-message">{this.state.errorMessage}</h4>
             </Col>
           </Row>
