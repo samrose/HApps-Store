@@ -61,22 +61,6 @@ public componentDidMount() {
     });
   }
 
-  public renderApps = (apps, category) => {
-    // console.log("renderApps apps param", apps);
-    // console.log("this.props.currentCategory", this.props.currentCategory);
-    apps.map(app => {
-      return (
-        <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash} onClick={this.handleSelectApp}>
-          <div className={app.Hash}>
-            {/* className for above: appstore-app-icons */}
-            <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
-            <h4 style={{ textAlign: 'center' }}>{app.Title}</h4>
-          </div>
-        </Link>
-      )
-    })
-  }
-
   public handleSelectApp = e => {
     const currentApp = e.target.key
     JSON.stringify(currentApp);
@@ -90,35 +74,52 @@ public componentDidMount() {
     // });
   }
 
-  public renderCategoryApps = (parsedCategory, category) => {
-    let apps: Array<any> = [];
-    fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
-      .then(response => {
-        console.log("app catgory : ", category);
-        console.log("getAppsByCategories response : ", response);
-        if (!response.error) {
-          apps = response;
-          console.log("NO RESPONSE ERROR: current app :", apps);
-          apps.map(app => {
-            console.log("inside map fn, ", app);
-            return (
-              <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash} onClick={this.handleSelectApp}>
-                <div className={`${app.Hash} appstore-app-icons`}>
-                  <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
-                  <h4 style={{ textAlign: 'center' }}>{app.Title}</h4>
-                </div>
-              </Link>
-            )
-          })
-        }
-        else {
-          return (
-            <h4 className="no-app-message">"Sorry there are no apps yet for this category."</h4>
-          )
-        }
-      });
-  }
+  // public renderCategoryApps = (parsedCategory, category) => {
+  //   let apps: Array<any> = [];
+  //   fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
+  //     .then(response => {
+  //       console.log("app catgory : ", category);
+  //       console.log("getAppsByCategories response : ", response);
+  //       if (!response.error) {
+  //         apps = response;
+  //         // console.log("NO RESPONSE ERROR: current app :", apps);
+  //         apps.map(app => {
+  //           console.log("inside map fn, ", app);
+  //           return (
+  //             <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash} onClick={this.handleSelectApp}>
+  //               <div className={`${app.Hash} appstore-app-icons`}>
+  //                 <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
+  //                 <h4 style={{ textAlign: 'center' }}>{app.Title}</h4>
+  //               </div>
+  //             </Link>
+  //           )
+  //         })
+  //       }
+  //       else {
+  //         return (
+  //           <h4 className="no-app-message">"Sorry there are no apps yet for this category."</h4>
+  //         )
+  //       }
+  //     });
+  // }
 
+  public renderApps = (apps, category) => {
+    console.log("renderApps apps param", apps);
+    // console.log("this.props.currentCategory", this.props.currentCategory);
+    const renderedApp=apps.map(app => {
+      return (
+        <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash} onClick={this.handleSelectApp}>
+          <div className={app.Hash}>
+            {/* className for above: appstore-app-icons */}
+            <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
+            <h4 style={{ textAlign: 'center' }}>{app.Title}</h4>
+          </div>
+        </Link>
+      )
+    })
+    // console.log("renderApps apps MAPPED", renderedApp);
+    return renderedApp
+  }
 
   public render() {
      // console.log("Testing . . . . ",this.props.getappsByCategory("Dev Tools"))
@@ -130,8 +131,7 @@ public componentDidMount() {
         <h4 style={{ textAlign: 'center', marginTop: '20%' }} className="loading-text">Fetching all app categories...</h4>
       </div>
     }
-    console.log("-------------############------------------------");
-    console.log("agent: ", this.props.currentAgent);
+        console.log("agent: ", this.props.currentAgent);
     const greeting: string = "All Categories";
 
     const renderCategoryApps = (parsedCategory) => {

@@ -30,7 +30,12 @@ function addCategory({ category, tags, hash }) {
 function getAppsByCategories({ category }) {
   if (anchorExists(category, "") == "true") {
     const base = anchor(category, "");
-    const apps = getLinks(base, "category", { Load: true }).map(e => e.Entry);
+    const apps = getLinks(base, "category", { Load: true }).map(e => {
+      return {
+        "Entry": e.Entry,
+        "Hash": e.Hash
+      }
+    });
     debug(apps);
     return apps;
   } else {
