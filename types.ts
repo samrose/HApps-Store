@@ -13,7 +13,7 @@ export type HCHCAppState = {
   currentAgent: {agent: {Hash: Hash, Name: string}}| null,
   currentCategory: string | null,
   currentAppHash: string,
-  appsByCategory: Array<{Hash,string}> | null, // A map parigin of the category string AND the array of app hashes and names(titles), belonging to that app Category...
+  appsByCategory: Array<{Entry: AppDetailState, Hash: Hash}> | null, // A map parigin of the category string AND the array of app hashes and names(titles), belonging to that app Category...
   currentAppDetails: {Entry: AppDetailState, Hash: Hash} | null,
   appCode: AppDNACode | null,
   reviewEntries: [ReviewLog] | [{}],
@@ -57,7 +57,7 @@ export type ReduxAction
   | { type: 'REGISTER_APP_HASH', appHash: string }
 
   | { type: 'FETCH_ALL_APPS', allApps: [{Entry:{AppDetailState}, Hash}] }  // {Hash:Hash, icon: string}
-  | { type: 'GET_APPS_BY_CATEGORY', category :string, appsByCurrentCategory: Array<{Hash,string}> }
+  | { type: 'GET_APPS_BY_CATEGORY', category :string, appsByCurrentCategory: Array<{Entry: AppDetailState, Hash: Hash}> }
   | { type: 'VIEW_APP', details: AppDetailState }
   | { type: 'FETCH_APP_CODE', code: AppDNACode }
 
