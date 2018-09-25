@@ -74,6 +74,7 @@ public componentDidMount() {
     // });
   }
 
+
   // public renderCategoryApps = (parsedCategory, category) => {
   //   let apps: Array<any> = [];
   //   fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
@@ -121,19 +122,15 @@ public componentDidMount() {
     return renderedApp
   }
 
-  public render() {
-     // console.log("Testing . . . . ",this.props.getappsByCategory("Dev Tools"))
-     // console.log("Category: ",this.props.getappsByCategory("Admin Tools"))
-     // return (<div/>)
 
+  public render() {
     if (!this.props.currentAgent) {
       return <div>
         <h4 style={{ textAlign: 'center', marginTop: '20%' }} className="loading-text">Fetching all app categories...</h4>
       </div>
     }
-        console.log("agent: ", this.props.currentAgent);
-    const greeting: string = "All Categories";
 
+        console.log("agent: ", this.props.currentAgent);
     const renderCategoryApps = (parsedCategory) => {
       fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
         .then(response => {
@@ -148,23 +145,19 @@ public componentDidMount() {
         });
     }
 
-    const categoriesDisplay = this.state.categories.map((category, i) => {
-        i=i+1;
-        // let apps: Array<any> = [];
-        const parsedCategory = {category};
-        // JSON.stringify(parsedCategory);
-        console.log("parsedCategory"+i+" : ",parsedCategory );
-        const categoryApps = renderCategoryApps(parsedCategory);
-        console.log("returned from renderCategoryApps : ",categoryApps);
-        return (
-          <Row key={i+category} className="category-container">
-            <Col className="category-header-name">
-              <h3>{category}</h3>
-              <hr/>
-              {categoryApps}
-              <h4 className="no-app-message">{this.state.errorMessage}</h4>
-            </Col>
-          </Row>
+    // console.log("this.props.currentCategory", this.props.currentCategory);
+    const greeting: string = "All Categories";
+    const categoriesDisplay = this.state.categories.map((category) => {
+      const parsedCategory = {category};
+      // console.log("parsedCategory",parsedCategory );
+      return (
+        <Row key={category} className="category-container">
+          <Col className="category-header-name">
+            <h3>{category}</h3>
+            <hr/>
+          
+          </Col>
+        </Row>
       )
     });
 
@@ -219,7 +212,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllCategoriesPage);
-
-// const zippyHash = hc.makeHash("App.Key.Hash", {Name: "Zippy"});
-// const apphash = hc.makeHash("appParam", {uuid:"1234-612-161341", title:"Clutter", author:{Hash:zippyHash,Name:"Zippy"}, description:"A Holochain Version of Twiter", thumbnail:"/imp2.jpg"});
-// console.log("appHash : ", apphash);
