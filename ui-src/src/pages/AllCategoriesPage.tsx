@@ -79,17 +79,16 @@ public componentDidMount() {
     fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
       .then(response => {
         console.log("app catgory : ", category);
-        console.log("getAppsByCategories response : ", response);
+        // console.log("getAppsByCategories response : ", response);
         if (!response.error) {
           apps = response;
-          console.log("NO RESPONSE ERROR: current app :", apps);
           apps.map(app => {
-            console.log("inside map fn, ", app);
+            console.log(" NO RESPONSE ERROR: inside map fn: current app, ", app);
             return (
-              <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash} onClick={this.handleSelectApp}>
-                <div className={`${app.Hash} appstore-app-icons`}>
-                  <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
-                  <h4 style={{ textAlign: 'center' }}>{app.Title}</h4>
+              <Link to={`/appstore/${category}/${app.Hash}`} key={app.uuid} onClick={this.handleSelectApp}>
+                <div className={`${app.uuid} appstore-app-icons`}>
+                  <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.uuid } />
+                  <h4 style={{ textAlign: 'center' }}>{app.title}</h4>
                 </div>
               </Link>
             )
