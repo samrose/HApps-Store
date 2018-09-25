@@ -16,7 +16,7 @@ export type HCHCAppState = {
   appsByCategory: Array<{Hash,string}> | null, // A map parigin of the category string AND the array of app hashes and names(titles), belonging to that app Category...
   currentAppDetails: {Entry: AppDetailState, Hash: Hash} | null,
   appCode: AppDNACode | null,
-  reviewEntries: [ReviewLog],
+  reviewEntries: [ReviewLog] | [{}],
   // reviewEntries: List<ReviewLog>,
 };
 

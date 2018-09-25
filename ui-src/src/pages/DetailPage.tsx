@@ -45,6 +45,9 @@ class DetailPage extends Component <DetailPageProps, DetailPageState> {
   public toggleReviewForm = () => {
     // console.log("calling this.toggleReviewForm");
     // console.log("this.state.showReviewForm", this.state.showReviewForm);
+
+    // JSON.stringify(currentApphash);
+    // console.log("currentApphash (hashVAR) for App Detail Call", currentApphash);
     this.setState({showReviewForm: !this.state.showReviewForm});
   }
 
