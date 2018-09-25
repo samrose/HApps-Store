@@ -52,13 +52,29 @@ public componentDidMount() {
     this.props.fetchAgent();
     // this.props.fetchAllApps();
     // Example:
-    // const hashVAR = {app_hash: "QmU3yxTLW3st9h3TmTBHimmTu32NofqMsX77og82dVEbSE"};
-    // JSON.stringify(hashVAR);
-    // console.log("hashVAR", hashVAR);
-    // fetchPOST('/fn/happs/getApp', hashVAR)
-    //   .then(appDetails => {
-    //     console.log("App Details", appDetails);
-    // });
+    const hashVAR = {app_hash: "QmU3yxTLW3st9h3TmTBHimmTu32NofqMsX77og82dVEbSE"};
+    JSON.stringify(hashVAR);
+    console.log("hashVAR", hashVAR);
+    fetchPOST('/fn/happs/getApp', hashVAR)
+      .then(appDetails => {
+        console.log("App Details", appDetails);
+    });
+  }
+
+  public renderApps = (apps, category) => {
+    // console.log("renderApps apps param", apps);
+    // console.log("this.props.currentCategory", this.props.currentCategory);
+    apps.map(app => {
+      return (
+        <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash} onClick={this.handleSelectApp}>
+          <div className={app.Hash}>
+            {/* className for above: appstore-app-icons */}
+            <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
+            <h4 style={{ textAlign: 'center' }}>{app.Title}</h4>
+          </div>
+        </Link>
+      )
+    })
   }
 
   public handleSelectApp = e => {
@@ -104,26 +120,50 @@ public componentDidMount() {
 
 
   public render() {
+     // console.log("Testing . . . . ",this.props.getappsByCategory("Dev Tools"))
+     // console.log("Category: ",this.props.getappsByCategory("Admin Tools"))
+     // return (<div/>)
+
     if (!this.props.currentAgent) {
       return <div>
         <h4 style={{ textAlign: 'center', marginTop: '20%' }} className="loading-text">Fetching all app categories...</h4>
       </div>
     }
-
-    // console.log("this.props.currentCategory", this.props.currentCategory);
+    console.log("-------------############------------------------");
+    console.log("agent: ", this.props.currentAgent);
     const greeting: string = "All Categories";
-    const categoriesDisplay = this.state.categories.map((category) => {
-      const parsedCategory = {category};
-      JSON.stringify(parsedCategory);
-      // console.log("parsedCategory",parsedCategory );
-      return (
-        <Row key={category} className="category-container">
-          <Col className="category-header-name">
-            <h3>{category}</h3>
-            <hr/>
-            {this.renderCategoryApps(parsedCategory, category)}
-          </Col>
-        </Row>
+
+    const renderCategoryApps = (parsedCategory) => {
+      fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
+        .then(response => {
+          console.log("getAppsByCategories response : ", response);
+          if (!response.error) {
+             const apps = response;
+             console.log("CHECKING THIS OUT: ",this.renderApps(apps, parsedCategory))
+             this.renderApps(apps, parsedCategory);
+          }  else {
+            // this.setState({errorMessage: "Sorry there are no apps yet for this category."});
+          }
+        });
+    }
+
+    const categoriesDisplay = this.state.categories.map((category, i) => {
+        i=i+1;
+        // let apps: Array<any> = [];
+        const parsedCategory = {category};
+        // JSON.stringify(parsedCategory);
+        console.log("parsedCategory"+i+" : ",parsedCategory );
+        const categoryApps = renderCategoryApps(parsedCategory);
+        console.log("returned from renderCategoryApps : ",categoryApps);
+        return (
+          <Row key={i+category} className="category-container">
+            <Col className="category-header-name">
+              <h3>{category}</h3>
+              <hr/>
+              {categoryApps}
+              <h4 className="no-app-message">{this.state.errorMessage}</h4>
+            </Col>
+          </Row>
       )
     });
 

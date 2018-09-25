@@ -21,7 +21,7 @@ function genesis(){
   // const mario_hash=JSON.parse(call("happs", "createApp", {appParam:{uuid:"1234-612-161347",title:"Mario",author:{Hash:App.Agent.Hash,Name:App.Agent.String},description:"A Holochain Version of the your Mario",thumbnail:"/impF.jpg"}}));
   debug("Errand Initialized: "+errand_hash);
   debug("Clutter Initialized: "+clutter_hash);
-  debug("HoloChat  Initialized: "+holochat_hash);
+  // debug("HoloChat  Initialized: "+holochat_hash);
   // debug("HoloVolt Initialized: "+holovolt_hash);
   // debug("Netflix  Initialized: "+netflix_hash);
   // debug("Mario  Initialized: "+mario_hash);

@@ -105,8 +105,8 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     }
 
     case 'GET_APPS_BY_CATEGORY': {
-      console.log("INSIDE REDUCER >> action.category: ", action.category);
-      console.log("INSIDE REDUCER >> action.AppsByCategory : ", action.appsByCurrentCategory);
+      // console.log("INSIDE REDUCER >> action.category: ", action.category);
+      // console.log("INSIDE REDUCER >> action.AppsByCategory : ", action.appsByCurrentCategory);
       return state;
     }
 
