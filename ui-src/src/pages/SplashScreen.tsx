@@ -78,7 +78,7 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
   public registerCategory = (category) => {
     console.log("category chosen:", category );
     this.props.registerCategoryType(category);
-    console.log("this.props.currentCategory", this.props.currentCategory);
+    setInterval(console.log("this.props.currentCategory", this.props.currentCategory), 3000);
   }
 
   public handleOnClick = e => {

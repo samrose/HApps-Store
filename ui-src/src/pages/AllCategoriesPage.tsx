@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import store from '../store'
 import { fetchPOST } from '../utils'
-import { ReduxAction } from '../../../types';
+import { ReduxAction, AppDetailState } from '../../../types';
 import { Hash } from '../../../holochain';
 // import * as hc from "../../../holochain";
 import { Map } from 'immutable';
@@ -32,7 +32,7 @@ type AllCategoriesPageProps = {
   fetchAppDetails: (appHash) => void,
   getappsByCategory: (cateogry) => void,
   registerCurrentAppHash: (appHash) => void,
-  appsByCategory: Array<{Hash,string}>,
+  appsByCategory: Array<{Entry: AppDetailState, Hash: Hash}>,
   // appsByCategory: Array<{category: string, appTitle: string, icon: string }>
 }
 
@@ -51,13 +51,13 @@ public componentDidMount() {
     this.props.fetchAgent();
     // this.props.fetchAllApps();
     // Example:
-    const hashVAR = {app_hash: "QmU3yxTLW3st9h3TmTBHimmTu32NofqMsX77og82dVEbSE"};
-    JSON.stringify(hashVAR);
-    console.log("hashVAR", hashVAR);
-    fetchPOST('/fn/happs/getApp', hashVAR)
-      .then(appDetails => {
-        console.log("App Details", appDetails);
-    });
+    // const hashVAR = {app_hash: "QmU3yxTLW3st9h3TmTBHimmTu32NofqMsX77og82dVEbSE"};
+    // JSON.stringify(hashVAR);
+    // console.log("hashVAR", hashVAR);
+    // fetchPOST('/fn/happs/getApp', hashVAR)
+    //   .then(appDetails => {
+    //     console.log("App Details", appDetails);
+    // });
   }
 
 
@@ -103,12 +103,12 @@ public componentDidMount() {
     // console.log("renderApps apps param", apps);
     // console.log("this.props.currentCategory", this.props.currentCategory);
     return apps.map(app => {
+    console.log("app : ", app);
       return (
         <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash} onClick={this.handleSelectApp}>
-          <div className={app.Hash}>
-            {/* className for above: appstore-app-icons */}
+          <div className={`{$app.Hash} appstore-app-icons`}>
             <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
-            <h4 style={{ textAlign: 'center' }}>{app.Entry.Title}</h4>
+            <h4 style={{ textAlign: 'center' }}>{app.Entry.title}</h4>
           </div>
         </Link>
       )

@@ -28,9 +28,9 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     }
 
     case 'REGISTER_CATEGORY': {
-      const currentCategory = action.category;
-      console.log("INSIDE REDUCER, currentCategory :", currentCategory);
-      return {...state, currentCategory}
+      const current = action.category;
+      console.log("INSIDE REDUCER, currentCategory :", current);
+      return {...state, currentCategory: current};
     }
 
     case 'REGISTER_APP_HASH': {
@@ -105,9 +105,9 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     }
 
     case 'GET_APPS_BY_CATEGORY': {
-      // console.log("INSIDE REDUCER >> action.category: ", action.category);
-      // console.log("INSIDE REDUCER >> action.AppsByCategory : ", action.appsByCurrentCategory);
-      return state;
+      console.log("INSIDE REDUCER >> action.AppsByCategory : ", action.appsByCurrentCategory);
+      const appsByCategory : Array<{Entry: AppDetailState, Hash: Hash}> = action.appsByCurrentCategory;
+      return {...state, appsByCategory};
     }
 
     case 'FETCH_REVIEWS': {
@@ -141,7 +141,7 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
       }
       return {...state}
     }
-
+    
     case 'VIEW_APP': {
       if (state.currentAppDetails) {
         console.log("state.currentAppDetails", state.currentAppDetails);
