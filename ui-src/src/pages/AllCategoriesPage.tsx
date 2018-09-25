@@ -50,8 +50,7 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
 
 public componentDidMount() {
     this.props.fetchAgent();
-    this.props.fetchAllApps();
-
+    // this.props.fetchAllApps();
     // Example:
     const hashVAR = {app_hash: "QmU3yxTLW3st9h3TmTBHimmTu32NofqMsX77og82dVEbSE"};
     JSON.stringify(hashVAR);
@@ -89,6 +88,35 @@ public componentDidMount() {
     //   .then(appDetails => {
     //     console.log("App Details", appDetails);
     // });
+  }
+
+  public renderCategoryApps = (parsedCategory, category) => {
+    let apps: Array<any> = [];
+    fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
+      .then(response => {
+        console.log("app catgory : ", category);
+        console.log("getAppsByCategories response : ", response);
+        if (!response.error) {
+          apps = response;
+          console.log("NO RESPONSE ERROR: current app :", apps);
+          apps.map(app => {
+            console.log("inside map fn, ", app);
+            return (
+              <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash} onClick={this.handleSelectApp}>
+                <div className={`${app.Hash} appstore-app-icons`}>
+                  <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
+                  <h4 style={{ textAlign: 'center' }}>{app.Title}</h4>
+                </div>
+              </Link>
+            )
+          })
+        }
+        else {
+          return (
+            <h4 className="no-app-message">"Sorry there are no apps yet for this category."</h4>
+          )
+        }
+      });
   }
 
 

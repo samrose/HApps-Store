@@ -12,7 +12,7 @@ const defaultState: HCHCAppState = {
   appsByCategory: null,
   currentAppDetails: null,
   appCode: null,
-  reviewEntries:[null],
+  reviewEntries: [{}],
 };
 
 export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCHCAppState => {

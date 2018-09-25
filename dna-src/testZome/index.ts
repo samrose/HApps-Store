@@ -31,7 +31,7 @@ function genesis(){
   // call("categories", "addCategory", { category:"Educational", tags:"", hash:errand_hash });
   // call("categories", "addCategory", { category:"Top Downloads", tags:"", hash:clutter_hash });
   // call("categories", "addCategory", { category:"Leisure", tags:"", hash:clutter_hash });
-  // call("categories", "addCategory", { category:"Top Downloads", tags:"", hash:holochat_hash });
+  // call("categories", "addCategory", { category:"Top Downloads", tags:"", hash:holovolt_hash });
   // call("categories", "addCategory", { category:"Leisure", tags:"", hash:holochat_hash });
   //call("categories", "addCategory", { category:"Admin Tools", tags:"", hash:holovolt_hash });
   // call("categories", "addCategory", { category:"Dev Tools", tags:"", hash:holovolt_hash });

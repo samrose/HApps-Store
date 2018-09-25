@@ -210,10 +210,10 @@ class UploadNewApp extends React.Component<any, UploadNewAppState> {
            this.setState({ description: event.target.value });
            break;
          case "app-code":
-           console.log("app-code - on inputChange", event.target.value);
-           console.log("app-code - on inputChange", event.target.files[0]);
-           this.handleUploadFile(event.target.files[0]);
-           this.setState({ fileload: event.target.files[0] });
+           console.log("app-code - on inputChange app-code target value", event.target.value);
+           console.log("app-code - on inputChange app-code target file at index position 0", event.target.files[0]);
+           this.handleUploadFile(event.target.files);
+           // this.setState({ fileload: event.target.files[0] });
           break;
          case "ui-code":
            console.log("ui-code - on inputChange", event.target.value);
@@ -229,7 +229,8 @@ class UploadNewApp extends React.Component<any, UploadNewAppState> {
 
      public renderURLfromBlob = (input) => {
         const reader = new FileReader();
-        // reader.readAsDataURL(input.files[0]);
+
+        console.log("input.files", input.files);
         reader.readAsDataURL(input[0]);
          console.log("Filename: " + input[0].name);
          console.log("Type: " + input[0].type);
@@ -240,11 +241,18 @@ class UploadNewApp extends React.Component<any, UploadNewAppState> {
         }
      }
 
-     public handleUploadFile = (file) => {
+     public handleUploadFile = (input) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(input[0]);
+
+        reader.onloadend = () => {
+            this.addNameToDataURI(reader.result, input[0].name);
+        }
+
         const data = new FormData();
-        data.append('file', file);
-        data.append('name', file.name);
-        console.log("file data since upload", data);
+        data.append('file', input[0]);
+        data.append('name', input[0].name);
+        console.log("DNA file data input since upload", data);
         return data;
     }
     // // For the followign: <input type="file" onChange={this.handleFileUpload} />

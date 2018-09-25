@@ -11,6 +11,7 @@ import "./ReviewList.css";
 
 type ReviewListProps = {
   currentAgent: {agent: {Hash: Hash, Name: string}},
+  currentAppDetails: {Entry: AppDetailState, Hash: Hash},
   fetchAgent: () => void,
   fetchAppReviews: () => void,
   fetchAppReviewsTemporary : () => void,
@@ -25,8 +26,9 @@ class ReviewList extends React.Component<any, any>  {
     const { agent } = this.props.currentAgent;
     const agentHash = agent.Hash;
 
+    console.log("currentAppDetails: ", this.props.currentAppDetails);
     // this.props.fetchAppReviewsTemporary(agentHash);
-    const appHash = this.props.currentAppsDetails.Hash;
+    const appHash = this.props.currentAppDetails.Hash;
     const currentAppHash = {reviewedHash: appHash }
     JSON.stringify(currentAppHash);
     console.log("currentApphash for App Detail Call", currentAppHash);
@@ -69,7 +71,7 @@ class ReviewList extends React.Component<any, any>  {
   }
 }
 
-const mapStateToProps = ({ reviewEntries, currentAgent }) => ({ reviewEntries, currentAgent });
+const mapStateToProps = ({ reviewEntries, currentAgent, currentAppDetails }) => ({ reviewEntries, currentAgent, currentAppDetails });
 const mapDispatchToProps = dispatch => ({
 fetchAppReviewsTemporary: (appHash) => {
   fetchPOST('/fn/ratings/getRatings', appHash)
