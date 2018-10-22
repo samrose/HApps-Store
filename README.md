@@ -4,6 +4,7 @@
 ![GitHub](https://img.shields.io/github/license/Holo-Host/HApps-Store.svg)
 
 ---
+
 The Holochain of Holochains Directory
 This is the App store that all the users  would use to Check out all the HApps that are Available on the HCHC
 
