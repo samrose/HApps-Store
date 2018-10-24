@@ -12,6 +12,7 @@
     "hc:win": "npm run ui:build && npm run hc:build-win && cd build-HApps && hcdev web",
     "hc:test": "npm run hc:build && cp -r ./test/ ./build-HApps/ && cd build-HApps && hcdev test",
     "ui:build": "rm -r build-HApps/ui; node scripts/build.js && cp -r ui-src/build-HApps/ build-HApps/ui/",
+    "ui:build-win": "rm -r build-HApps/ui & node scripts/build.js && cp -r ui-src/build-HApps/ build-HApps/ui/",
     "start": "node scripts/start.js",
     "build": "mkdir -p build-HApps/ui build-HApps/dna; npm run hc:build && npm run ui:build",
     "test": "node scripts/test.js --env=jsdom"
