@@ -13,35 +13,41 @@ This is the App store that all the users  would use to Check out all the HApps t
 
 ---
 
+## Documentation
+- [HCHC/HApps-Store : Design Decisions](https://hackmd.io/uBkCcxybSWyQ-h60dEi8bg)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
-
-Ensure holochain-proto (at least version 26) is installed on your machine by running.
-
-```
-hcd -v
-```
-
-Subsequent steps also assumes npm/yarn is installed.
-
 ### Installing
 
-The app can now be started for development purposes using
+The app can now be started for **development** purposes using
+
+**For Windows:**
+```
+npm run hc:win
+```
+**For Other OS:**
 ```
 npm run hc:dev
 ```
 and opening the browser to http://localhost:4141
 
 ---
-If you would like to persist data between sessions install to the local holochain directory by running the following from the project root directory:
+If you would like to persist data between sessions install to the **local holochain directory** by running the following from the project root directory:
 ```
 hcadmin init <id/name string>
-hcadmin join ./build/ HCHC
+hcadmin join ./build-HCHC/ HCHC
 hcd HCHC
 ```
+### Prerequisites
+Ensure holochain-proto (at least version 26) is installed on your machine by running.
+
+```
+hcd -v
+```
+Subsequent steps also assumes npm/yarn is installed.
 
 ## Built With
 

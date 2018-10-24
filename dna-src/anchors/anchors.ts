@@ -1,3 +1,4 @@
+
 'use strict';
 export = 0;
 let module = {};
@@ -7,6 +8,7 @@ let module = {};
 // -----------------------------------------------------------------
 // Description :
 // -----------------------------------------------------------------
+
 function anchor(anchor) {
   var anchorType = {anchorType: anchor.anchorType, anchorText: ''};
   var rootAnchortype =  {anchorType: 'anchorTypes', anchorText: ''};

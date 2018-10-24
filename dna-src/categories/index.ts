@@ -10,8 +10,8 @@ let module = {};
 // This Tag can then be used to catogorize entries so thats Its easies to retirve data back
 // -----------------------------------------------------------------
 
-const BASE_TAG_STRING = "HCHC_TAGS"
 
+const BASE_TAG_STRING = "HCHC_TAGS"
 
 function addCategory({ category, tags, hash }) {
   // debug("Catagory : "+category+" | "+"tag"+tags)
@@ -30,6 +30,7 @@ function addCategory({ category, tags, hash }) {
 function getAppsByCategories({ category }) {
   if (anchorExists(category, "") == "true") {
     const base = anchor(category, "");
+
     const apps = getLinks(base, "category", { Load: true }).map(e => {
       return {
         "Entry": e.Entry,
@@ -40,6 +41,7 @@ function getAppsByCategories({ category }) {
     return apps;
   } else {
     return { error: "ERROR: This category doesn't exist..." }
+
   }
 }
 
@@ -59,6 +61,7 @@ function getAppCategories({ hash }) {
 
 // Old way to add tags to the hashs
 /*
+
 function addTag({ tag, hash }: AddTagParams): Hash {
   const base = makeHash("tag_anchor", BASE_TAG_STRING);
   const commit_hash = commit("tag_link", { Links: [{ Base: base, Link: hash, Tag: tag }] });
