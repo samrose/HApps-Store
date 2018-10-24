@@ -101,11 +101,6 @@ class CreateReviewForm extends React.Component<any, CreateReviewFormState> {
               const reviewObject = {appHash: hash, authorHash: hash, authorName: name, rating: rate, review: reviewMsg }
               console.log("reviewObject", reviewObject);
               this.props.createReview(reviewObject);
-
-              // console.log("createRatings response", response);
-              // this.props.fetchAppReviewsTemporary(response);
-
-              // this.props.dispatch({ type: 'RETURN_STATE' })
               this.props.onModalToggle();
             }
           })
@@ -121,7 +116,6 @@ class CreateReviewForm extends React.Component<any, CreateReviewFormState> {
         this.setState({review: event.target.value});
         break;
     }
-    // console.log("state: ", this.state);
   }
 
   private handleEnter = (event: React.KeyboardEvent) => {
