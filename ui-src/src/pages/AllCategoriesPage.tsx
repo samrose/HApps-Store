@@ -7,14 +7,13 @@ import store from '../store'
 import { fetchPOST } from '../utils'
 import { ReduxAction, AppDetailState } from '../../../types';
 import { Hash } from '../../../holochain';
-// import * as hc from "../../../holochain";
 import { Map } from 'immutable';
 
 import './AllCategoriesPage.css';
 import JdenticonPlaceHolder from '../components/JdenticonFiller';
 import MainNav from "../components/MainNav";
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'reactstrap';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 type AllCategoriesPageState = {
@@ -33,7 +32,6 @@ type AllCategoriesPageProps = {
   getappsByCategory: (cateogry) => void,
   registerCurrentAppHash: (appHash) => void,
   appsByCategory: Array<{Entry: AppDetailState, Hash: Hash}>,
-  // appsByCategory: Array<{category: string, appTitle: string, icon: string }>
 }
 
 class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCategoriesPageState> {
@@ -49,15 +47,6 @@ class AllCategoriesPage extends React.Component<AllCategoriesPageProps, AllCateg
 
 public componentDidMount() {
     this.props.fetchAgent();
-    // this.props.fetchAllApps();
-    // Example:
-    // const hashVAR = {app_hash: "QmU3yxTLW3st9h3TmTBHimmTu32NofqMsX77og82dVEbSE"};
-    // JSON.stringify(hashVAR);
-    // console.log("hashVAR", hashVAR);
-    // fetchPOST('/fn/happs/getApp', hashVAR)
-    //   .then(appDetails => {
-    //     console.log("App Details", appDetails);
-    // });
   }
 
 
@@ -69,56 +58,15 @@ public componentDidMount() {
     console.log("this.props.currentAppHash",this.props.currentAppHash);
     this.props.fetchAppDetails(currentApp);
   }
-  // public renderCategoryApps = (parsedCategory, category) => {
-  //   let apps: Array<any> = [];
-  //   fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
-  //     .then(response => {
-  //       console.log("app catgory : ", category);
-  //       console.log("getAppsByCategories response : ", response);
-  //       if (!response.error) {
-  //         apps = response;
-  //         console.log("NO RESPONSE ERROR: current app :", apps);
-  //         apps.map(app => {
-  //           console.log("inside map fn, ", app);
-  //           return (
-  //             <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash} onClick={this.handleSelectApp}>
-  //               <div className={`${app.Hash} appstore-app-icons`}>
-  //                 <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
-  //                 <h4 style={{ textAlign: 'center' }}>{app.Title}</h4>
-  //               </div>
-  //             </Link>
-  //           )
-  //         })
-  //       }
-  //       else {
-  //         return (
-  //           <h4 className="no-app-message">"Sorry there are no apps yet for this category."</h4>
-  //         )
-  //       }
-  //     });
-  // }
 
 
   public renderApps = (apps, category) => {
-    // console.log("renderApps apps param", apps);
-    // console.log("this.props.currentCategory", this.props.currentCategory);
     return apps.map(app => {
-    console.log("app : ", app);
-      return (
-        <Link to={`/appstore/${category}/${app.Hash}`} key={app.Hash} onClick={this.handleSelectApp}>
-          <div className={`{$app.Hash} appstore-app-icons`}>
-            <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
-            <h4 style={{ textAlign: 'center' }}>{app.Entry.title}</h4>
-          </div>
-        </Link>
-      )
+        // TODO: Render Apps
     })
   }
 
   public render() {
-     // console.log("Testing . . . . ",this.props.getappsByCategory("Dev Tools"))
-     // console.log("Category: ",this.props.getappsByCategory("Admin Tools"))
-     // return (<div/>)
     if (!this.props.currentAgent) {
       return <div>
         <h4 style={{ textAlign: 'center', marginTop: '20%' }} className="loading-text">Fetching all app categories...</h4>
@@ -208,6 +156,3 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(AllCategoriesPage);
-// const zippyHash = hc.makeHash("App.Key.Hash", {Name: "Zippy"});
-// const apphash = hc.makeHash("appParam", {uuid:"1234-612-161341", title:"Clutter", author:{Hash:zippyHash,Name:"Zippy"}, description:"A Holochain Version of Twiter", thumbnail:"/imp2.jpg"});
-// console.log("appHash : ", apphash);
