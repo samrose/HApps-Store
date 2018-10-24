@@ -22,7 +22,6 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
 
   switch (action.type) {
     case 'RETURN_STATE': {
-      // tslint:disable-next-line:no-console
       console.log({ ...state });
       return state;
     }
@@ -48,21 +47,11 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     }
 
     case 'CREATE_REVIEW': {
-      // const { appId } = state.currentAppDetails;
-      // tslint:disable-next-line:no-console
-      console.log("action.params.appHash", action.params.appHash);
-      // if (appId === null || appId !== action.params.appHash ){
-      //   break;
-      // }
+      console.log("action.params", action.params);
       let newReview;
       const { reviewEntries } = state;
-      console.log("action.params", action.params);
-      // const check = Object.entries(reviewEntries)[0]
       const check = Object.keys(reviewEntries).length;
-      // console.log(">>> reviewEntires.size", reviewEntries.size);
-      // console.log(">>> reviewEntires.keys", Object.keys(reviewEntries));
-      console.log(">>> reviewEntires.keys.length", check);
-      // if ( check === 0 )
+      // console.log(">>> reviewEntires.keys.length", check);
       if ( check === 0 || reviewEntries === null || reviewEntries === undefined ) {
         newReview = {};
         newReview = {
@@ -74,7 +63,6 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
         };
         newReview = [ newReview ];
         console.log("line 109 newReview", newReview);
-        // tslint:disable-next-line:no-console
         // console.log({ newReview });
 
         return {
@@ -93,8 +81,6 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
           timestamp: "Now"
         });
         // newReview = List(newReview);
-
-        // tslint:disable-next-line:no-console
         // console.log( "newReview (List Version of newReview) >>> " );
         console.log({ newReview });
         return {
@@ -122,15 +108,13 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     case 'FETCH_APP_CODE' : {
       if (!state.currentAppDetails) {break};
       if (state.appCode) {
-        // tslint:disable-next-line:no-console
         console.log("state.appCode", state.appCode);
-        // if there is a appCode, then remove it to replace with following app (that was just clicked on...)
         state.appCode = null;
       }
+
       console.log("the FETCH_APP_CODE payload", action);
       const { fileload } = action.code;
       console.log("fileload", fileload);
-
       // const hash = fileload.hash;
       // const code = fileload.CodeParams.dna;
       // const test = fileload.CodeParams.test;
@@ -141,11 +125,11 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
       }
       return {...state}
     }
-    
+
     case 'VIEW_APP': {
       if (state.currentAppDetails) {
         console.log("state.currentAppDetails", state.currentAppDetails);
-        state.currentAppDetails = null;// if there is a currentAppDetails, then remove it to replace with following app (that was just clicked on...)
+        state.currentAppDetails = null;
       }
       console.log("the App Details (VIEW_APP) ACTION payload", action.details);
       const { author, thumbnail, description, title, uuid } = action.details;
@@ -160,7 +144,6 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
       const currentAppDetails = {Entry, Hash:appHash};
       return {...state, currentAppDetails}
     }
-    // For REVEIW, maybe use with comments? >>> : state.texts = action.entries.map(entry => entry.text);
 
     case 'FETCH_ALL_APPS': {
       console.log(">>ln 164 in reducer, ALL APPs Action !!!!: ", action.allApps);
