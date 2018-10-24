@@ -5,10 +5,6 @@ import { BrowserRouter, Route, Link } from 'react-router-dom'
 import SplashNav from "../components/SplashNav";
 import './SplashScreen.css';
 
-// import Icon from '@material-ui/core/Icon';
-// import { VideogameAsset, StarRate, Code, Timeline, List } from '@material-ui/icons';
-// import { Array,Map } from "immutable"
-
 import store from '../store'
 import { fetchPOST } from '../utils'
 import { WelcomeMsg, ReduxAction } from '../../../types';
@@ -198,8 +194,7 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
     }
     const renderWelcomeMsgs = () => {
       const { agent } = this.props.currentAgent!;
-      // const waitGreeting1: WelcomeMsg = `Hello ${agent.Name}`
-      const waitGreeting1: WelcomeMsg = `Hello Lisa`;
+      const waitGreeting1: WelcomeMsg = `Hello ${agent.Name}`
       const waitGreeting2: WelcomeMsg = "Welcome to the Holo App Store";
       if (this.state.toggleMessage === true) {
         setInterval(() => {this.removeMessages()}, 6150);
