@@ -41,7 +41,6 @@ class CreateReviewForm extends React.Component<CreateReviewFormProps, CreateRevi
 
   public componentDidMount() {
     this.props.fetchAgent();
-    console.log("INSIDE THE CreateReviewForm");
   }
 
   public render() {

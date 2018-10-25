@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Hash } from "../../../holochain";
 import { AppDetailState } from "../../../types";
 import { fetchPOST } from '../utils'
+import JdenticonPlaceHolder from '../components/JdenticonFiller';
 
 import "./ReviewList.css";
 
@@ -24,17 +25,18 @@ class ReviewList extends React.Component<any, any>  {
   }
 
   public componentDidMount() {
-    const { agent } = this.props.currentAgent;
-    const agentHash = agent.Hash;
     console.log("this.props in ReviewList : ", this.props);
-    // 
-    // const currentAppHash = { reviewedHash: this.props.currentAppHash }
-    // JSON.stringify(currentAppHash);
-    // console.log("currentApphash for App REVIEWS CALL", currentAppHash);
-    // this.props.fetchAppReviews(currentAppHash);
+
+    const currentAppHash = { reviewedHash: this.props.currentAppHash }
+    JSON.stringify(currentAppHash);
+    console.log("currentApphash for App REVIEWS CALL", currentAppHash);
+    this.props.fetchAppReviews(currentAppHash);
   }
 
   public renderCurrentReviewList() {
+    const { agent } = this.props.currentAgent;
+    const agentHash = agent.Hash;
+    
     if (!this.props.reviewEntries) {
       // console.log("!this.props.reviewEntries ?!", this.props.reviewEntries);
       return <div>
@@ -46,13 +48,14 @@ class ReviewList extends React.Component<any, any>  {
       console.log("reviewEntries", reviewEntries);
       console.log("typeof reviewEntries : ", typeof reviewEntries);
 
-      return reviewEntries.map((entry) => {
+      return reviewEntries.sort().map((entry) => {
         return (
           <li
             key={entry.authorHash+entry.rating+entry.review}
-            className="list-group-item list-entry-item">
-            {console.log("reviewEntires entry :", entry)}
-            <h4>{entry.authorName}: <span>{entry.timestamp}</span></h4>
+            className="list-group-item list-entry-item"
+          >
+            <JdenticonPlaceHolder className="jdenticon" size={100} hash={ agent.Hash } />
+            <span><h4>{entry.authorName} <span>{entry.timestamp}</span></h4></span>
             <h5>{entry.rate}</h5>
             <h5>{entry.review}</h5>
           </li>
