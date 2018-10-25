@@ -1,38 +1,62 @@
 import * as React from 'react';
-
+import {connect} from 'react-redux'
+import { withRouter, Redirect } from 'react-router-dom';
+import { fetchPOST } from '../utils';
+import { Hash } from "../../../holochain";
+import { AppDetailState } from "../../../types";
+import { Link } from 'react-router-dom';
+import './CreateReviewForm.css';
 import JdenticonPlaceHolder from '../components/JdenticonFiller';
-
 // import StarFillRating from "../components/StarFillRating";
 
-import './CreateReviewForm.css';
-import {connect} from 'react-redux'
-
-import { fetchPOST } from '../utils';
-
+type CreateReviewFormProps = {
+  currentAgent: {agent: {Hash: Hash, Name: string}},
+  currentAppDetails: {Entry: AppDetailState, Hash: Hash},
+  currentApp: AppDetailState,
+  currentAppHash: string,
+  currentCategory: string,
+  fetchAgent: () => void,
+  onModalToggle: () => void,
+  createReview: (reviewObject) => void,
+  fetchAppReviews: (currentAppHash) => void,
+}
 
 type CreateReviewFormState = {
   errorMessage: string | null,
   rating: number | undefined,
   review: string,
+  toggleReviewForm: boolean,
 }
 
-class CreateReviewForm extends React.Component<any, CreateReviewFormState> {
+class CreateReviewForm extends React.Component<CreateReviewFormProps, CreateReviewFormState> {
   constructor(props: any) {
     super(props)
     this.state = {
       errorMessage: null,
       rating: undefined,
       review: "",
+      toggleReviewForm: false,
     }
   }
 
   public componentDidMount() {
     this.props.fetchAgent();
+    console.log("INSIDE THE CreateReviewForm");
   }
 
   public render() {
+    // if (!this.props.currentAppDetails) {
+    //   return <div/>
+    // }
+
+    const submitReview = (
+      <Redirect to='/appstore/${this.props.currentCategory}/${currentAppDetails.Hash'/>
+    )
+
     const required: boolean = true;
     const { agent } = this.props.currentAgent;
+    const { currentAppDetails } = this.props;
+    console.log("THIS.PROPS ", this.props);
     let errorDisplay: JSX.Element | null = null;
     if (this.state.errorMessage) {
       errorDisplay = <div className="error-message">{ this.state.errorMessage }</div>
@@ -67,26 +91,40 @@ class CreateReviewForm extends React.Component<any, CreateReviewFormState> {
         <hr className="reg-hr"/>
         { errorDisplay }
         <hr className="reg-hr"/>
-        <button className="modal-button" onClick={this.props.onModalToggle}>Close</button>
         <button className="modal-button" onClick={this.handleCreate}>Submit</button>
+        <Link to={`/appstore/${this.props.currentCategory}/${currentAppDetails.Hash}`} key="closeModal">
+            <button>Close</button>
+        </Link>
+        {this.state.toggleReviewForm ? submitReview : null}
       </div>
     )}
 
     public handleCreate = () => {
+      const { currentAppDetails } = this.props;
       const { agent } = this.props.currentAgent;
       const { review, rating } = this.state;
-      console.log("review", review);
-      console.log("rating", rating);
+
       if (!review || !rating) {
         this.setState({errorMessage: "Please be sure you've completed your review before submiting."})
       }
       else if (review && rating) {
+        console.log("review", review);
+        console.log("rating", rating);
+        console.log("typeof rating", typeof rating);
+
+
         const agentHash = agent.Hash;
         const authorName = agent.Name;
-        {/* // BELOW> : The reviewedHash should instead be the App Hash (... not the whoami Hash). */}
-        const rate = rating;
-        const reviewedHash = agentHash;
-        fetchPOST('/fn/ratings/createRatings', {rate, review, authorName, reviewedHash})
+        const rate = Number(rating);
+        console.log("rate", rate);
+        console.log("typeof rate", typeof rate);
+        const reviewedHash = currentAppDetails.Hash;
+
+        const createReviewFetchBundle = {rate, review, reviewedHash};
+        JSON.stringify(createReviewFetchBundle);
+        console.log("createReviewFetchBundle for App REVIEWS CALL", createReviewFetchBundle);
+
+        fetchPOST('/fn/ratings/createRatings', createReviewFetchBundle)
           .then(response => {
             if (response.errorMessage) {
               // TODO: IMPROVE ERROR MESSAGE
@@ -97,12 +135,19 @@ class CreateReviewForm extends React.Component<any, CreateReviewFormState> {
               const reviewMsg = review;
               const hash = agentHash;
               const name = authorName;
-              // NB: Make sure to change out the appHash with the APPLICATION HASH instead of the agentHash used below (once the function is written...);
-              const reviewObject = {appHash: hash, authorHash: hash, authorName: name, rating: rate, review: reviewMsg }
-              console.log("reviewObject", reviewObject);
+              const reviewObject = {appHash: reviewedHash, authorHash: hash, authorName: name, rating: rate, review: reviewMsg, reviewHash: response }
+              console.log("reviewObject -->>> ", reviewObject);
               this.props.createReview(reviewObject);
-              this.props.onModalToggle();
-            }
+
+              // const currentAppHash = { reviewedHash: this.props.currentAppHash }
+              // JSON.stringify(currentAppHash);
+              // console.log("currentApphash for App REVIEWS CALL", currentAppHash);
+              // this.props.fetchAppReviews(currentAppHash);
+
+              // this.props.onModalToggle();
+              // this.props.history.push(`/appstore/${this.props.currentCategory}/${currentAppDetails.Hash}`);
+              this.setState({toggleReviewForm: true});
+            };
           })
         }
     }
@@ -130,8 +175,7 @@ class CreateReviewForm extends React.Component<any, CreateReviewFormState> {
 }
 
 
-
-const mapStateToProps = ({currentAgent, currentApp}) => ({currentAgent, currentApp});
+const mapStateToProps = ({currentAgent, currentApp, currentAppDetails, currentAppHash}) => ({currentAgent, currentApp, currentAppDetails, currentAppHash});
 const mapDispatchToProps = dispatch => ({
   createReview: (params) => {
     dispatch({ type: 'CREATE_REVIEW', params });
@@ -149,13 +193,6 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: 'FETCH_REVIEWS', reviewEntries })
       })
   },
-  fetchAppReviewsTemporary: (appHash) => {
-    fetchPOST('/fn/ratings/getRatings', appHash)
-      .then(reviewEntries => {
-        console.log("getRatings response to send to reducer", reviewEntries);
-        dispatch({ type: 'FETCH_REVIEWS', reviewEntries })
-      })
-    },
   returnState: () => dispatch({type: 'RETURN_STATE'})
 })
 

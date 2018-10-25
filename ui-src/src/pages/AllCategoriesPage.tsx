@@ -66,6 +66,21 @@ public componentDidMount() {
     })
   }
 
+  public renderCategoryApps = (parsedCategory) => {
+    fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
+    .then(response => {
+      console.log("getAppsByCategories response : ", response);
+      if (!response.error) {
+        const apps = response;
+        console.log("CHECKING THIS OUT: ",this.renderApps(apps, parsedCategory))
+        this.renderApps(apps, parsedCategory);
+      }  else {
+        // return error = "Sorry there are no apps yet for this category.";
+        this.setState({errorMessage: "Sorry there are no apps yet for this category."});
+      }
+    });
+  }
+
   public render() {
     if (!this.props.currentAgent) {
       return <div>
@@ -73,39 +88,30 @@ public componentDidMount() {
       </div>
     }
     console.log("agent: ", this.props.currentAgent);
+
     const greeting: string = "All Categories";
-    const renderCategoryApps = (parsedCategory) => {
-      fetchPOST('/fn/categories/getAppsByCategories', parsedCategory)
-        .then(response => {
-          console.log("getAppsByCategories response : ", response);
-          if (!response.error) {
-             const apps = response;
-             console.log("CHECKING THIS OUT: ",this.renderApps(apps, parsedCategory))
-             this.renderApps(apps, parsedCategory);
-          }  else {
-            // this.setState({errorMessage: "Sorry there are no apps yet for this category."});
-          }
-        });
-    }
+    // let error: string;
+
     const categoriesDisplay = this.state.categories.map((category, i) => {
-        i=i+1;
-        // let apps: Array<any> = [];
-        const parsedCategory = {category};
-        // JSON.stringify(parsedCategory);
-        console.log("parsedCategory"+i+" : ",parsedCategory );
-        const categoryApps = renderCategoryApps(parsedCategory);
-        console.log("returned from renderCategoryApps : ",categoryApps);
-        return (
-          <Row key={i+category} className="category-container">
-            <Col className="category-header-name">
-              <h3>{category}</h3>
-              <hr/>
-              {categoryApps}
-              <h4 className="no-app-message">{this.state.errorMessage}</h4>
-            </Col>
-          </Row>
+      const parsedCategory = {category};
+      // JSON.stringify(parsedCategory);
+      // let apps: Array<any> = [];
+      i=i+1;
+      console.log("parsedCategory"+i+" : ",parsedCategory );
+      const categoryApps = this.renderCategoryApps(parsedCategory);
+      console.log("returned from renderCategoryApps : ",categoryApps);
+      return (
+        <Row key={i+category} className="category-container">
+          <Col className="category-header-name">
+            <h3>{category}</h3>
+            <hr/>
+            {categoryApps}
+            <h4 className="no-app-message">{this.state.errorMessage}</h4>
+          </Col>
+        </Row>
       )
     });
+
     console.log("CATEGORIES DISPLAY: ",categoriesDisplay);
     return (
       <div>

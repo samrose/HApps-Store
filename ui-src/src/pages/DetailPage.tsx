@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 import { Component } from "react";
 import { connect } from 'react-redux';
 
@@ -11,7 +12,6 @@ import CreateReviewForm from '../components/CreateReviewForm';
 import ReviewList from "../components/ReviewList";
 // import AppList from "../containers/AppList";
 // import AppDetails from "../containers/AppDetails";
-
 import "./DetailPage.css";
 
 import { Hash } from "../../../holochain";
@@ -20,9 +20,13 @@ import { fetchPOST } from '../utils'
 
 type DetailPageProps = {
   currentAgent: {agent: {Hash: Hash, Name: string}},
+  currentAppDetails: {Entry: AppDetailState, Hash: Hash},
   currentApp: AppDetailState,
-  fetchAppDetails: () => void,
+  currentCategory: string,
+  currentAppHash: string,
   fetchAgent: () => void,
+  fetchAppDetails: (currentAppHash) => void,
+  fetchAppReviews: (currentAppHash) => void,
 }
 
 type DetailPageState = {
@@ -39,64 +43,67 @@ class DetailPage extends Component <DetailPageProps, DetailPageState> {
 
   public componentWillMount() {
     this.props.fetchAgent();
-    this.props.fetchAppDetails();
+    console.log("this.props in DetailPage: ", this.props);
+
+    const fetchDetailsBundle = { app_hash: this.props.currentAppHash }
+    JSON.stringify(fetchDetailsBundle);
+    console.log("fetchDetailsBundle for Fetch App Details Call", fetchDetailsBundle);
+    this.props.fetchAppDetails(fetchDetailsBundle)
+
+    const fetchAppReviewsBundle = { reviewedHash: this.props.currentAppHash }
+    JSON.stringify(fetchAppReviewsBundle);
+    console.log("fetchAppReviewsBundle for App REVIEWS CALL", fetchAppReviewsBundle);
+    this.props.fetchAppReviews(fetchAppReviewsBundle);
   }
 
   public toggleReviewForm = () => {
-    // console.log("calling this.toggleReviewForm");
-    // console.log("this.state.showReviewForm", this.state.showReviewForm);
-
-    // JSON.stringify(currentApphash);
-    // console.log("currentApphash (hashVAR) for App Detail Call", currentApphash);
+    console.log("calling this.toggleReviewForm");
+    console.log("this.state.showReviewForm", this.state.showReviewForm);
     this.setState({showReviewForm: !this.state.showReviewForm});
   }
 
   public render() {
-    const makeReview = (
-      <div className="interstitial-modal-overlay">
-        <div className="interstitial-modal">
-          <div className="modal-container register-modal">
-            <div className="modal-background">
-              <div className="modal">
-                <CreateReviewForm onModalToggle={this.toggleReviewForm}/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+    // const makeReview = (
+    //   <CreateReviewForm onModalToggle={this.toggleReviewForm}/>
+    // )
 
-    if (!this.props.currentAgent) {
+    if (!this.props.currentAgent || !this.props.currentAppDetails) {
       return <div>
         <h4>Loading...</h4>
       </div>
     }
     else {
       const { agent } = this.props.currentAgent;
+      const { currentAppDetails } = this.props;
+      console.log("currentAppDetails.Hash : ", currentAppDetails.Hash);
+      const appEntry = currentAppDetails.Entry;
       return (
         <div>
-          { this.state.showReviewForm ? makeReview : null }
-
-          <div className={ this.state.showReviewForm ? "app app-background detail-view hide" : "app app-background detail-view"} >
-            <h1 className="detail-page-header">App Name Goes Here</h1>
-            <JdenticonPlaceHolder className="jdenticon" size={150} hash={ agent.Hash } />
+          <div className={ this.state.showReviewForm ? "detail-view hide" : "detail-view"} >
+            <h1 className="detail-page-header">{appEntry.title}</h1>
+            <JdenticonPlaceHolder className="jdenticon" size={150} hash={currentAppDetails.Hash} />
+            <h3 className="detail-page-header">by: {appEntry.author.Name}</h3>
             <br/>
             <Row>
                 <Col s={12}>
                   <CardPanel className="lighten-4 black-text card-panel">
                       <h4 className="title">App Details</h4>
-                      <h5>{agent.Name}</h5>
-                      <br/>
-                      <br/>
-                      <br/>
-                      <button onClick={this.toggleReviewForm}>Add Review</button>
+                      <h5>{appEntry.description}</h5>
                   </CardPanel>
                   <CardPanel className="lighten-4 black-text card-panel">
                       <h4 className="title">App Reviews</h4>
+                      <Link to={`/appstore/${this.props.currentCategory}/${currentAppDetails.Hash}/makereview`} key={currentAppDetails.Hash}>
+                          <button>Add Review</button>
+                      </Link>
+                      <br/>
+                      <br/>
+                      <h5> Add a message {agent.Name}:</h5>
+                      <br/>
                       <ReviewList/>
+                      <br/>
                   </CardPanel>
                   <CardPanel className="lighten-4 black-text card-panel">
-                      <h4 className="title">Similar / Recommended Apps</h4>
+                      <h4 className="title">Other Apps in Category</h4>
                       {/* <AppList/> */}
                   </CardPanel>
                 </Col>
@@ -108,28 +115,36 @@ class DetailPage extends Component <DetailPageProps, DetailPageState> {
   }
 }
 
-const mapStateToProps = ({ currentAgent, currentApp }) => ({ currentAgent, currentApp });
+const mapStateToProps = ({ reviewEntries, currentAgent, currentAppDetails, currentAppHash, currentCategory }) => ({ reviewEntries, currentAgent, currentAppDetails, currentAppHash, currentCategory });
 const mapDispatchToProps = dispatch => ({
-  fetchAppReviews: (appHash) => {
-    fetchPOST('/fn/whoami/getAgent')
-      .then(agentHash => {
-        dispatch({ type: 'FETCH_REVIEWS', agentHash })
-      })
-    },
   fetchAgent: () => {
     fetchPOST('/fn/whoami/getAgent')
       .then(agent => {
         dispatch({ type: 'FETCH_AGENT', agent })
       })
   },
-  fetchAppDetails: () => {
-    fetchPOST('/fn/applications/getAppHash')
-      .then( appHash => {
-        dispatch({ type: 'VIEW_APP', appHash })
+  fetchAppDetails: (currentAppHash) => {
+    fetchPOST('/fn/happs/getApp', currentAppHash)
+      .then( appDetails => {
+        console.log("after action in DHT >> appDetials >> : ", appDetails);
+        dispatch({ type: 'VIEW_APP', appDetails })
       })
   },
+  fetchAppReviews: (appHash) => {
+    fetchPOST('/fn/ratings/getRatings', appHash)
+      .then( reviewEntries => {
+        console.log("getRatings response to send to reducer", reviewEntries);
+        dispatch({ type: 'FETCH_REVIEWS', reviewEntries })
+      })
+  },
+  // fetchAppReviewsTemporary: (appHash) => {
+  //   fetchPOST('/fn/ratings/getRatings', appHash)
+  //     .then(reviewEntries => {
+  //       console.log("getRatings response to send to reducer", reviewEntries);
+  //       dispatch({ type: 'FETCH_REVIEWS', reviewEntries })
+  //     })
+  //   },
   returnState: () => dispatch({ type: 'RETURN_STATE' }),
-  fetchAllApps: () => dispatch({ type: 'FETCH_ALL_APPS' }), // for the recommeneded app list
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailPage);

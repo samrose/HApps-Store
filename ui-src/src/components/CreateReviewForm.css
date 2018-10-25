@@ -6,10 +6,8 @@
 }
 
 .create-review-form {
-  z-index: 99999;
   border: 2px solid black;
   width: 600px;
-  height: 600px;
   background: white;
   filter: drop-shadow(2px 2px 0.5px gray);
   color: black;
@@ -73,18 +71,5 @@
     text-shadow: 0px -1px grey;
     cursor: pointer;
 }
-
-/* .button span:after {
-    display: block;
-    width: 10px;
-    height: 10px;
-    position: absolute;
-    right: 14px;
-    top: 12px;
-    font-weight: 700;
-    color: #AEBF3B;
-    text-shadow: 0px 1px #fff, 0px -1px #97A63A;
-    font-size: 26px;
-} */
 
 /* =========== =========== =========== =========== ===========*/

@@ -3,16 +3,12 @@ import * as redux from 'redux';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // import SplashNav from "./components/SplashNav";
-
-import ScaffoldRef from "./pages/ReferencePage";
-
 import SplashScreen from "./pages/SplashScreen";
-// import AllApps from "./pages/AllAppsPage";
 import AllCategories from "./pages/AllCategoriesPage";
 import Category from "./pages/CategoryPage";
 import Detail from "./pages/DetailPage";
-// import UploadNewApp from "./pages/UploadNewApp";
 import Profile from "./pages/Profile";
+import CreateReviewForm from "./components/CreateReviewForm";
 import NoMatch from "./pages/NoMatch";
 
 const exact: boolean = true;
@@ -26,8 +22,8 @@ const App = () =>
         <Route exact={exact} path="/appstore/Categories" component={AllCategories} />
         <Route exact={exact} path="/appstore/:category" component={Category} />
         <Route exact={exact} path="/appstore/:category/:id" component={Detail} />
+        <Route exact={exact} path="/appstore/:category/:id/makereview" component={CreateReviewForm} />
         <Route exact={exact} path="/profile/:userHash" component={Profile} />
-        {/* <Route exact={exact} path="/produceapp" component={UploadNewApp} /> */}
         <Route component={NoMatch} />
       </Switch>
     </div>

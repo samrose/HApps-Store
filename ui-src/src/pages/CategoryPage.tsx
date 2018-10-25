@@ -36,7 +36,7 @@ type CategoryPageProps = {
 
 class CategoryPage extends React.Component <CategoryPageProps, {}> {
   public componentDidMount() {
-    // this.props.fetchAgent();
+    this.props.fetchAgent();
     this.props.fetchAllApps();
     console.log("this.props.currentCategory", this.props.currentCategory);
   }

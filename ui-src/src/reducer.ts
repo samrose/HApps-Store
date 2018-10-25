@@ -133,11 +133,12 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
 
     case 'VIEW_APP': {
       if (state.currentAppDetails) {
+        console.log("the App Details (VIEW_APP) ACTION payload", action);
         console.log("state.currentAppDetails", state.currentAppDetails);
         state.currentAppDetails = null;
       }
-      console.log("the App Details (VIEW_APP) ACTION payload", action.details);
-      const { author, thumbnail, description, title, uuid } = action.details;
+      console.log("the App Details (VIEW_APP) ACTION payload", action);
+      const { author, thumbnail, description, title, uuid } = action.appDetails;
       const Entry:AppDetailState = {
         author,
         thumbnail,
