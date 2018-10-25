@@ -27,9 +27,14 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     }
 
     case 'REGISTER_CATEGORY': {
-      const current = action.category;
-      console.log("INSIDE REDUCER, currentCategory :", current);
-      return {...state, currentCategory: current};
+      const {category} = action;
+      console.log("INSIDE REDUCER, currentCategory :", category);
+
+      return Object.assign({}, state, {
+        currentCategory: category
+      })
+
+      // return {...state, currentCategory};
     }
 
     case 'REGISTER_APP_HASH': {

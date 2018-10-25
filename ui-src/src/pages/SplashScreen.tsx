@@ -15,7 +15,7 @@ type SplashScreenProps = {
   fetchAgent: () => void,
   currentAgent: {agent: {Hash: Hash, Name: string}},
   currentCategory: string,
-  registerCategoryType: (category) => void,
+  registerCategoryType: (category) => Promise<any>,
 }
 
 
@@ -71,16 +71,24 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
     this.props.fetchAgent();
   }
 
-  public registerCategory = (category) => {
-    console.log("category chosen:", category );
-    this.props.registerCategoryType(category);
-    setInterval(console.log("this.props.currentCategory", this.props.currentCategory), 3000);
+  public handleOnClick = e => {
+    const panelClassName = e.target.className;
+    const panelType = panelClassName.split(" ").slice(1);
+    if (panelType.length >= 4) {
+      const panel = panelType.slice(0,2).join(" ");
+      this.handleToggle(panel);
+    }
+    else {
+      const panel = panelType.join(" ");
+      this.handleToggle(panel);
+    }
+
+    const category = panelClassName.split(" ")[0];
+    this.registerCategory(category);
   }
 
-  public handleOnClick = e => {
-    const panelType = e.target.className;
-    this.handleToggle(panelType);
-    this.registerCategory(panelType);
+  public registerCategory = (category) => {
+    this.props.registerCategoryType(category)
   }
 
   public handleToggle = (panelType: string) => {
@@ -184,7 +192,7 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
 
 
   public removeMessages = () => {
-    console.log("SET THE STATE TO FALSE");
+    // console.log("SET THE STATE TO FALSE");
     this.setState({toggleMessage: false });
   }
 
@@ -215,12 +223,17 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
         toggleState = toggle
       }
       this.chooseToggleState1(i, cb);
+      const categoryName = panel.name.toLowerCase().replace(/\s{1,}/g,'').trim();
+      // console.log("categoryName", categoryName);
+
       return (
-        <div key={panel.name} className={toggleState ? `panel panel${i} open open-active` :` panel panel${i}` } onClick={this.handleOnClick}>
+        <div key={categoryName} className={toggleState ? `${categoryName} ${panel.name} panel panel${i} open open-active` :`${categoryName} ${panel.name} panel panel${i}` } onClick={this.handleOnClick}>
           <p>{panel.name}</p>
-          <p className={panel.name}><i className="material-icons">{panel.icon}</i></p>
-          <p><a className={panel.name} href={`/appstore/${panel.name}`}>
-            <button className="icon-btn"><h4 className="btn-text">{panel.btn}</h4></button>
+          <p className={`${categoryName} ${panel.name}`}><i className="material-icons">{panel.icon}</i></p>
+          <p><a className={`${categoryName} ${panel.name}`}>
+            <Link to={`/appstore/${categoryName}`}>
+              <button className={`${categoryName} icon-btn`}><h4 className={`${categoryName} btn-text`}>{panel.btn}</h4></button>
+            </Link>
           </a></p>
         </div>
     )
@@ -234,12 +247,16 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
         toggleState = toggle
       }
       this.chooseToggleState2(i, cb);
+      const categoryName = panel.name.toLowerCase().replace(/\s{1,}/g,'').trim();
+      // console.log("categoryName", categoryName);
       return (
-        <div key={panel.name} className={toggleState ? `panel panel${i} open open-active` :` panel panel${i}` } onClick={this.handleOnClick}>
+        <div key={categoryName} className={toggleState ? `${categoryName} ${panel.name} panel panel${i} open open-active` : `${categoryName} ${panel.name} panel panel${i}` } onClick={this.handleOnClick}>
           <p>{panel.name}</p>
-          <p className={panel.name}><i className="material-icons">{panel.icon}</i></p>
-          <p><a className={panel.name} href={`/appstore/${panel.name}`}>
-            <button className="icon-btn"><h4 className="btn-text">{panel.btn}</h4></button>
+          <p className={`${categoryName} ${panel.name}`}><i className="material-icons">{panel.icon}</i></p>
+          <p><a className={`${categoryName} ${panel.name}`}>
+            <Link to={`/appstore/${categoryName}`}>
+              <button className={`${categoryName} icon-btn`}><h4 className={`${categoryName} btn-text`}>{panel.btn}</h4></button>
+            </Link>
           </a></p>
         </div>
     )
@@ -273,6 +290,7 @@ const mapDispatchToProps = dispatch => ({
       })
   },
   registerCategoryType: (category) => {
+    console.log("category CALLED : ", category );
     dispatch({ type: 'REGISTER_CATEGORY', category })
   },
 });

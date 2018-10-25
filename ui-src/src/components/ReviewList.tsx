@@ -12,9 +12,10 @@ import "./ReviewList.css";
 type ReviewListProps = {
   currentAgent: {agent: {Hash: Hash, Name: string}},
   currentAppDetails: {Entry: AppDetailState, Hash: Hash},
+  currentAppHash: string,
   fetchAgent: () => void,
-  fetchAppReviews: () => void,
-  fetchAppReviewsTemporary : () => void,
+  fetchAppDetails: (currentAppHash) => void,
+  fetchAppReviews: (currentAppHash) => void,
 }
 
 class ReviewList extends React.Component<any, any>  {
@@ -25,13 +26,13 @@ class ReviewList extends React.Component<any, any>  {
   public componentDidMount() {
     const { agent } = this.props.currentAgent;
     const agentHash = agent.Hash;
-
+    console.log("this.props : ", this.props);
     console.log("currentAppDetails: ", this.props.currentAppDetails);
-    // this.props.fetchAppReviewsTemporary(agentHash);
-    const appHash = this.props.currentAppDetails.Hash;
-    const currentAppHash = {reviewedHash: appHash }
+
+    const currentAppHash = {reviewedHash: this.props.currentAppHash }
     JSON.stringify(currentAppHash);
     console.log("currentApphash for App Detail Call", currentAppHash);
+    this.props.fetchAppDetails(currentAppHash);
     this.props.fetchAppReviews(currentAppHash);
   }
 
@@ -71,19 +72,25 @@ class ReviewList extends React.Component<any, any>  {
   }
 }
 
-const mapStateToProps = ({ reviewEntries, currentAgent, currentAppDetails }) => ({ reviewEntries, currentAgent, currentAppDetails });
+const mapStateToProps = ({ reviewEntries, currentAgent, currentAppDetails, currentAppHash }) => ({ reviewEntries, currentAgent, currentAppDetails, currentAppHash });
 const mapDispatchToProps = dispatch => ({
-fetchAppReviewsTemporary: (appHash) => {
-  fetchPOST('/fn/ratings/getRatings', appHash)
-    .then(reviewEntries => {
-      console.log("getRatings response to send to reducer", reviewEntries);
-      dispatch({ type: 'FETCH_REVIEWS', reviewEntries })
-    })
-  },
+// fetchAppReviewsTemporary: (appHash) => {
+//   fetchPOST('/fn/ratings/getRatings', appHash)
+//     .then(reviewEntries => {
+//       console.log("getRatings response to send to reducer", reviewEntries);
+//       dispatch({ type: 'FETCH_REVIEWS', reviewEntries })
+//     })
+//   },
   fetchAgent: () => {
     fetchPOST('/fn/whoami/getAgent')
       .then(agent => {
         dispatch({ type: 'FETCH_AGENT', agent })
+      })
+  },
+  fetchAppDetails: (appHash) => {
+    fetchPOST('/fn/happs/getApp', appHash)
+      .then( appDetails => {
+        dispatch({ type: 'VIEW_APP', appDetails })
       })
   },
   fetchAppReviews: (appHash) => {

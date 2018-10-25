@@ -111,7 +111,7 @@ class UploadNewApp extends React.Component<any, UploadNewAppState> {
         <div className="create-app-form" onKeyUp={ this.handleEnter }>
           <h1 className="registration-header">Upload Your App Below</h1>
           <h4 className="app-author">Author: {agent.Name}</h4>
-          <h4 className="app-author">Avatar:
+          <h4 className="app-author">(User Avatar)
               <JdenticonPlaceHolder className="jdenticon" size={100} hash={ agent.Hash } />
           </h4>
           <hr className="reg-hr"/>

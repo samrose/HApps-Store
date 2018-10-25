@@ -15,52 +15,58 @@ import { ReduxAction } from '../../../types';
 import { Hash } from '../../../holochain';
 
 type CategoryPageProps = {
-  AllApps: Array<{Entry:{
+  AllApps: Array<{
+    Entry:{
      author: {Hash:Hash, Name:string},
      thumbnail: string,
      description: HTMLInputElement | string,
      title: string,
-     uuid: string,}
-  ,Hash: Hash}>,
+     uuid: string,
+   },
+   Hash: Hash}>,
   currentAgent: {agent: {Hash: Hash, Name: string}},
   currentCategory: string,
   currentAppHash: string,
   appsByCategory: Array<{Hash,string}>,
   fetchAgent: () => void,
   fetchAllApps: () => void,
-  fetchAppDetails: () => void,
-  registerCurrentAppHash: (appHash) => void,
-  getappsByCategory: (cateogry) => void,
+  getappsByCategory: (category) => void,
+  registerAppHash: (appHash) => void,
 }
 
 class CategoryPage extends React.Component <CategoryPageProps, {}> {
   public componentDidMount() {
-    this.props.fetchAgent();
-    setInterval(this.props.fetchAllApps(), 500);
+    // this.props.fetchAgent();
+    this.props.fetchAllApps();
+    console.log("this.props.currentCategory", this.props.currentCategory);
   }
 
-  public handleSelectApp = () => {
-    // this.props.fetchAppDetails();
+  public handleSelectApp = (hash) => (e) => {
+    console.log("app.Hash", hash);
+    this.props.registerAppHash(hash);
   }
 
   public render() {
     const greeting: string = "Category Page";
-    if (!this.props.currentAgent || !this.props.AllApps) {
+    if (!this.props.AllApps) {
       return <div>
         <h4 className="loading-text">Loading...</h4>
       </div>
     }
+    else if (!this.props.currentAgent || !this.props.currentAgent && !this.props.AllApps) {
+      location.assign(`/appstore`);
+    }
+    console.log("this.props", this.props);
 
-    console.log("this.props.currentCategory", this.props.currentCategory);
     const { agent } = this.props.currentAgent;
     const { currentCategory, AllApps} = this.props;
 
     const renderApps = AllApps.map(app => {
-      console.log("this.props.AllApps app .Entry.title", app.Entry.title);
+      console.log("this.props.AllApps --> app.Entry.title", app.Entry.title);
       return (
-        <Link to={`/appstore/${`Admin Tools`}/${app.Hash}`} key={app.Hash}>
-        <div className="appstore-app-icons" onClick={this.handleSelectApp}>
-          <JdenticonPlaceHolder className="jdenticon" size={150} hash={ app.Hash } />
+        <Link to={`/appstore/${currentCategory}/${app.Hash}`} key={app.Hash}>
+        <div className="appstore-app-icons" onClick={this.handleSelectApp(app.Hash)}>
+          <JdenticonPlaceHolder className={`${app.Hash} jdenticon`} size={150} hash={ app.Hash } />
           <h4>{app.Entry.title}</h4>
         </div>
         </Link>
@@ -95,17 +101,14 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: 'FETCH_ALL_APPS', allApps })
     })
 },
-  fetchAppDetails: (appHash) => {
-    fetchPOST('/fn/happs/getApp', appHash)
-      .then( appDetails => {
-        dispatch({ type: 'VIEW_APP', appDetails })
-      })
-  },
   getappsByCategory: (category) => {
     fetchPOST('/fn/categories/getAppsByCategories', category)
       .then( appsByCurrentCategory => {
         dispatch({ type: 'FETCH_APPS_BY_CATEGORY', category, appsByCurrentCategory })
       })
+  },
+  registerAppHash: (appHash) => {
+    dispatch({ type: 'REGISTER_APP_HASH', appHash })
   }
 });
 

@@ -31,9 +31,7 @@ class MainNav extends React.Component<any, {}> {
     const { agent } = this.props.currentAgent!;
     let agentName = agent.Name;
     if (agentName.length > 15 ) {
-      // agentName = agentName.substring(0,15) + "...";
-      // TODO: REMOVE THE FOLLWOWING LINE, and uncomment the one above..
-      agentName = "Lisa";
+      agentName = agentName.substring(0,15) + "...";
     }
     return (
       <nav className="nav nav-pills flex-column flex-sm-row">

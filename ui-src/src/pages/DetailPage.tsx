@@ -39,7 +39,7 @@ class DetailPage extends Component <DetailPageProps, DetailPageState> {
 
   public componentWillMount() {
     this.props.fetchAgent();
-    // setInterval(this.props.returnState(), 1200)
+    this.props.fetchAppDetails();
   }
 
   public toggleReviewForm = () => {
@@ -85,7 +85,7 @@ class DetailPage extends Component <DetailPageProps, DetailPageState> {
                 <Col s={12}>
                   <CardPanel className="lighten-4 black-text card-panel">
                       <h4 className="title">App Details</h4>
-                      <h5>whoami: {agent.Name}</h5>
+                      <h5>{agent.Name}</h5>
                       <br/>
                       <br/>
                       <br/>
@@ -110,7 +110,7 @@ class DetailPage extends Component <DetailPageProps, DetailPageState> {
 
 const mapStateToProps = ({ currentAgent, currentApp }) => ({ currentAgent, currentApp });
 const mapDispatchToProps = dispatch => ({
-  fetchAppReviewsTemporary: () => {
+  fetchAppReviews: (appHash) => {
     fetchPOST('/fn/whoami/getAgent')
       .then(agentHash => {
         dispatch({ type: 'FETCH_REVIEWS', agentHash })
@@ -129,7 +129,7 @@ const mapDispatchToProps = dispatch => ({
       })
   },
   returnState: () => dispatch({ type: 'RETURN_STATE' }),
-  fetchAllApps: () => dispatch({ type: 'FETCH_ALL_APPS' }),
+  fetchAllApps: () => dispatch({ type: 'FETCH_ALL_APPS' }), // for the recommeneded app list
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailPage);
