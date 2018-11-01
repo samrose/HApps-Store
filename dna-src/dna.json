@@ -148,7 +148,12 @@
         "Name": "getAgent",
         "CallingType": "json",
         "Exposure": "public"
-      }]
+      },{
+        "Name": "findUser",
+        "CallingType": "json",
+        "Exposure": "public"
+        }
+      ]
     },
     {
       "Name": "comments",

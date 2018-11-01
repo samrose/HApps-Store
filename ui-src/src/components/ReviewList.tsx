@@ -24,6 +24,32 @@ class ReviewList extends React.Component<any, any>  {
     super(props);
   }
 
+  /* ///////////////////////////////////////////////
+      Table Data Generation Helper Function : Date
+   ////////////////////////////////////////////////*/
+  public formatDate(dateparam) {
+    const unixDate = new Date(dateparam);
+
+    const dd = unixDate.getDate();
+    const mm = unixDate.getMonth()+1; // Jan is 0
+    const yyyy = unixDate.getFullYear();
+
+    const datestamp = mm + '-' + dd + '-' + yyyy;
+    const hr = unixDate.getHours();
+    const m = "0" + unixDate.getMinutes();
+    const s = "0" + unixDate.getSeconds();
+    const timestamp  = hr+ ':' + m.substr(-2) + ':' + s.substr(-2);
+
+    const dateTimeStamps = {
+      datestamp,
+      timestamp
+    }
+
+    // console.log("dateTimeStamps", dateTimeStamps);
+    return dateTimeStamps;
+  }
+  //////////////////////////////////////////////// */
+
   public componentDidMount() {
     console.log("this.props in ReviewList : ", this.props);
 
@@ -33,10 +59,12 @@ class ReviewList extends React.Component<any, any>  {
     this.props.fetchAppReviews(currentAppHash);
   }
 
+
+
   public renderCurrentReviewList() {
     const { agent } = this.props.currentAgent;
     const agentHash = agent.Hash;
-    
+
     if (!this.props.reviewEntries) {
       // console.log("!this.props.reviewEntries ?!", this.props.reviewEntries);
       return <div>
@@ -46,19 +74,24 @@ class ReviewList extends React.Component<any, any>  {
     else {
       const { reviewEntries } = this.props;
       console.log("reviewEntries", reviewEntries);
-      console.log("typeof reviewEntries : ", typeof reviewEntries);
+      // console.log("typeof reviewEntries : ", typeof reviewEntries);
 
       return reviewEntries.sort().map((entry) => {
+        const authorName : Promise<any> = this.props.findUser(entry.author);
+        const timestamp = this.formatDate(entry.timestamp);
+        // console.log("entry timestamp >>", timestamp);
+        // console.log("msg author >>", authorName);
         return (
-          <li
+          <div
             key={entry.authorHash+entry.rating+entry.review}
             className="list-group-item list-entry-item"
           >
-            <JdenticonPlaceHolder className="jdenticon" size={100} hash={ agent.Hash } />
-            <span><h4>{entry.authorName} <span>{entry.timestamp}</span></h4></span>
+            <JdenticonPlaceHolder id="review-jdenticon" className="jdenticon" size={100} hash={ entry.author } />
+             <span>{`${timestamp.datestamp }: ${timestamp.timestamp}`}</span>
+             <h4>{authorName}</h4>
             <h5>{entry.rate}</h5>
             <h5>{entry.review}</h5>
-          </li>
+          </div>
         );
       });
     }
@@ -66,9 +99,9 @@ class ReviewList extends React.Component<any, any>  {
 
   public render() {
     return(
-        <ul className="list-group">
+        <div className="list-group container">
           {this.renderCurrentReviewList()}
-        </ul>
+        </div>
     );
   }
 }
@@ -79,6 +112,12 @@ const mapDispatchToProps = dispatch => ({
     fetchPOST('/fn/whoami/getAgent')
       .then(agent => {
         dispatch({ type: 'FETCH_AGENT', agent })
+      })
+  },
+  findUser: (hash) => {
+    fetchPOST('/fn/whoami/findUser', hash)
+      .then(user => {
+        dispatch({ type: 'FETCH_MSG_AUTHOR', user })
       })
   },
   fetchAppDetails: (currentAppHash) => {

@@ -3,20 +3,19 @@ import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Component } from "react";
 import { connect } from 'react-redux';
-
+import { Hash } from "../../../holochain";
+import { AppDetailState } from "../../../types";
+import { fetchPOST } from '../utils'
 import { Row, Col, CardPanel } from 'react-materialize';
-
 import JdenticonPlaceHolder from '../components/JdenticonFiller';
 
 import CreateReviewForm from '../components/CreateReviewForm';
 import ReviewList from "../components/ReviewList";
+import DownloadApp from "../components/DownloadApp"
 // import AppList from "../containers/AppList";
 // import AppDetails from "../containers/AppDetails";
 import "./DetailPage.css";
 
-import { Hash } from "../../../holochain";
-import { AppDetailState } from "../../../types";
-import { fetchPOST } from '../utils'
 
 type DetailPageProps = {
   currentAgent: {agent: {Hash: Hash, Name: string}},
@@ -82,13 +81,14 @@ class DetailPage extends Component <DetailPageProps, DetailPageState> {
           <div className={ this.state.showReviewForm ? "detail-view hide" : "detail-view"} >
             <h1 className="detail-page-header">{appEntry.title}</h1>
             <JdenticonPlaceHolder className="jdenticon" size={150} hash={currentAppDetails.Hash} />
-            <h3 className="detail-page-header">by: {appEntry.author.Name}</h3>
             <br/>
             <Row>
                 <Col s={12}>
                   <CardPanel className="lighten-4 black-text card-panel">
                       <h4 className="title">App Details</h4>
-                      <h5>{appEntry.description}</h5>
+                      <h5 className="detail-page-header">Author: {appEntry.author.Name}</h5>
+                      <h5>Description: {appEntry.description}</h5>
+                      <DownloadApp/>
                   </CardPanel>
                   <CardPanel className="lighten-4 black-text card-panel">
                       <h4 className="title">App Reviews</h4>
@@ -137,13 +137,6 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: 'FETCH_REVIEWS', reviewEntries })
       })
   },
-  // fetchAppReviewsTemporary: (appHash) => {
-  //   fetchPOST('/fn/ratings/getRatings', appHash)
-  //     .then(reviewEntries => {
-  //       console.log("getRatings response to send to reducer", reviewEntries);
-  //       dispatch({ type: 'FETCH_REVIEWS', reviewEntries })
-  //     })
-  //   },
   returnState: () => dispatch({ type: 'RETURN_STATE' }),
 });
 

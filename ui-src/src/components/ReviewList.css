@@ -2,6 +2,7 @@
   list-style: none;
 }
 
-.list-group-item {
-  color: black !important;
+#review-jdenticon {
+  height: 30px;
+  width: 30px;
 }

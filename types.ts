@@ -18,10 +18,11 @@ export type HCHCAppState = {
   appCode: AppDNACode | null,
   reviewEntries: [ReviewLog] | [{}],
   // reviewEntries: List<ReviewLog>,
+  msgAuthorObj: {user: {Hash: Hash, Name: string}}| null,
 };
 
 export type AppDetailState = {
-  author: Map<Hash, string>,
+  author: {Hash: Hash, Name: string},
   thumbnail: string,
   description: HTMLInputElement | string,
   title: string,
@@ -56,13 +57,14 @@ export type ReduxAction
   | { type: 'REGISTER_CATEGORY', category: string }
   | { type: 'REGISTER_APP_HASH', appHash: string }
 
-  | { type: 'FETCH_ALL_APPS', allApps: [{Entry:{AppDetailState}, Hash}] }  // {Hash:Hash, icon: string}
+  | { type: 'FETCH_ALL_APPS', allApps: [{Entry:{AppDetailState}, Hash}] }
   | { type: 'GET_APPS_BY_CATEGORY', category :string, appsByCurrentCategory: Array<{Entry: AppDetailState, Hash: Hash}> }
-  | { type: 'VIEW_APP', details: AppDetailState }
+  | { type: 'VIEW_APP', appDetails: AppDetailState }
   | { type: 'FETCH_APP_CODE', code: AppDNACode }
 
   | { type: 'CREATE_REVIEW', params: ReviewParams }
   | { type: 'FETCH_REVIEWS', reviewEntries: [ReviewLog]}
+  | { type: 'FETCH_MSG_AUTHOR', user: {Hash: Hash, Name: string}}
 
   | { type: 'CREATE_NEW_APP_DETAILS', params: AppParams }
   | { type: 'CREATE_NEW_APP_CODE', params: CodeParams }

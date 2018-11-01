@@ -13,6 +13,7 @@ const defaultState: HCHCAppState = {
   currentAppDetails: null,
   appCode: null,
   reviewEntries: [{}],
+  msgAuthorObj: null
 };
 
 export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCHCAppState => {
@@ -163,6 +164,15 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
       return {
         ...state,
         currentAgent: { agent }
+      };
+    }
+
+    case 'FETCH_MSG_AUTHOR': {
+      console.log("Fetch FETCH_MSG_AUTHOR Action: ", action);
+      const { user } = action;
+      return {
+        ...state,
+        msgAuthorObj: { user }
       };
     }
 

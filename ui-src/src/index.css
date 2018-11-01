@@ -50,11 +50,16 @@ h6 {
 .card-panel {
 	margin-top: 30px;
 	color: white !important;
-	background: black;
+	background: #0c5e5b	;
+	/* background: radial-gradient(rgba(0, 0, 0, 1), hsla(185, 30%, 50%, 1.6), hsla(170, 50%, 10%, 0)); */
 	border: 2px solid #282a2f;
 	min-height: 300px;
 }
 
+.list-group-item {
+	text-align: left;
+  background-color: #202125 !important;
+}
 
 .app-background {
 	margin: 5px;
