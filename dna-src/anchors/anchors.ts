@@ -1,3 +1,14 @@
+
+'use strict';
+export = 0;
+let module = {};
+// -----------------------------------------------------------------
+//  Public Functions
+// Author : Zo-El
+// -----------------------------------------------------------------
+// Description :
+// -----------------------------------------------------------------
+
 function anchor(anchor) {
   var anchorType = {anchorType: anchor.anchorType, anchorText: ''};
   var rootAnchortype =  {anchorType: 'anchorTypes', anchorText: ''};

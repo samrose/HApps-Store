@@ -1,5 +1,92 @@
+* {
+	 box-sizing: border-box;
+	 font-family: 'Poppins', sans-serif;
+	 /* font-family: 'Roboto Slab', serif; */
+	 /* font-family: 'PT Sans', sans-serif; */
+	 /* font-family: 'Kosugi Maru', sans-serif; */
+ }
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+	margin: 0 auto;
+	line-height: 1.3em;
+	height: 100%;
+	background: radial-gradient(circle, #36383F, #202125);
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 100%; /* Prevent jump from scrollbar appearing on only some pages */
+}
+
+.app {
+	padding: 15px;
+	height: 90vh;
+}
+
+.brand-logo {
+	margin-left: 20px;
+}
+
+.nav-item {
+	margin-right: 10px;
+}
+
+.list-entry-item {
+  cursor: pointer;
+	font-weight: bold;
+	margin: 20px 80px;
+}
+
+h6 {
+	line-height: 2.1;
+}
+
+.jumbotron-title {
+	color: white;
+	text-align: center;
+	padding: 20px 50px 50px 50px;
+	margin: 50px;
+}
+
+.card-panel {
+	margin-top: 30px;
+	color: white !important;
+	background: #0c5e5b	;
+	/* background: radial-gradient(rgba(0, 0, 0, 1), hsla(185, 30%, 50%, 1.6), hsla(170, 50%, 10%, 0)); */
+	border: 2px solid #282a2f;
+	min-height: 300px;
+}
+
+.list-group-item {
+	text-align: left;
+  background-color: #202125 !important;
+}
+
+.app-background {
+	margin: 5px;
+	background: #1e2126;
+}
+
+hr {
+	height: .75px;
+	width: 85%;
+	background: #026269;
+}
+
+td {
+	color: black !important;
+}
+
+.nav-btn {
+	background: #367780; /* #075250 */
+}
+
+.detail-view.hide {
+	visibility: hidden;
+}
+
+.loading-text {
+	color: white;
+	font-size: 3em;
+	position: relative;
+	top: 30%;
 }

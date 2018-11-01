@@ -14,6 +14,13 @@ function getAgent(): any {
   Name: App.Agent.String
   };
 }
+
+function findUser(hash): any {
+  return {Hash : hash,
+  Name: App.Agent.String
+  };
+}
+
 // -----------------------------------------------------------------
 //  The Genesis Function https://developer.holochain.org/genesis
 // -----------------------------------------------------------------
