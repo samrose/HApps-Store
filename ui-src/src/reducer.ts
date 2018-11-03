@@ -10,6 +10,12 @@ const defaultState: HCHCAppState = {
   AdminApps: null,
   DevApps: null,
   TopApps: null,
+  GameApps:null,
+  MusicApps:null,
+  LeisureApps:null,
+  MoviesApps:null,
+  EducationalApps:null,
+  FinanceApps:null,
   currentCategory: null,
   currentAppHash: "null",
   appsByCategory: null,
@@ -140,15 +146,34 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
       return { ...state, AllApps };
     }
     case 'GET_APPS_BY_CATEGORY': {
-      if (action.category === "admintools") {
+    
+      if (action.category === "admintools" && !action.allApps.error) {
         const AdminApps = action.allApps;
         return { ...state, AdminApps };
-      } else if (action.category === "devtools") {
+      } else if (action.category === "devtools" && !action.allApps.error) {
         const DevApps = action.allApps;
         return { ...state, DevApps };
-      } else if (action.category === "topdownloads") {
+      } else if (action.category === "topdownloads" && !action.allApps.error) {
         const TopApps = action.allApps;
         return { ...state, TopApps };
+      } else if (action.category === "games" && !action.allApps.error) {
+        const GameApps = action.allApps;
+        return { ...state, GameApps };
+      } else if (action.category === "music" && !action.allApps.error) {
+        const MusicApps = action.allApps;
+        return { ...state, MusicApps };
+      } else if (action.category === "leisure" && !action.allApps.error) {
+        const LeisureApps = action.allApps;
+        return { ...state, LeisureApps };
+      } else if (action.category === "finance" && !action.allApps.error) {
+        const FinanceApps = action.allApps;
+        return { ...state, FinanceApps };
+      } else if (action.category === "educational" && !action.allApps.error) {
+        const EducationalApps = action.allApps;
+        return { ...state, EducationalApps };
+      } else if (action.category === "movies" && !action.allApps.error) {
+        const MoviesApps = action.allApps;
+        return { ...state, MoviesApps };
       }
       return { ...state };
     }
