@@ -37,7 +37,8 @@ type CategoryPageProps = {
 class CategoryPage extends React.Component <CategoryPageProps, {}> {
   public componentDidMount() {
     this.props.fetchAgent();
-    this.props.fetchAllApps();
+    // this.props.fetchAllApps();
+    this.props.getappsByCategory(this.props.currentCategory);
     console.log("this.props.currentCategory", this.props.currentCategory);
   }
 
@@ -102,9 +103,9 @@ const mapDispatchToProps = dispatch => ({
     })
 },
   getappsByCategory: (category) => {
-    fetchPOST('/fn/categories/getAppsByCategories', category)
-      .then( appsByCurrentCategory => {
-        dispatch({ type: 'FETCH_APPS_BY_CATEGORY', category, appsByCurrentCategory })
+    fetchPOST('/fn/categories/getAppsByCategories', {category})
+      .then( allApps => {
+        dispatch({ type: 'FETCH_APPS_BY_CATEGORY', allApps })
       })
   },
   registerAppHash: (appHash) => {

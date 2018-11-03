@@ -1,12 +1,21 @@
 import { Hash } from '../../holochain';
 // import { List, Map } from "immutable"
 import { Map } from "immutable"
-import {HCHCAppState, AppDetailState, AppDNACode, ReviewLog, ReduxAction} from "../../types";
+import { HCHCAppState, AppDetailState, AppDNACode, ReviewLog, ReduxAction } from "../../types";
 
 
 const defaultState: HCHCAppState = {
   currentAgent: null,
   AllApps: null,
+  AdminApps: null,
+  DevApps: null,
+  TopApps: null,
+  GameApps:null,
+  MusicApps:null,
+  LeisureApps:null,
+  MoviesApps:null,
+  EducationalApps:null,
+  FinanceApps:null,
   currentCategory: null,
   currentAppHash: "null",
   appsByCategory: null,
@@ -28,22 +37,18 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     }
 
     case 'REGISTER_CATEGORY': {
-      const {category} = action;
+      const { category } = action;
       console.log("INSIDE REDUCER, currentCategory :", category);
 
       return Object.assign({}, state, {
         currentCategory: category
       })
-
-      // return {...state, currentCategory};
     }
-
     case 'REGISTER_APP_HASH': {
       const currentAppHash = action.appHash;
       console.log("INSIDE REDUCER, appHash", currentAppHash);
-      return {...state, currentAppHash}
+      return { ...state, currentAppHash }
     }
-
     case 'CREATE_NEW_APP_DETAILS': {
       return state;
     }
@@ -51,14 +56,13 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     case 'CREATE_NEW_APP_CODE': {
       return state;
     }
-
     case 'CREATE_REVIEW': {
       console.log("action.params", action.params);
       let newReview;
       const { reviewEntries } = state;
       const check = Object.keys(reviewEntries).length;
       // console.log(">>> reviewEntires.keys.length", check);
-      if ( check === 0 || reviewEntries === null || reviewEntries === undefined ) {
+      if (check === 0 || reviewEntries === null || reviewEntries === undefined) {
         newReview = {};
         newReview = {
           authorHash: action.params.authorHash,
@@ -67,7 +71,7 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
           review: action.params.review,
           timestamp: "Now"
         };
-        newReview = [ newReview ];
+        newReview = [newReview];
         console.log("line 109 newReview", newReview);
         // console.log({ newReview });
 
@@ -95,52 +99,33 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
         };
       }
     }
-
-    case 'GET_APPS_BY_CATEGORY': {
-      console.log("INSIDE REDUCER >> action.AppsByCategory : ", action.appsByCurrentCategory);
-      const appsByCategory : Array<{Entry: AppDetailState, Hash: Hash}> = action.appsByCurrentCategory;
-      return {...state, appsByCategory};
-    }
-
     case 'FETCH_REVIEWS': {
       const reviews: [ReviewLog] = action.reviewEntries;
       console.log(action);
       console.log("reviews", reviews);
       const reviewEntries: [ReviewLog] = reviews;
 
-      return { ...state, reviewEntries};
+      return { ...state, reviewEntries };
     }
 
-    case 'FETCH_APP_CODE' : {
-      if (!state.currentAppDetails) {break};
+    case 'FETCH_APP_CODE': {
+      if (!state.currentAppDetails) { break };
       if (state.appCode) {
-        console.log("state.appCode", state.appCode);
         state.appCode = null;
       }
-
-      console.log("the FETCH_APP_CODE payload", action);
       const { fileload } = action.code;
-      console.log("fileload", fileload);
-      // const hash = fileload.hash;
-      // const code = fileload.CodeParams.dna;
-      // const test = fileload.CodeParams.test;
-
       const appCode: AppDNACode = {
         fileload: Map({}),
-        // fileload: Map<("Hash",{"dnaCode","testCode"})>,
       }
-      return {...state}
+      return { ...state }
     }
 
     case 'VIEW_APP': {
       if (state.currentAppDetails) {
-        console.log("the App Details (VIEW_APP) ACTION payload", action);
-        console.log("state.currentAppDetails", state.currentAppDetails);
         state.currentAppDetails = null;
       }
-      console.log("the App Details (VIEW_APP) ACTION payload", action);
       const { author, thumbnail, description, title, uuid } = action.appDetails;
-      const Entry:AppDetailState = {
+      const Entry: AppDetailState = {
         author,
         thumbnail,
         description,
@@ -148,18 +133,51 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
         uuid,
       }
       const appHash = state.currentAppHash;
-      const currentAppDetails = {Entry, Hash:appHash};
-      return {...state, currentAppDetails}
+      const currentAppDetails = { Entry, Hash: appHash };
+      return { ...state, currentAppDetails }
     }
 
     case 'FETCH_ALL_APPS': {
-      console.log(">>ln 164 in reducer, ALL APPs Action !!!!: ", action.allApps);
       const AllApps = action.allApps;
       return { ...state, AllApps };
     }
-
+    case 'FETCH_APPS_BY_CATEGORY': {
+      const AllApps = action.allApps;
+      return { ...state, AllApps };
+    }
+    case 'GET_APPS_BY_CATEGORY': {
+    
+      if (action.category === "admintools" && !action.allApps.error) {
+        const AdminApps = action.allApps;
+        return { ...state, AdminApps };
+      } else if (action.category === "devtools" && !action.allApps.error) {
+        const DevApps = action.allApps;
+        return { ...state, DevApps };
+      } else if (action.category === "topdownloads" && !action.allApps.error) {
+        const TopApps = action.allApps;
+        return { ...state, TopApps };
+      } else if (action.category === "games" && !action.allApps.error) {
+        const GameApps = action.allApps;
+        return { ...state, GameApps };
+      } else if (action.category === "music" && !action.allApps.error) {
+        const MusicApps = action.allApps;
+        return { ...state, MusicApps };
+      } else if (action.category === "leisure" && !action.allApps.error) {
+        const LeisureApps = action.allApps;
+        return { ...state, LeisureApps };
+      } else if (action.category === "finance" && !action.allApps.error) {
+        const FinanceApps = action.allApps;
+        return { ...state, FinanceApps };
+      } else if (action.category === "educational" && !action.allApps.error) {
+        const EducationalApps = action.allApps;
+        return { ...state, EducationalApps };
+      } else if (action.category === "movies" && !action.allApps.error) {
+        const MoviesApps = action.allApps;
+        return { ...state, MoviesApps };
+      }
+      return { ...state };
+    }
     case 'FETCH_AGENT': {
-      console.log("Fetch AGENT Action: ", action);
       const { agent } = action;
       return {
         ...state,
@@ -177,7 +195,7 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     }
 
     default:
-    return state
+      return state
   }
   return state
 }

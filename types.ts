@@ -10,6 +10,16 @@ export type WelcomeMsg = string;
 
 export type HCHCAppState = {
   AllApps: [{Entry:{AppDetailState}, Hash}] | null, // pairing of the app hash and the an obj with its title and thumbanil url path
+  AdminApps: [{Entry:{AppDetailState}, Hash}] | null, // pairing of the app hash and the an obj with its title and thumbanil url path
+  DevApps: [{Entry:{AppDetailState}, Hash}] | null, // pairing of the app hash and the an obj with its title and thumbanil url path
+  TopApps: [{Entry:{AppDetailState}, Hash}] | null, // pairing of the app hash and the an obj with its title and thumbanil url path
+  GameApps: [{Entry:{AppDetailState}, Hash}] | null, // pairing of the app hash and the an obj with its title and thumbanil url path
+  MusicApps: [{Entry:{AppDetailState}, Hash}] | null, // pairing of the app hash and the an obj with its title and thumbanil url path
+  LeisureApps: [{Entry:{AppDetailState}, Hash}] | null, // pairing of the app hash and the an obj with its title and thumbanil url path
+  MoviesApps: [{Entry:{AppDetailState}, Hash}] | null, // pairing of the app hash and the an obj with its title and thumbanil url path
+  EducationalApps: [{Entry:{AppDetailState}, Hash}] | null, // pairing of the app hash and the an obj with its title and thumbanil url path
+  FinanceApps: [{Entry:{AppDetailState}, Hash}] | null, // pairing of the app hash and the an obj with its title and thumbanil url path
+
   currentAgent: {agent: {Hash: Hash, Name: string}}| null,
   currentCategory: string | null,
   currentAppHash: string,
@@ -58,7 +68,8 @@ export type ReduxAction
   | { type: 'REGISTER_APP_HASH', appHash: string }
 
   | { type: 'FETCH_ALL_APPS', allApps: [{Entry:{AppDetailState}, Hash}] }
-  | { type: 'GET_APPS_BY_CATEGORY', category :string, appsByCurrentCategory: Array<{Entry: AppDetailState, Hash: Hash}> }
+    | { type: 'FETCH_APPS_BY_CATEGORY', allApps: [{Entry:{AppDetailState}, Hash}] }
+  | { type: 'GET_APPS_BY_CATEGORY', category :string,allApps: any }
   | { type: 'VIEW_APP', appDetails: AppDetailState }
   | { type: 'FETCH_APP_CODE', code: AppDNACode }
 
