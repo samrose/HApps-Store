@@ -152,6 +152,7 @@ const mapDispatchToProps = dispatch => ({
     fetchPOST('/fn/categories/getAppsByCategories', category)
       .then( appsByCurrentCategory => {
         dispatch({ type: 'FETCH_APPS_BY_CATEGORY', category, appsByCurrentCategory })
+        console.log("---> ", appsByCurrentCategory);
       })
   },
   registerCategoryType: (category) => {

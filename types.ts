@@ -58,6 +58,7 @@ export type ReduxAction
   | { type: 'REGISTER_APP_HASH', appHash: string }
 
   | { type: 'FETCH_ALL_APPS', allApps: [{Entry:{AppDetailState}, Hash}] }
+    | { type: 'FETCH_APPS_BY_CATEGORY', allApps: [{Entry:{AppDetailState}, Hash}] }
   | { type: 'GET_APPS_BY_CATEGORY', category :string, appsByCurrentCategory: Array<{Entry: AppDetailState, Hash: Hash}> }
   | { type: 'VIEW_APP', appDetails: AppDetailState }
   | { type: 'FETCH_APP_CODE', code: AppDNACode }

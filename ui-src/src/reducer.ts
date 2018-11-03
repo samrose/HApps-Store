@@ -99,6 +99,7 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     case 'GET_APPS_BY_CATEGORY': {
       console.log("INSIDE REDUCER >> action.AppsByCategory : ", action.appsByCurrentCategory);
       const appsByCategory : Array<{Entry: AppDetailState, Hash: Hash}> = action.appsByCurrentCategory;
+      console.log("appsBYCategory", appsByCategory);
       return {...state, appsByCategory};
     }
 
@@ -157,7 +158,10 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
       const AllApps = action.allApps;
       return { ...state, AllApps };
     }
-
+    case 'FETCH_APPS_BY_CATEGORY': {
+      const AllApps = action.allApps;
+      return { ...state, AllApps };
+    }
     case 'FETCH_AGENT': {
       console.log("Fetch AGENT Action: ", action);
       const { agent } = action;
