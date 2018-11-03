@@ -7,6 +7,9 @@ import {HCHCAppState, AppDetailState, AppDNACode, ReviewLog, ReduxAction} from "
 const defaultState: HCHCAppState = {
   currentAgent: null,
   AllApps: null,
+  AdminApps: null,
+  DevApps: null,
+  TopApps: null,
   currentCategory: null,
   currentAppHash: "null",
   appsByCategory: null,
@@ -96,12 +99,7 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
       }
     }
 
-    case 'GET_APPS_BY_CATEGORY': {
-      console.log("INSIDE REDUCER >> action.AppsByCategory : ", action.appsByCurrentCategory);
-      const appsByCategory : Array<{Entry: AppDetailState, Hash: Hash}> = action.appsByCurrentCategory;
-      console.log("appsBYCategory", appsByCategory);
-      return {...state, appsByCategory};
-    }
+
 
     case 'FETCH_REVIEWS': {
       const reviews: [ReviewLog] = action.reviewEntries;
@@ -161,6 +159,21 @@ export default (oldState: HCHCAppState = defaultState, action: ReduxAction): HCH
     case 'FETCH_APPS_BY_CATEGORY': {
       const AllApps = action.allApps;
       return { ...state, AllApps };
+    }
+    case 'GET_APPS_BY_CATEGORY': {
+      console.log("Setting Category: ",action.category,":",action.allApps)
+      console.log("STATE: ",state)
+      if(action.category==="admintools"){
+        const AdminApps = action.allApps;
+        return { ...state, AdminApps };
+      }else if(action.category==="devtools"){
+        const DevApps = action.allApps;
+        return { ...state, DevApps };
+      }else if(action.category==="topdownloads"){
+        const TopApps = action.allApps;
+        return { ...state, TopApps };
+      }
+      return {...state};
     }
     case 'FETCH_AGENT': {
       console.log("Fetch AGENT Action: ", action);
