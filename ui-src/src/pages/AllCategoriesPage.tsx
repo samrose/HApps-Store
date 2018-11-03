@@ -29,7 +29,6 @@ type AllCategoriesPageProps = {
   AdminApps: Array<AllApps>,
   DevApps: Array<AllApps>,
   TopApps: Array<AllApps>,
-
   currentAgent: {agent: {Hash: Hash, Name: string}},
   currentCategory: string,
   currentAppHash: string,
@@ -43,40 +42,29 @@ type AllCategoriesPageProps = {
 class AllCategoriesPage extends React.Component <AllCategoriesPageProps, {}> {
 
   public static getDerivedStateFromProps(props, state) {
-    if(props.AdminApps===undefined || props.AdminApps === null){
+    if(props.AdminApps === null){
        props.getappsByCategory("admintools");
     }
-    if(props.DevApps===undefined || props.DevApps === null){
+    if(props.DevApps === null){
        props.getappsByCategory("devtools");
-
     }
-    if(props.TopApps===undefined || props.TopApps === null){
+    if(props.TopApps === null){
        props.getappsByCategory("topdownloads");
     }
   }
   public componentDidMount() {
     this.props.fetchAgent();
-    // this.props.fetchAllApps();
   }
 
   public handleSelectApp = (hash) => (e) => {
-    console.log("app.Hash", hash);
     this.props.registerAppHash(hash);
   }
 
-
   public render() {
-    const greeting: string = "Category Page";
-    // if (!this.props.AllApps) {
-    //   return <div>
-    //     <h4 className="loading-text">Loading...</h4>
-    //   </div>
-    // }
+    const greeting: string = "All Categorys";
     if (!this.props.currentAgent || !this.props.currentAgent) {
       location.assign(`/appstore`);
     }
-    console.log("this.props", this.props);
-
     const { agent } = this.props.currentAgent;
     const { currentCategory, AdminApps, DevApps, TopApps} = this.props;
     let renderAdminApps= [<h4 key={"1"} className="no-app-message">"No Apps"</h4>]
