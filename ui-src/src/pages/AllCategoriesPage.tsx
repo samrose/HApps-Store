@@ -85,7 +85,7 @@ class AllCategoriesPage extends React.Component <AllCategoriesPageProps, {}> {
   }
 
   public render() {
-    const greeting: string = "All Categorys";
+    const greeting: string = "All Categories";
     if (!this.props.currentAgent || !this.props.currentAgent) {
       location.assign(`/appstore`);
     }

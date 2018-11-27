@@ -23,6 +23,8 @@ function addCategory({ category, tags, hash }) {
     { Base: tag_base, Link: hash, Tag: "tag_category" },
     { Base: hash, Link: tag_base, Tag: "app_category" }]
   });
+  // debug("Category Added: "+category)
+  // debug("Check if value is Commited: "+JSON.stringify(getAppsByCategories({category})))
   return commit_hash;
 }
 
