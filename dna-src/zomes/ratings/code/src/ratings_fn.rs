@@ -59,12 +59,6 @@ pub fn handle_get_reviews_by_hash(_reviewedHash: HashString) -> JsonString{
                 let k:String=get_review(address.clone()).into();
                 ratings_list.push(serde_json::from_str(&k).unwrap());
             }
-            // JsonString::from(ratings_list)
-            // let rate:Vec<serde_json::Value> = ratings_list
-            // .iter()
-            // .map(|r|{
-            //     serde_json::from_str(r.into()).unwrap()
-            // }).collect();
             ratings_list.into()
          }
         Err(hdk_error) => hdk_error.into(),

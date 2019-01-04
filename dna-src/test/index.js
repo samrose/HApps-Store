@@ -11,5 +11,4 @@ app.start()
 require('./unit_test/ratings_test')(app);
 require('./unit_test/whoami_test')(app);
 require('./unit_test/happs_test')(app);
-// require('./unit_test/anchor_test')(app);
 require('./unit_test/categories_test')(app);

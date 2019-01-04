@@ -89,34 +89,3 @@ pub fn handle_adding_UI(app_hash:HashString,ui_bundle:String)->JsonString{
     );
     commit_n_link(bundle_entry,"ui_bundle_tag".into(),&app_hash).into()
 }
-/***
-Custom Function
-***/
-pub fn commit_n_link(entry:Entry,entry_tag:String,base_hash:&HashString) -> JsonString{
-    match hdk::commit_entry(&entry) {
-        Ok(address) => {
-            let link_result = hdk::link_entries(
-                &base_hash,
-                &address,
-                entry_tag
-            );
-            if link_result.is_err(){
-                return link_result.into()
-            }
-            address.into()
-        }
-        Err(hdk_error) => hdk_error.into()
-    }
-}
-
-
-pub fn get_entry(post_address:HashString)-> JsonString {
-    let result : Result<Option<Entry>,ZomeApiError> = hdk::get_entry(post_address);
-    match result {
-        Ok(Some(entry)) => {
-            entry.value().to_owned()
-        },
-        Ok(None) => {}.into(),
-        Err(err) => err.into(),
-    }
-}
