@@ -5,11 +5,13 @@ build/
 build-HApps/
 ui/
 dna/
-node_modules/
 .dist/
 .cache/
 npm-debug.log
-HApps/
+
+node_modules
+target
+
 
 # OS generated files #
 ######################
