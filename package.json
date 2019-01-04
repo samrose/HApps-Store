@@ -6,6 +6,7 @@
   "scripts": {
     "hc:build": "rm -rf dna; mkdir -p dna && cd dna-src && hc package --strip-meta -o ../dna/happ-store.hcpkg",
     "hc:start": "mkdir -p tmp-storage && holochain_container -c ./container-config.toml",
+    "hc:test": "cd dna-src && hc test",
     "start": "node scripts/start.js",
     "build": "mkdir -p build-HApps/ui build-HApps/dna; npm run hc:build && npm run ui:build",
     "test": "node scripts/test.js --env=jsdom"

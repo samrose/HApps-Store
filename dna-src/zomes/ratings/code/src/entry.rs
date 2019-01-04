@@ -2,7 +2,7 @@
 
 use hdk::holochain_core_types::{
     // cas::content::Address,
-    dna::zome::entry_types::Sharing,
+    dna::entry_types::Sharing,
     error::HolochainError,
     json::JsonString,
 };
@@ -11,7 +11,6 @@ use hdk::{
     self,
     entry_definition::ValidatingEntryType,
 };
-use serde_json;
 
 /// We declare the structure of our entry type with this Rust struct.
 /// It will be checked automatically by the macro below, similar
@@ -34,7 +33,7 @@ pub fn definition() -> ValidatingEntryType {
         native_type: Ratings,
 
         validation_package: || {
-            hdk::ValidationPackageDefinition::ChainFull
+            hdk::ValidationPackageDefinition::Entry
         },
 
         validation: |_ratings: Ratings, _ctx: hdk::ValidationData| {
