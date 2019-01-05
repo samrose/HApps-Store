@@ -7,7 +7,7 @@ use hdk::{
     holochain_core_types::{
     	hash::HashString,
     	entry::{AppEntryValue, Entry},
-    	cas::content::AddressableContent,
+    	cas::content::{Address, AddressableContent},
     },
     error::{ZomeApiResult, ZomeApiError}
 };
@@ -82,8 +82,14 @@ pub fn get_as_type<
 }
 
 
-pub fn link_entries_bidir<S: Into<String>>(a: &HashString, b: &HashString, tag_a_b: &str, tag_b_a: S) -> ZomeApiResult<()> {
+pub fn link_entries_bidir<S: Into<String>>(a: &HashString, b: &HashString, tag_a_b: S, tag_b_a: S) -> ZomeApiResult<()> {
     hdk::link_entries(a, b, tag_a_b)?;
     hdk::link_entries(b, a, tag_b_a)?;
     Ok(())
+}
+
+pub fn commit_and_link<S: Into<String>>(entry: &Entry, base: &Address, tag: S) -> ZomeApiResult<Address> {
+	let entry_addr = hdk::commit_entry(entry)?;
+	hdk::link_entries(&entry_addr, base, tag)?;
+	Ok(entry_addr)
 }

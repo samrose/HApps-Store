@@ -5,9 +5,15 @@ extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 #[macro_use]
-extern crate serde_json;
-#[macro_use]
 extern crate holochain_core_types_derive;
+extern crate utils;
+
+use hdk::{
+    error::ZomeApiResult,
+    holochain_core_types::{
+        cas::content::Address
+    },
+};
 
 pub mod entry;
 pub mod happs_fn;
@@ -25,38 +31,38 @@ define_zome! {
         main (Public) {
             create_app: {
                 inputs:| uuid:String,title:String,description:String,thumbnail:String |,
-                outputs: |result: serde_json::Value|,
-                handler: happs_fn::handle_creating_app
+                outputs: |result: ZomeApiResult<Address>|,
+                handler: happs_fn::handle_add_app
             }
-            get_allApps: {
+            get_all_apps: {
                 inputs:| |,
-                outputs: |result: serde_json::Value|,
-                handler: happs_fn::handle_getting_all_apps
+                outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<entry::App>>>|,
+                handler: happs_fn::handle_get_all_apps
             }
             get_app: {
                 inputs:|app_hash:hdk::holochain_core_types::hash::HashString|,
-                outputs: |result: serde_json::Value|,
-                handler: happs_fn::handle_getting_app
+                outputs: |result: ZomeApiResult<entry::App>|,
+                handler: happs_fn::handle_get_app
             }
-            adding_DNA: {
+            add_dna: {
                 inputs:| app_hash:hdk::holochain_core_types::hash::HashString,dna_bundle:String |,
-                outputs: |result: serde_json::Value|,
-                handler: happs_fn::handle_adding_DNA
+                outputs: |result: ZomeApiResult<Address>|,
+                handler: happs_fn::handle_add_dna
             }
-            getting_dna: {
+            get_dna: {
                 inputs:| app_hash:hdk::holochain_core_types::hash::HashString|,
-                outputs: |result: serde_json::Value|,
-                handler: happs_fn::handle_getting_dna
+                outputs: |result: ZomeApiResult<entry::DnaBundle>|,
+                handler: happs_fn::handle_get_dna
             }
-            adding_UI: {
+            add_ui: {
                 inputs:| app_hash:hdk::holochain_core_types::hash::HashString,ui_bundle:String |,
-                outputs: |result: serde_json::Value|,
-                handler: happs_fn::handle_adding_UI
+                outputs: |result: ZomeApiResult<Address>|,
+                handler: happs_fn::handle_add_ui
             }
-            getting_ui: {
+            get_ui: {
                 inputs:| app_hash:hdk::holochain_core_types::hash::HashString|,
-                outputs: |result: serde_json::Value|,
-                handler: happs_fn::handle_getting_ui
+                outputs: |result: ZomeApiResult<entry::UiBundle>|,
+                handler: happs_fn::handle_get_ui
             }
         }
     }
