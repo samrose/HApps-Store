@@ -1,7 +1,7 @@
 [package]
 name = "ratings"
 version = "0.1.0"
-authors = ["zo-el <joelulahanna@gmail.com>"]
+authors = ["zo-el <joelulahanna@gmail.com>", "Willem Olding <willem.olding@holo.host>"]
 edition = "2018"
 
 [dependencies]

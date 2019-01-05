@@ -1,42 +1,53 @@
 // TODO: Get the categories of the a app hash/address
 use hdk::{
+    self,
     holochain_core_types::{
         hash::HashString,
-        json::JsonString,
         entry::Entry,
         error::HolochainError,
-    }
+        json::JsonString,
+        cas::content::AddressableContent,
+    },
+    error::{ZomeApiResult},
 };
-use hdk::error::{
-    ZomeApiError,
-};
-use std::convert::TryFrom;
-use crate::holochain_core_types_derive;
-use serde_json::{Value,Error};
 
-
-
-pub fn handle_adding_category(category:String, tag:String, hash:HashString)->JsonString{
-    let category_base : Value = anchor(category.clone(),"".into()).unwrap();
-    let category_base_string :String = category_base["value"].clone().to_string();
-    let category_base_hash:HashString = category_base_string[3..49].to_string().into();
-    let tag_base : Value = anchor(category.clone(),tag).unwrap();
-    let tag_base_string :String = tag_base["value"].clone().to_string();
-    let tag_base_hash : HashString = tag_base_string[3..49].to_string().into();
-    link_address(hash.clone(),&tag_base_hash,"tag_category".into());
-    link_address(tag_base_hash,&hash,"app_category".into());
-    link_address(hash.clone(),&category_base_hash,"category".into()).to_string().into()
+// reimplemening here for now...
+#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
+pub struct App {
+    pub uuid:String,
+    pub title:String,
+    pub author:String,
+    pub description:String,
+    pub thumbnail:String,
 }
 
-pub fn handle_get_apps_by_category(category:String)->JsonString{
-    let check_anchor_exist = anchor_exists(category.clone(),"".to_string()).unwrap();
-    if(check_anchor_exist["value"]=="true"){
-        hdk::debug("testing");
-        let category_base : Value = anchor(category.clone(),"".into()).unwrap();
-        let category_base_string :String = category_base["value"].clone().to_string();
-        let category_base_hash:HashString = category_base_string[3..49].to_string().into();
-        get_all_links(category_base_hash,"category".to_string())
-    } else{
-        return "ERROR: This category doesn't exist...".into()
-    }
+
+// links a tag and app bidirectionally 
+// links a catagory and an app bidirectionally
+pub fn handle_adding_category(category:String, tag:String, hash:HashString) -> ZomeApiResult<()> {
+    let category_anchor_entry = Entry::App(
+        "category_anchor".into(),
+        category.into()
+    );
+    let category_anchor_addr = hdk::commit_entry(&category_anchor_entry)?;
+
+    let tag_anchor_entry = Entry::App(
+        "tag_anchor".into(),
+        tag.into()
+    );
+    let tag_anchor_addr = hdk::commit_entry(&tag_anchor_entry)?;
+
+    utils::link_entries_bidir(&hash, &category_anchor_addr, "", "")?;
+    utils::link_entries_bidir(&hash, &tag_anchor_addr, "", "")?;
+    Ok(())
+}
+
+
+pub fn handle_get_apps_by_category(category: String) -> ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>> {
+    let category_anchor_entry = Entry::App(
+        "category_anchor".into(),
+        category.into()
+    );
+
+    utils::get_links_and_load_type(&category_anchor_entry.address(), "")
 }

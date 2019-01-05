@@ -4,15 +4,107 @@ extern crate hdk;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
-#[macro_use]
-extern crate serde_json;
+extern crate utils;
 #[macro_use]
 extern crate holochain_core_types_derive;
 
 pub mod categories_fn;
 
+use crate::categories_fn::App;
+use hdk::{
+    holochain_core_types::{
+        cas::content::Address,
+        dna::entry_types::Sharing,
+        json::RawString
+    },
+    error::ZomeApiResult
+};
+
 define_zome! {
-    entries: []
+    entries: [
+        entry!(
+            name: "category_anchor",
+            description: "",
+            sharing: Sharing::Public,
+            native_type: RawString,
+
+            validation_package: || {
+                hdk::ValidationPackageDefinition::Entry
+            },
+
+            validation: |_name: RawString, _ctx: hdk::ValidationData| {
+                Ok(())
+            },
+
+            links: [
+                to!(
+                    "app",
+                    tag: "",
+
+                    validation_package: || {
+                        hdk::ValidationPackageDefinition::Entry
+                    },
+
+                    validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                        Ok(())
+                    }
+                ),
+                from!(
+                    "app",
+                    tag: "",
+
+                    validation_package: || {
+                        hdk::ValidationPackageDefinition::Entry
+                    },
+
+                    validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                        Ok(())
+                    }
+                )
+            ]
+        ),
+        entry!(
+            name: "tag_anchor",
+            description: "",
+            sharing: Sharing::Public,
+            native_type: RawString,
+
+            validation_package: || {
+                hdk::ValidationPackageDefinition::Entry
+            },
+
+            validation: |_name: RawString, _ctx: hdk::ValidationData| {
+                Ok(())
+            },
+
+            links: [
+                to!(
+                    "app",
+                    tag: "",
+
+                    validation_package: || {
+                        hdk::ValidationPackageDefinition::Entry
+                    },
+
+                    validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                        Ok(())
+                    }
+                ),
+                from!(
+                    "app",
+                    tag: "",
+
+                    validation_package: || {
+                        hdk::ValidationPackageDefinition::Entry
+                    },
+
+                    validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                        Ok(())
+                    }
+                )
+            ]
+        )
+    ]
 
     genesis: || { Ok(()) }
 
@@ -20,12 +112,12 @@ define_zome! {
         main (Public) {
             add_category: {
                 inputs:| category:String,tag:String, hash:hdk::holochain_core_types::hash::HashString |,
-                outputs: | result: JsonString |,
+                outputs: | result: ZomeApiResult<()> |,
                 handler: categories_fn::handle_adding_category
             }
             get_apps_by_category: {
                 inputs:| category:String |,
-                outputs: | result: JsonString |,
+                outputs: | result: ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>> |,
                 handler: categories_fn::handle_get_apps_by_category
             }
         }
