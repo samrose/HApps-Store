@@ -37,7 +37,7 @@ pub fn handle_get_ui(app_hash: Address) -> ZomeApiResult<entry::UiBundle> {
 /*
 Functions needed to be handeled by the HCHC
 */
-pub fn handle_add_app(uuid:String,title:String,description:String,thumbnail:String) -> ZomeApiResult<Address> {
+pub fn handle_create_app(uuid:String, title:String, description:String, thumbnail:String) -> ZomeApiResult<Address> {
     let app_entry = Entry::App(
         "app".into(),
         entry::App {
@@ -52,7 +52,7 @@ pub fn handle_add_app(uuid:String,title:String,description:String,thumbnail:Stri
     utils::commit_and_link(&app_entry, &hdk::AGENT_ADDRESS, "app_tag")
 }
 
-pub fn handle_add_dna(app_hash: Address,dna_bundle:String) -> ZomeApiResult<Address> {
+pub fn handle_add_dna(app_hash: Address, dna_bundle:String) -> ZomeApiResult<Address> {
     let bundle_entry = Entry::App(
         "dna_code_bundle".into(),
         entry::DnaBundle {

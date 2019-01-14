@@ -10,6 +10,9 @@ use hdk::holochain_core_types::{
 use hdk::{
     self,
     entry_definition::ValidatingEntryType,
+    holochain_core_types::{
+        cas::content::Address
+    }
 };
 
 /// We declare the structure of our entry type with this Rust struct.
@@ -38,6 +41,21 @@ pub fn definition() -> ValidatingEntryType {
 
         validation: |_ratings: Ratings, _ctx: hdk::ValidationData| {
             Ok(())
-        }
+        },
+
+        links: [
+            from!(
+                "app",
+                tag: "rating_tag",
+
+                validation_package: || {
+                    hdk::ValidationPackageDefinition::Entry
+                },
+
+                validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                    Ok(())
+                }
+            )
+        ]
     )
 }

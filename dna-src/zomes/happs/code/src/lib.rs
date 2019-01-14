@@ -32,7 +32,7 @@ define_zome! {
             create_app: {
                 inputs:| uuid:String,title:String,description:String,thumbnail:String |,
                 outputs: |result: ZomeApiResult<Address>|,
-                handler: happs_fn::handle_add_app
+                handler: happs_fn::handle_create_app
             }
             get_all_apps: {
                 inputs:| |,

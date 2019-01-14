@@ -19,45 +19,39 @@ module.exports = (app) => {
 
     app.call("happs", "main", "create_app", App2);
 
-    t.plan(1)
     // console.log("Creating App : ",app_address);
     t.equal(app_address.length, 46)
 
-    t.plan(2)
-    const dna_bundle_hash = app.call("happs", "main", "adding_DNA", {
+    const dna_bundle_hash = app.call("happs", "main", "add_DNA", {
       app_hash: app_address,
       dna_bundle: "{219y9c7b64290182b4c5710918732rbc79q8nxocbq4tboc7nqrfo83x}"
     })
     t.equal(dna_bundle_hash.length, 46)
 
-    t.plan(3)
-    const dna_bundle = app.call("happs", "main", "getting_dna", {
+    const dna_bundle = app.call("happs", "main", "get_dna", {
       app_hash: app_address
     })
     t.equal(dna_bundle.dna_bundle, '{219y9c7b64290182b4c5710918732rbc79q8nxocbq4tboc7nqrfo83x}')
 
-    t.plan(4)
     const app_details = app.call('happs', "main", "get_app", {app_hash:app_address})
     t.equal(app_details.uuid, App1.uuid)
     console.log("App Details : ",app_details);
 
-    t.plan(5)
-    const ui_bundle_hash = app.call("happs", "main", "adding_UI", {
+    const ui_bundle_hash = app.call("happs", "main", "add_ui", {
       app_hash: app_address,
       ui_bundle: "{219y9c7b64290182b4c5710918732rbc79q8nxocbq4tboc7nqrfo83x}"
     })
     t.equal(ui_bundle_hash.length, 46)
 
-    t.plan(6)
-    const ui_bundle = app.call("happs", "main", "getting_ui", {
+    const ui_bundle = app.call("happs", "main", "get_ui", {
       app_hash: app_address
     })
     t.equal(ui_bundle.ui_bundle, '{219y9c7b64290182b4c5710918732rbc79q8nxocbq4tboc7nqrfo83x}')
 
-    t.plan(7)
-    const allApp_details = app.call('happs', "main", "get_allApps", {})
+    const allApp_details = app.call('happs', "main", "get_all_apps", {})
     t.equal(allApp_details.length , 2)
     console.log("All Apps : ",allApp_details);
 
+    t.end()
   })
 }

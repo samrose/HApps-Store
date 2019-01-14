@@ -1,7 +1,7 @@
 use utils::{get_links_and_load_type, GetLinksLoadElement};
 use hdk::{
     holochain_core_types::{
-        hash::HashString,
+        cas::content::Address,
         entry::Entry,
     },
     error::ZomeApiResult,
@@ -12,7 +12,7 @@ use crate::entry::{
 };
 
 
-pub fn handle_creating_ratings(rate: String, review: String, reviewed_hash: HashString ) -> ZomeApiResult<HashString> {
+pub fn handle_creating_ratings(rate: String, review: String, reviewed_hash: Address ) -> ZomeApiResult<Address> {
     let ratings_entry = Entry::App(
         "ratings".into(),
         Ratings {
@@ -29,6 +29,6 @@ pub fn handle_creating_ratings(rate: String, review: String, reviewed_hash: Hash
 }
 
 
-pub fn handle_get_reviews_by_hash(reviewed_hash: HashString) -> ZomeApiResult<Vec<GetLinksLoadElement<Ratings>>> {
+pub fn handle_get_reviews_by_hash(reviewed_hash: Address) -> ZomeApiResult<Vec<GetLinksLoadElement<Ratings>>> {
     get_links_and_load_type(&reviewed_hash, "rating_tag")
 }

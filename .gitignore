@@ -8,6 +8,7 @@ dna/
 .dist/
 .cache/
 npm-debug.log
+bundle.json
 
 node_modules
 target

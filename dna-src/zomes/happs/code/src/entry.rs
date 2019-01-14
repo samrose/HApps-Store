@@ -46,7 +46,7 @@ pub fn dna_bundle_definitions()-> ValidatingEntryType{
         name: "dna_code_bundle",
         description: "dna code bundel for the app",
         sharing: Sharing::Public,
-        native_type: DNA_Bundle,
+        native_type: DnaBundle,
         validation_package: || {
             hdk::ValidationPackageDefinition::Entry
         },
