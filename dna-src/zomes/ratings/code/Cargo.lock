@@ -101,15 +101,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "futures-channel-preview"
 version = "0.3.0-alpha.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11#dd9acd0bc452d44fafc7f3075b369df88f9b1d38"
 dependencies = [
- "futures-core-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-core-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
 ]
 
 [[package]]
 name = "futures-core-preview"
 version = "0.3.0-alpha.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11#dd9acd0bc452d44fafc7f3075b369df88f9b1d38"
 dependencies = [
  "either 1.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -117,11 +117,11 @@ dependencies = [
 [[package]]
 name = "futures-executor-preview"
 version = "0.3.0-alpha.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11#dd9acd0bc452d44fafc7f3075b369df88f9b1d38"
 dependencies = [
- "futures-channel-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-core-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-util-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-channel-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "futures-core-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "futures-util-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
  "lazy_static 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "num_cpus 1.9.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "pin-utils 0.1.0-alpha.4 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -130,29 +130,29 @@ dependencies = [
 [[package]]
 name = "futures-io-preview"
 version = "0.3.0-alpha.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11#dd9acd0bc452d44fafc7f3075b369df88f9b1d38"
 dependencies = [
- "futures-core-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-core-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
  "iovec 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "futures-preview"
 version = "0.3.0-alpha.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11#dd9acd0bc452d44fafc7f3075b369df88f9b1d38"
 dependencies = [
- "futures-channel-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-core-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-executor-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-io-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-sink-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-util-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-channel-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "futures-core-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "futures-executor-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "futures-io-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "futures-sink-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "futures-util-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
 ]
 
 [[package]]
 name = "futures-select-macro-preview"
 version = "0.3.0-alpha.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11#dd9acd0bc452d44fafc7f3075b369df88f9b1d38"
 dependencies = [
  "proc-macro-hack 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "proc-macro2 0.4.24 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -163,24 +163,24 @@ dependencies = [
 [[package]]
 name = "futures-sink-preview"
 version = "0.3.0-alpha.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11#dd9acd0bc452d44fafc7f3075b369df88f9b1d38"
 dependencies = [
  "either 1.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-channel-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-core-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-channel-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "futures-core-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
 ]
 
 [[package]]
 name = "futures-util-preview"
 version = "0.3.0-alpha.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11#dd9acd0bc452d44fafc7f3075b369df88f9b1d38"
 dependencies = [
  "either 1.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-channel-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-core-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-io-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-select-macro-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-sink-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-channel-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "futures-core-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "futures-io-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "futures-select-macro-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "futures-sink-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
  "pin-utils 0.1.0-alpha.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "proc-macro-hack 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -197,13 +197,13 @@ dependencies = [
 
 [[package]]
 name = "hdk"
-version = "0.0.2"
-source = "git+https://github.com/holochain/holochain-rust?branch=develop#0887587b59acc76a964e53fca77caa13f4e14a96"
+version = "0.0.3"
+source = "git+https://github.com/holochain/holochain-rust?tag=v0.0.3#1d93ee9400fd1a236fad14f43f64d48302067917"
 dependencies = [
  "bitflags 1.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "holochain_core_types 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)",
- "holochain_core_types_derive 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)",
- "holochain_wasm_utils 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)",
+ "holochain_core_types 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)",
+ "holochain_core_types_derive 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)",
+ "holochain_wasm_utils 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)",
  "lazy_static 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -212,13 +212,13 @@ dependencies = [
 
 [[package]]
 name = "holochain_core_types"
-version = "0.0.2"
-source = "git+https://github.com/holochain/holochain-rust?branch=develop#0887587b59acc76a964e53fca77caa13f4e14a96"
+version = "0.0.3"
+source = "git+https://github.com/holochain/holochain-rust?tag=v0.0.3#1d93ee9400fd1a236fad14f43f64d48302067917"
 dependencies = [
  "arrayref 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "base64 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "holochain_core_types_derive 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)",
+ "futures-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)",
+ "holochain_core_types_derive 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)",
  "multihash 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "objekt 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "reed-solomon 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -233,8 +233,8 @@ dependencies = [
 
 [[package]]
 name = "holochain_core_types_derive"
-version = "0.0.2"
-source = "git+https://github.com/holochain/holochain-rust?branch=develop#0887587b59acc76a964e53fca77caa13f4e14a96"
+version = "0.0.3"
+source = "git+https://github.com/holochain/holochain-rust?tag=v0.0.3#1d93ee9400fd1a236fad14f43f64d48302067917"
 dependencies = [
  "quote 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -244,11 +244,11 @@ dependencies = [
 
 [[package]]
 name = "holochain_wasm_utils"
-version = "0.0.2"
-source = "git+https://github.com/holochain/holochain-rust?branch=develop#0887587b59acc76a964e53fca77caa13f4e14a96"
+version = "0.0.3"
+source = "git+https://github.com/holochain/holochain-rust?tag=v0.0.3#1d93ee9400fd1a236fad14f43f64d48302067917"
 dependencies = [
- "holochain_core_types 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)",
- "holochain_core_types_derive 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)",
+ "holochain_core_types 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)",
+ "holochain_core_types_derive 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)",
  "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.34 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -439,8 +439,8 @@ name = "ratings"
 version = "0.1.0"
 dependencies = [
  "boolinator 2.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "hdk 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)",
- "holochain_core_types_derive 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)",
+ "hdk 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)",
+ "holochain_core_types_derive 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)",
  "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.34 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -597,8 +597,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "utils"
 version = "0.1.0"
 dependencies = [
- "hdk 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)",
- "holochain_core_types_derive 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)",
+ "hdk 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)",
+ "holochain_core_types_derive 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)",
  "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.34 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -658,19 +658,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum fake-simd 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "e88a8acf291dafb59c2d96e8f59828f3838bb1a70398823ade51a84de6a6deed"
 "checksum fuchsia-zircon 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = "2e9763c69ebaae630ba35f74888db465e49e259ba1bc0eda7d06f4a067615d82"
 "checksum fuchsia-zircon-sys 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = "3dcaa9ae7725d12cdb85b3ad99a434db70b468c09ded17e012d86b5c1010f7a7"
-"checksum futures-channel-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)" = "88ac990a04959a1f053c1d66814641ecc2e83307b012f0f70eeda01a5cff9d43"
-"checksum futures-core-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)" = "def006cf2cbfd12264668c4099ed7293a098f5ed1e56a17c2b8982bbfba8a589"
-"checksum futures-executor-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)" = "b267447ec2b8a84cbe6ae250603268bf86b3c30315c6506b23a939af950b9e6c"
-"checksum futures-io-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)" = "2ad71c7781169013ee56b94316f281c3fa690244c7bd17ebc546167c6ea558bb"
-"checksum futures-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)" = "7e3846197ff6a2f25e306fea0f98b22b03c0c2d0121ff48c10dbb9a923833d64"
-"checksum futures-select-macro-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)" = "d9ef6081511aaf8f16804046829d0d3126bae9ba51c4837eea1c53f432dbfa25"
-"checksum futures-sink-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)" = "113c745dcea4f505a8b137160eb6777c785bc979e32cb6971443af356c09b373"
-"checksum futures-util-preview 0.3.0-alpha.11 (registry+https://github.com/rust-lang/crates.io-index)" = "2aabd61c42118a455d62d13fb82c98b7e936f8fdc3810104ca8d9b11c5c2f0d6"
+"checksum futures-channel-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)" = "<none>"
+"checksum futures-core-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)" = "<none>"
+"checksum futures-executor-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)" = "<none>"
+"checksum futures-io-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)" = "<none>"
+"checksum futures-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)" = "<none>"
+"checksum futures-select-macro-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)" = "<none>"
+"checksum futures-sink-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)" = "<none>"
+"checksum futures-util-preview 0.3.0-alpha.11 (git+https://github.com/holochain/futures-rs?branch=pinned-to-alpha-11)" = "<none>"
 "checksum generic-array 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ef25c5683767570c2bbd7deba372926a55eaae9982d7726ee2a1050239d45b9d"
-"checksum hdk 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)" = "<none>"
-"checksum holochain_core_types 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)" = "<none>"
-"checksum holochain_core_types_derive 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)" = "<none>"
-"checksum holochain_wasm_utils 0.0.2 (git+https://github.com/holochain/holochain-rust?branch=develop)" = "<none>"
+"checksum hdk 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)" = "<none>"
+"checksum holochain_core_types 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)" = "<none>"
+"checksum holochain_core_types_derive 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)" = "<none>"
+"checksum holochain_wasm_utils 0.0.3 (git+https://github.com/holochain/holochain-rust?tag=v0.0.3)" = "<none>"
 "checksum indexmap 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "7e81a7c05f79578dbc15793d8b619db9ba32b4577003ef3af1a91c416798c58d"
 "checksum iovec 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "dbe6e417e7d0975db6512b90796e8ce223145ac4e33c377e4a42882a0e88bb08"
 "checksum itoa 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)" = "1306f3464951f30e30d12373d31c79fbd52d236e5e896fd92f96ec7babbbe60b"

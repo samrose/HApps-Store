@@ -39,7 +39,7 @@ define_zome! {
             links: [
                 to!(
                     "app",
-                    tag: "",
+                    tag: "contains",
 
                     validation_package: || {
                         hdk::ValidationPackageDefinition::Entry
@@ -51,7 +51,7 @@ define_zome! {
                 ),
                 from!(
                     "app",
-                    tag: "",
+                    tag: "in",
 
                     validation_package: || {
                         hdk::ValidationPackageDefinition::Entry
@@ -80,7 +80,7 @@ define_zome! {
             links: [
                 to!(
                     "app",
-                    tag: "",
+                    tag: "contains",
 
                     validation_package: || {
                         hdk::ValidationPackageDefinition::Entry
@@ -92,7 +92,7 @@ define_zome! {
                 ),
                 from!(
                     "app",
-                    tag: "",
+                    tag: "in",
 
                     validation_package: || {
                         hdk::ValidationPackageDefinition::Entry

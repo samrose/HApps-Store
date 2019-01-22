@@ -2,6 +2,7 @@ use hdk::holochain_core_types::{
     dna::entry_types::Sharing,
     error::HolochainError,
     json::JsonString,
+    cas::content::Address,
 };
 use hdk::{
     self,
@@ -25,7 +26,7 @@ pub struct UiBundle {
     pub ui_bundle: String,
 }
 
-pub fn app_definitions()-> ValidatingEntryType{
+pub fn app_definitions() -> ValidatingEntryType{
     entry!(
         name: "app",
         description: "Details of the app",
@@ -37,14 +38,41 @@ pub fn app_definitions()-> ValidatingEntryType{
 
         validation: |_app: App, _ctx: hdk::ValidationData| {
             Ok(())
-        }
+        },
+
+        links: [
+            to!(
+                "%agent_id",
+                tag: "author_is",
+
+                validation_package: || {
+                    hdk::ValidationPackageDefinition::Entry
+                },
+
+                validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                    Ok(())
+                }
+            ),
+            from!(
+                "%agent_id",
+                tag: "published",
+
+                validation_package: || {
+                    hdk::ValidationPackageDefinition::Entry
+                },
+
+                validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                    Ok(())
+                }
+            )
+        ]
     )
 }
 
 pub fn dna_bundle_definitions()-> ValidatingEntryType{
     entry!(
         name: "dna_code_bundle",
-        description: "dna code bundel for the app",
+        description: "dna code bundle for the app",
         sharing: Sharing::Public,
         native_type: DnaBundle,
         validation_package: || {
@@ -53,14 +81,29 @@ pub fn dna_bundle_definitions()-> ValidatingEntryType{
 
         validation: |_app: DnaBundle, _ctx: hdk::ValidationData| {
             Ok(())
-        }
+        },
+
+        links: [
+            from!(
+                "app",
+                tag: "has",
+
+                validation_package: || {
+                    hdk::ValidationPackageDefinition::Entry
+                },
+
+                validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                    Ok(())
+                }
+            )
+        ]
     )
 }
 
 pub fn ui_bundle_definitions()-> ValidatingEntryType{
     entry!(
         name: "ui_code_bundle",
-        description: "ui code bundel for the app",
+        description: "ui code bundle for the app",
         sharing: Sharing::Public,
         native_type: UiBundle,
         validation_package: || {
@@ -69,6 +112,21 @@ pub fn ui_bundle_definitions()-> ValidatingEntryType{
 
         validation: |_app: UiBundle, _ctx: hdk::ValidationData| {
             Ok(())
-        }
+        },
+
+        links: [
+            from!(
+                "app",
+                tag: "has",
+
+                validation_package: || {
+                    hdk::ValidationPackageDefinition::Entry
+                },
+
+                validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                    Ok(())
+                }
+            )
+        ]
     )
 }

@@ -1,7 +1,8 @@
 use hdk::{
     holochain_core_types::{
         entry::Entry,
-        cas::content::Address
+        cas::content::{Address, AddressableContent},
+        json::RawString,
     },
     error::{ZomeApiResult, ZomeApiError},
 };
@@ -13,7 +14,11 @@ Getter Functions
 ***/
 
 pub fn handle_get_all_apps() -> ZomeApiResult<Vec<utils::GetLinksLoadElement<entry::App>>> {
-    utils::get_links_and_load_type(&hdk::AGENT_ADDRESS, "app_tag")
+    let all_apps_anchor_addr = Entry::App(
+        "category_anchor".into(),
+        RawString::from("*").into(),
+    ).address();
+    utils::get_links_and_load_type(&all_apps_anchor_addr, "contains")
 }
 
 pub fn handle_get_app(app_hash:Address) -> ZomeApiResult<entry::App> {
@@ -21,14 +26,14 @@ pub fn handle_get_app(app_hash:Address) -> ZomeApiResult<entry::App> {
 }
 
 pub fn handle_get_dna(app_hash: Address) -> ZomeApiResult<entry::DnaBundle> {
-    Ok(utils::get_links_and_load_type::<_, entry::DnaBundle>(&app_hash, "dna_bundle_tag")?
+    Ok(utils::get_links_and_load_type::<_, entry::DnaBundle>(&app_hash, "has")?
         .first()
         .ok_or(ZomeApiError::Internal("No DNA bundles linked to app address".into()))?
         .entry.clone())
 }
 
 pub fn handle_get_ui(app_hash: Address) -> ZomeApiResult<entry::UiBundle> {
-    Ok(utils::get_links_and_load_type::<_, entry::UiBundle>(&app_hash, "ui_bundle_tag")?
+    Ok(utils::get_links_and_load_type::<_, entry::UiBundle>(&app_hash, "has")?
         .first()
         .ok_or(ZomeApiError::Internal("No ui bundles linked to app address".into()))?
         .entry.clone())
@@ -48,18 +53,28 @@ pub fn handle_create_app(uuid:String, title:String, description:String, thumbnai
             thumbnail:thumbnail.to_string(),
         }.into()
     );
-    //TODO: Link to an anchor nt AGENT_ADDRESS
-    utils::commit_and_link(&app_entry, &hdk::AGENT_ADDRESS, "app_tag")
+    let app_addr = hdk::commit_entry(&app_entry)?;
+    utils::link_entries_bidir(&app_addr, &hdk::AGENT_ADDRESS, "author_is", "published")?;
+
+    let all_apps_anchor_addr = hdk::commit_entry(&Entry::App(
+        "category_anchor".into(),
+        RawString::from("*").into()
+    ))?;
+    utils::link_entries_bidir(&all_apps_anchor_addr, &app_addr, "contains", "in")?;
+
+    Ok(app_addr)
 }
 
-pub fn handle_add_dna(app_hash: Address, dna_bundle:String) -> ZomeApiResult<Address> {
+pub fn handle_add_dna(app_hash: Address, dna_bundle: String) -> ZomeApiResult<Address> {
     let bundle_entry = Entry::App(
         "dna_code_bundle".into(),
         entry::DnaBundle {
             dna_bundle: dna_bundle.to_string(),
         }.into()
     );
-    utils::commit_and_link(&bundle_entry, &app_hash, "dna_bundle_tag")
+    let bundle_addr = hdk::commit_entry(&bundle_entry)?;
+    hdk::link_entries(&app_hash, &bundle_addr, "has")?;
+    Ok(bundle_addr)
 }
 
 pub fn handle_add_ui(app_hash: Address,ui_bundle:String) -> ZomeApiResult<Address> {
@@ -69,5 +84,7 @@ pub fn handle_add_ui(app_hash: Address,ui_bundle:String) -> ZomeApiResult<Addres
             ui_bundle: ui_bundle.to_string(),
         }.into()
     );
-    utils::commit_and_link(&bundle_entry, &app_hash, "ui_bundle_tag")
+    let bundle_addr = hdk::commit_entry(&bundle_entry)?;
+    hdk::link_entries(&app_hash, &bundle_addr, "has")?;
+    Ok(bundle_addr)
 }
