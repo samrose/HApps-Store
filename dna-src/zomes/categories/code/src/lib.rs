@@ -15,7 +15,7 @@ use hdk::{
     holochain_core_types::{
         cas::content::Address,
         dna::entry_types::Sharing,
-        json::RawString
+        json::RawString,
     },
     error::ZomeApiResult
 };
@@ -110,15 +110,25 @@ define_zome! {
 
     functions: {
         main (Public) {
-            add_category: {
-                inputs:| category:String,tag:String, hash:hdk::holochain_core_types::hash::HashString |,
+            add_app_to_category: {
+                inputs:|app_address: Address, category: String|,
                 outputs: | result: ZomeApiResult<()> |,
-                handler: categories_fn::handle_adding_category
+                handler: categories_fn::handle_add_app_to_category
+            }
+            add_app_to_tag: {
+                inputs:|app_address: Address, tag: String|,
+                outputs: | result: ZomeApiResult<()> |,
+                handler: categories_fn::handle_add_app_to_tag
             }
             get_apps_by_category: {
-                inputs:| category:String |,
-                outputs: | result: ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>> |,
+                inputs:|category: String|,
+                outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>>|,
                 handler: categories_fn::handle_get_apps_by_category
+            }
+            get_apps_by_tag: {
+                inputs:|tag: String|,
+                outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>>|,
+                handler: categories_fn::handle_get_apps_by_tag
             }
         }
     }
