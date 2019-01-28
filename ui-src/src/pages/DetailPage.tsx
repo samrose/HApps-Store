@@ -7,7 +7,6 @@ import { Hash } from "../../../holochain";
 import { AppDetailState } from "../../../types";
 import { fetchPOST } from '../utils'
 import { Row, Col, CardPanel } from 'react-materialize';
-import JdenticonPlaceHolder from '../components/JdenticonFiller';
 
 import CreateReviewForm from '../components/CreateReviewForm';
 import ReviewList from "../components/ReviewList";
@@ -80,7 +79,6 @@ class DetailPage extends Component <DetailPageProps, DetailPageState> {
         <div>
           <div className={ this.state.showReviewForm ? "detail-view hide" : "detail-view"} >
             <h1 className="detail-page-header">{appEntry.title}</h1>
-            <JdenticonPlaceHolder className="jdenticon" size={150} hash={currentAppDetails.Hash} />
             <br/>
             <Row>
                 <Col s={12}>

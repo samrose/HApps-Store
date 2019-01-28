@@ -6,7 +6,6 @@ import { Hash } from "../../../holochain";
 import { AppDetailState } from "../../../types";
 import { Link } from 'react-router-dom';
 import './CreateReviewForm.css';
-import JdenticonPlaceHolder from '../components/JdenticonFiller';
 // import StarFillRating from "../components/StarFillRating";
 
 type CreateReviewFormProps = {
@@ -63,7 +62,6 @@ class CreateReviewForm extends React.Component<CreateReviewFormProps, CreateRevi
     return (
       <div className="create-review-form" onKeyUp={ this.handleEnter }>
         <h1 className="registration-header">Write your App Review Below</h1>
-        <JdenticonPlaceHolder className="jdenticon" size={100} hash={ agent.Hash } />
         <h4 className="review-author">Author: {agent.Name}</h4>
         <hr className="reg-hr"/>
         <br/>

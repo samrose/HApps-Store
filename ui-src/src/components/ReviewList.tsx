@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { Hash } from "../../../holochain";
 import { AppDetailState } from "../../../types";
 import { fetchPOST } from '../utils'
-import JdenticonPlaceHolder from '../components/JdenticonFiller';
 
 import "./ReviewList.css";
 
@@ -14,6 +13,7 @@ type ReviewListProps = {
   currentAgent: {agent: {Hash: Hash, Name: string}},
   currentAppDetails: {Entry: AppDetailState, Hash: Hash},
   currentAppHash: string,
+  
   fetchAgent: () => void,
   fetchAppDetails: (currentAppHash) => void,
   fetchAppReviews: (currentAppHash) => void,
@@ -86,7 +86,6 @@ class ReviewList extends React.Component<any, any>  {
             key={entry.authorHash+entry.rating+entry.review}
             className="list-group-item list-entry-item"
           >
-            <JdenticonPlaceHolder id="review-jdenticon" className="jdenticon" size={100} hash={ entry.author } />
              <span>{`${timestamp.datestamp }: ${timestamp.timestamp}`}</span>
              <h4>{authorName}</h4>
             <h5>{entry.rate}</h5>

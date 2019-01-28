@@ -7,7 +7,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
 
 import registerServiceWorker from './registerServiceWorker';
-import store from './store';
+import CreateStore from './store';
+
+const store = CreateStore()
 
 const root = <Provider store={store}>
   <App />

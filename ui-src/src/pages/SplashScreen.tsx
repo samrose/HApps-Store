@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as redux from 'redux';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
-import SplashNav from "../components/SplashNav";
 import './SplashScreen.css';
 
 import store from '../store'
@@ -44,10 +43,7 @@ class SplashScreen extends React.Component<Props, State> {
     this.setState({toggleMessage: false });
   }
 
-  public render(){
-    if (!this.props.currentAgent) {
-      return <div/>
-    }
+  public render() {
     const renderWelcomeMsgs = () => {
       const { agent } = this.props.currentAgent!;
       const waitGreeting1: WelcomeMsg = `Hello ${agent.Name}`
@@ -65,7 +61,6 @@ class SplashScreen extends React.Component<Props, State> {
 
     return (
       <div>
-        <SplashNav/>
         {renderWelcomeMsgs()}
         <div className="splash-screen-container" style={{ textAlign: 'center' }}>
           <h1 className="app-store-header">App Store</h1>

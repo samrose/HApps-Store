@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import { fetchPOST, fetchFormPOST } from '../utils';
 import { Hash } from '../../../holochain'
 import { AppDetailState } from "../../../types";
-import JdenticonPlaceHolder from '../components/JdenticonFiller';
 
 import * as utils from '../utils';  // the file upload resource code is located in this file...
 import Dropzone from 'react-dropzone';

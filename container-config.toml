@@ -4,26 +4,10 @@ name = "HoloTester1"
 public_address = "sandwich--------------------------------------------------------------------------AAAEqzh28L"
 key_file = "holo_tester.key"
 
-[[agents]]
-id = "test_agent2"
-name = "HoloTester2"
-public_address = "bagel-----------------------------------------------------------------------------AAADAq0mCu"
-key_file = "holo_tester.key"
-
-[[agents]]
-id = "test_agent3"
-name = "HoloTester3"
-public_address = "croissant-------------------------------------------------------------------------AAAEuHzxV4"
-key_file = "holo_tester.key"
-
-
-
-
 [[dnas]]
 id = "happ_store_dna"
 file = "dna/happ-store.hcpkg"
 hash = "Qm328wyq38924x"
-
 
 [[instances]]
 id = "happ-store"
@@ -35,8 +19,6 @@ file = "app_spec.log"
 [instances.storage]
 type = "file"
 path = "tmp-storage"
-
-
 
 [[interfaces]]
 id = "websocket_interface"

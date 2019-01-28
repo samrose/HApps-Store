@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import './AllAppsPage.css';
 
-import JdenticonPlaceHolder from '../components/JdenticonFiller';
-
 import store from '../store'
 import { fetchPOST } from '../utils'
 import { ReduxAction } from '../../../types';
@@ -16,6 +14,7 @@ import { Hash } from '../../../holochain';
 type AllAppsPageProps = {
   allApps: Map<Hash,{ title: string, icon: string }>,
   currentAgent: {agent: {Hash: Hash, Name: string}},
+
   fetchAgent: () => void,
   fetchAllApps: () => void,
   fetchAppDetails: () => void
@@ -24,38 +23,27 @@ type AllAppsPageProps = {
 class AllAppsPage extends React.Component<AllAppsPageProps, {}> {
   public componentDidMount() {
     this.props.fetchAgent();
-    setInterval(this.props.fetchAllApps, 500);
+    this.props.fetchAllApps();
   }
 
   public handleSelectApp = () => {
     // this.props.fetchAppDetails();
+    // navigate to details page
   }
 
   public render() {
-    const greeting: string = "Welcome to your HCHC App Store";
+    const greeting: string = "All listed hApps";
     if (!this.props.currentAgent) {
       return <div/>
     }
     else {
       const { agent } = this.props.currentAgent;
       return (
+        <div>
           <div style={{ textAlign: 'center' }}>
-            <h1 className="all-apps-header">{ greeting }</h1>
-            <hr/>
-            <Link to={`/appstore/${agent.Hash}`}>
-            <div className="appstore-app-icons" onClick={this.handleSelectApp}>
-              {/* // BELOW> : The App Icon should instead pass the App Hash into the hash prop,... (not the whoami Hash). */}
-              <JdenticonPlaceHolder className="jdenticon" size={150} hash={ agent.Hash } />
-            </div>
-            </Link>
-            {/* // BELOW> : This should instead be the App Hash (... not the whoami Hash). */}
-            <Link to={`/appstore/${agent.Hash}`}>
-            <div className="appstore-app-icons" onClick={this.handleSelectApp}>
-              {/* // BELOW> : The App Icon should instead pass the App Hash into the hash prop,... (not the whoami Hash). */}
-              <JdenticonPlaceHolder className="jdenticon" size={150} hash={ agent.Hash } />
-            </div>
-          </Link>
-
+              <h1 className="all-apps-header">{ greeting }</h1>
+              <hr/>
+          </div>
         </div>
       );
     }

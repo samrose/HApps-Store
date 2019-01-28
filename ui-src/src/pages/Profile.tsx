@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from 'react-redux';
 import { fetchPOST } from '../utils'
-import MainNav from "../components/MainNav";
 // import "./Profile.css";
 import {
   Container, Row, Col, Form,
@@ -27,7 +26,6 @@ class Profile extends React.Component<any, {}> {
 
     return (
       <div>
-          <MainNav/>
           <Container className="container-fluid">
               <br/>
               <Row>

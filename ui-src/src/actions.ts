@@ -26,15 +26,18 @@ export const CreateApp = createHolochainAsyncAction<
   string
 >(`happ-store`, 'happs', 'main', 'create_app')
 
+
 export const GetAllApps = createHolochainAsyncAction<
   {},
   Array<GetLinksLoadElement<App>>
 >(`happ-store`, 'happs', 'main', 'get_all_apps')
 
+
 export const GetApp = createHolochainAsyncAction<
   {address: string},
   App
 >(`happ-store`, 'happs', 'main', 'get_all_apps')
+
 
 export const Whoami = createHolochainAsyncAction<
 {}, 
