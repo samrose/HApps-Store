@@ -11,60 +11,25 @@ import { WelcomeMsg, ReduxAction } from '../../../types';
 
 import { Hash } from '../../../holochain';
 
-type SplashScreenProps = {
-  fetchAgent: () => void,
+interface Props {
   currentAgent: {agent: {Hash: Hash, Name: string}},
   currentCategory: string,
+  
+  fetchAgent: () => void,
   registerCategoryType: (category) => Promise<any>,
 }
 
 
-type SplashScreenState = {
+interface State {
   toggleMessage: boolean,
-  panels1: Array<any>,
-  panels2: Array<any>,
-  toggle1: boolean,
-  toggle2: boolean,
-  toggle3: boolean,
-  toggle4: boolean,
-  toggle5: boolean,
-  toggle6: boolean,
-  toggle7: boolean,
-  toggle8: boolean,
-  toggle9: boolean,
-  toggle10: boolean,
 }
 
-class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState> {
+class SplashScreen extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
-      toggleMessage: true,
-      panels1: [
-        {name: 'Games', icon: "videogame_asset", btn: "Play"},
-        {name: 'Admin Tools', icon: "timeline", btn: "Browse"},
-        {name: 'Dev Tools', icon: "code", btn: "Dive In"},
-        {name: 'Top Downloads', icon: "stars", btn: "Visit"},
-        {name: 'Categories', icon: "format_list_bulleted", btn: "See"},
-      ],
-      panels2: [
-        {name: 'Movies', icon: "movie_filter", btn: "Watch"},
-        {name: 'Educational', icon: "book", btn: "Learn"},
-        {name: 'Finance', icon: "attach_money", btn: "Save"},
-        {name: 'Leisure', icon: "language", btn: "Travel"},
-        {name: 'Music', icon: "music_note", btn: "Listen"},
-      ],
-      toggle1: false,
-      toggle2: false,
-      toggle3: false,
-      toggle4: false,
-      toggle5: false,
-      toggle6: false,
-      toggle7: false,
-      toggle8: false,
-      toggle9: false,
-      toggle10: false,
-    };
+      toggleMessage: true
+    }
   }
 
   public componentDidMount() {
@@ -76,7 +41,6 @@ class SplashScreen extends React.Component<SplashScreenProps, SplashScreenState>
   }
 
   public removeMessages = () => {
-    // console.log("SET THE STATE TO FALSE");
     this.setState({toggleMessage: false });
   }
 

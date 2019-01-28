@@ -81,27 +81,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllAppsPage);
-
-// constructor(props) {
-//   super(props);
-//   this.state = {
-//     allAppCategories: [],
-//     selectedApp: null,
-//   };
-// }
-
-  // public appSearch = (appSearchTerm) => {
-  //   JSONFETCH ({url: URL_BASE_HERE, term: appSearchTerm}, (data) => {
-  //       console.log(data);
-  //       this.setState({
-  //           allAppCategories: data,
-  //           selectedApp: data[0]
-  //       });
-  //     });
-  // }
-
-// const searchTerm = _.debounce(term => {this.appSearch(term)}, 300);
-
-{/* <a className="flex-sm-fill text-sm-center nav-link" href="#"> */}
-  {/* <SearchBar onSearchTermUpdate={ searchTerm } /> */}
-// </a>

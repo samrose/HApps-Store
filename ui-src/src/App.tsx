@@ -19,10 +19,10 @@ const App = () =>
       <Switch>
         <Route exact={exact} path="/" component={SplashScreen} />
         <Route exact={exact} path="/appstore" component={SplashScreen} />
-        <Route exact={exact} path="/appstore/Categories" component={AllCategories} />
-        <Route exact={exact} path="/appstore/:category" component={Category} />
-        <Route exact={exact} path="/appstore/:category/:id" component={Detail} />
-        <Route exact={exact} path="/appstore/:category/:id/makereview" component={CreateReviewForm} />
+        <Route exact={exact} path="/appstore/categories" component={AllCategories} />
+        <Route exact={exact} path="/appstore/cat/:category" component={Category} />
+        <Route exact={exact} path="/appstore/cat/:category/id/:id" component={Detail} />
+        <Route exact={exact} path="/appstore/cat/:category/id/:id/makereview" component={CreateReviewForm} />
         <Route exact={exact} path="/profile/:userHash" component={Profile} />
         <Route component={NoMatch} />
       </Switch>
