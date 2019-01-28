@@ -28,6 +28,8 @@ pub struct UiBundle {
     pub ui_bundle: String,
 }
 
+const ADMIN_AUTHOR: &str = "alice-----------------------------------------------------------------------------AAAIuDJb4M";
+
 pub fn app_definitions() -> ValidatingEntryType{
     entry!(
         name: "app",
@@ -38,8 +40,18 @@ pub fn app_definitions() -> ValidatingEntryType{
             hdk::ValidationPackageDefinition::Entry
         },
 
-        validation: |_app: App, _validation_data: hdk::ValidationData| {
-            Ok(())
+        validation: |_app: App, validation_data: hdk::ValidationData| {
+            {
+                let header = validation_data.package.chain_header.ok_or("No header found so could not validate")?;
+                match header.sources().contains(&Address::from(ADMIN_AUTHOR)) {
+                    true => Ok(()),
+                    false => Err(
+                        format!("Permission denied. Author \"{:?}\" is not allowed to commit an app entry. Only \"{}\"", 
+                        header.sources(), 
+                        ADMIN_AUTHOR)
+                    )
+                }
+            }
         },
 
         links: [
