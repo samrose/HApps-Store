@@ -9,6 +9,8 @@ use hdk::{
     entry_definition::ValidatingEntryType,
 };
 
+pub mod handlers;
+
 #[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
 pub struct App {
     pub uuid:String,

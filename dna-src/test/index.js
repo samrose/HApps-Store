@@ -23,7 +23,7 @@ container.start()
 
 const app = container.makeCaller('alice', dnaPath)
 
-// require('./unit_test/happs_test')(app);
+require('./unit_test/happs_test')(app);
 require('./unit_test/categories_test')(app);
-// require('./unit_test/ratings_test')(app);
-// require('./unit_test/whoami_test')(app);
+require('./unit_test/ratings_test')(app);
+require('./unit_test/whoami_test')(app);

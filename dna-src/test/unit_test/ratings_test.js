@@ -13,6 +13,7 @@ module.exports = (app) => {
 
     // commit an app to review
     const app_address = app.call("happs", "main", "create_app", App1).Ok;
+    console.log(app_address)
 
     const ratings_1 = {
         rate: "5",
@@ -25,19 +26,23 @@ module.exports = (app) => {
         reviewed_hash: app_address
     }
 
-    const result_0 = app.call("ratings", "main", "create_ratings", ratings_1)
+    const result_0 = app.call("happs", "main", "create_ratings", ratings_1)
     console.log(result_0)
-    t.equal(result_0.Ok.address.length, 46)
+    t.equal(result_0.Ok.length, 46)
     console.log("Commited Rating : ",result_0);
 
-    const result_00 = app.call("ratings", "main", "create_ratings", ratings_2)
-    t.equal(result_00.Ok.address.length, 46)
+    const result_00 = app.call("happs", "main", "create_ratings", ratings_2)
+    t.equal(result_00.Ok.length, 46)
     console.log("Commited Rating : ",result_00);
 
     const hash = {
-      reviewedHash: whoami.hash
+      reviewed_hash: app_address
     }
-    const result_1 = app.call("ratings", "main", "get_ratings", hash)
+
+    app.call("happs", "main", "get_ratings", hash)
+    app.call("happs", "main", "get_ratings", hash)
+    app.call("happs", "main", "get_ratings", hash)
+    const result_1 = app.call("happs", "main", "get_ratings", hash)
     console.log("Returned ratings : ",result_1);
     t.equal(result_1.Ok.length,2)
 

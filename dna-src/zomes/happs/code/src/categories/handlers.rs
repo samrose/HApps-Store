@@ -3,21 +3,14 @@ use hdk::{
     self,
     holochain_core_types::{
         entry::Entry,
-        error::HolochainError,
-        json::{JsonString, RawString},
+        json::{RawString},
         cas::content::{Address, AddressableContent},
     },
     error::{ZomeApiResult},
 };
 
-#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
-pub struct App {
-    pub uuid:String,
-    pub title:String,
-    pub author:String,
-    pub description:String,
-    pub thumbnail:String,
-}
+use crate::happs::App;
+
 
 pub fn handle_add_app_to_category(app_address: Address, category: String) -> ZomeApiResult<()> {
     let category_anchor_entry = Entry::App(
@@ -38,7 +31,6 @@ pub fn handle_add_app_to_tag(app_address: Address, tag: String) -> ZomeApiResult
     utils::link_entries_bidir(&app_address, &tag_anchor_addr, "in", "contains")?;
     Ok(())
 }
-
 
 pub fn handle_get_apps_by_category(category: String) -> ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>> {
     let category_anchor_entry = Entry::App(
