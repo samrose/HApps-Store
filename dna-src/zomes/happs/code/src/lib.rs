@@ -73,12 +73,12 @@ define_zome! {
                 handler: happs::handlers::handle_get_ui
             }
             create_ratings: {
-                inputs:| rate:String, review:String, reviewedHash: Address |,
+                inputs:| rate:String, review:String, reviewed_hash: Address |,
                 outputs: | result: ZomeApiResult<Address> |,
                 handler: ratings::handlers::handle_creating_ratings
             }
             get_ratings: {
-                inputs:| reviewedHash: Address |,
+                inputs:| reviewed_hash: Address |,
                 outputs: |result: ZomeApiResult<Vec<GetLinksLoadElement<Ratings>>>|,
                 handler: ratings::handlers::handle_get_reviews_by_hash
             }

@@ -26,18 +26,18 @@ module.exports = (app) => {
     t.equal(app_address2.length, 46)
     console.log("APP ADDRESS:: ",app_address2);
 
-    const result1 = app.call("categories", "main", "add_app_to_category", {app_address: app_address, category: "good apps",})
+    const result1 = app.call("happs", "main", "add_app_to_category", {app_address: app_address, category: "good apps",})
     console.log(result1)
     t.equal(result1.Ok, null)
 
-    const result2 = app.call("categories", "main", "add_app_to_category", {app_address: app_address2, category: "good apps",})
+    const result2 = app.call("happs", "main", "add_app_to_category", {app_address: app_address2, category: "good apps",})
     console.log(result2)
     t.equal(result2.Ok, null)
 
-    app.call("categories", "main", "get_apps_by_category", {category:"good apps"})
-    app.call("categories", "main", "get_apps_by_category", {category:"good apps"})
-    app.call("categories", "main", "get_apps_by_category", {category:"good apps"})
-    const result3 = app.call("categories", "main", "get_apps_by_category", {category:"good apps"})
+    app.call("happs", "main", "get_apps_by_category", {category:"good apps"})
+    app.call("happs", "main", "get_apps_by_category", {category:"good apps"})
+    app.call("happs", "main", "get_apps_by_category", {category:"good apps"})
+    const result3 = app.call("happs", "main", "get_apps_by_category", {category:"good apps"})
     t.equal(result3.Ok.length, 2)
 
     t.end()
