@@ -4,6 +4,7 @@
 import { Hash } from '../../holochain'
 import store from './store'
 
+import { createAction } from 'typesafe-actions'
 import { createHolochainAsyncAction } from '@holochain/hc-redux-middleware'
 
 interface App {
@@ -111,3 +112,6 @@ export const GetAppsByTag = createHolochainAsyncAction<
 //     outputs: |result: ZomeApiResult<Vec<GetLinksLoadElement<Ratings>>>|,
 //     handler: ratings::handlers::handle_get_reviews_by_hash
 // }
+export const SetCurrentApp = createAction('SET_CURRENT_APP', resolve => {
+  return (currentApp: App) => resolve(currentApp)
+})

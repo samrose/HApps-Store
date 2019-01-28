@@ -4,11 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import MainNav from "./components/MainNav";
 import SplashScreen from "./pages/SplashScreen";
-import Detail from "./pages/DetailPage";
 import AllAppsPage from "./pages/AllAppsPage";
 import DetailPage from "./pages/DetailPage";
 import Profile from "./pages/Profile";
-import CreateReviewForm from "./components/CreateReviewForm";
 import NoMatch from "./pages/NoMatch";
 
 const exact: boolean = true;

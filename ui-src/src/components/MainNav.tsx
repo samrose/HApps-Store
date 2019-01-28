@@ -17,8 +17,8 @@ class MainNav extends React.Component<any, {}> {
       return <div/>
     }
 
-    const { agent } = this.props.currentAgent!;
-    let agentName = agent.Name;
+    const agent = this.props.currentAgent || {name: 'none', hash: 'none'};
+    let agentName = agent.name;
     if (agentName.length > 15 ) {
       agentName = agentName.substring(0,15) + "...";
     }

@@ -6,8 +6,7 @@ import { Map } from 'immutable';
 import './AllAppsPage.css';
 
 import store from '../store'
-import { fetchPOST } from '../utils'
-import { ReduxAction } from '../../../types';
+import { GetAllApps, Whoami } from '../actions'
 
 import { Hash } from '../../../holochain';
 
@@ -53,19 +52,8 @@ class AllAppsPage extends React.Component<AllAppsPageProps, {}> {
 
 const mapStateToProps = ({ allApps, currentAgent }) => ({ allApps, currentAgent });
 const mapDispatchToProps = dispatch => ({
-  fetchAgent: () => {
-    fetchPOST('/fn/whoami/getAgent')
-      .then(agent => {
-        dispatch({ type: 'FETCH_AGENT', agent })
-      })
-  },
-  fetchAppDetails: () => {
-    fetchPOST('/fn/applications/getAppHash')
-      .then( appHash => {
-        dispatch({ type: 'VIEW_APP', appHash })
-      })
-  },
-  fetchAllApps: () => dispatch({ type: 'FETCH_ALL_APPS' }),
+  fetchAgent: () => dispatch(Whoami.create({})),
+  fetchAllApps: () => dispatch(GetAllApps.create({})),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllAppsPage);

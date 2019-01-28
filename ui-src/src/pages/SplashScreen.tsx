@@ -6,12 +6,11 @@ import './SplashScreen.css';
 
 import store from '../store'
 import { fetchPOST } from '../utils'
-import { WelcomeMsg, ReduxAction } from '../../../types';
 
 import { Hash } from '../../../holochain';
 
 interface Props {
-  currentAgent: {agent: {Hash: Hash, Name: string}},
+  currentAgent: {hash: Hash, name: string},
   currentCategory: string,
   
   fetchAgent: () => void,
@@ -45,9 +44,9 @@ class SplashScreen extends React.Component<Props, State> {
 
   public render() {
     const renderWelcomeMsgs = () => {
-      const { agent } = this.props.currentAgent!;
-      const waitGreeting1: WelcomeMsg = `Hello ${agent.Name}`
-      const waitGreeting2: WelcomeMsg = "Welcome to the Holo App Store";
+      const agent = this.props.currentAgent || {name: 'none', hash: 'none'};
+      const waitGreeting1: string = `Hello ${agent.name}`
+      const waitGreeting2: string = "Welcome to the Holo App Store";
       if (this.state.toggleMessage === true) {
         setInterval(() => {this.removeMessages()}, 6150);
         return (

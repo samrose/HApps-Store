@@ -4,22 +4,18 @@ import { Link } from 'react-router-dom';
 import { Component } from "react";
 import { connect } from 'react-redux';
 import { Hash } from "../../../holochain";
-import { AppDetailState } from "../../../types";
+import { App } from "../../../types";
 import { fetchPOST } from '../utils'
 import { Row, Col, CardPanel } from 'react-materialize';
 
-import CreateReviewForm from '../components/CreateReviewForm';
-import ReviewList from "../components/ReviewList";
-import DownloadApp from "../components/DownloadApp"
-// import AppList from "../containers/AppList";
-// import AppDetails from "../containers/AppDetails";
+
 import "./DetailPage.css";
 
 
 type DetailPageProps = {
   currentAgent: {agent: {Hash: Hash, Name: string}},
-  currentAppDetails: {Entry: AppDetailState, Hash: Hash},
-  currentApp: AppDetailState,
+  currentAppDetails: {Entry: App, Hash: Hash},
+  currentApp: App,
   currentCategory: string,
   currentAppHash: string,
   fetchAgent: () => void,
@@ -84,21 +80,14 @@ class DetailPage extends Component <DetailPageProps, DetailPageState> {
                 <Col s={12}>
                   <CardPanel className="lighten-4 black-text card-panel">
                       <h4 className="title">App Details</h4>
-                      <h5 className="detail-page-header">Author: {appEntry.author.Name}</h5>
+                      <h5 className="detail-page-header">Author: {appEntry.author}</h5>
                       <h5>Description: {appEntry.description}</h5>
-                      <DownloadApp/>
                   </CardPanel>
                   <CardPanel className="lighten-4 black-text card-panel">
                       <h4 className="title">App Reviews</h4>
                       <Link to={`/appstore/${this.props.currentCategory}/${currentAppDetails.Hash}/makereview`} key={currentAppDetails.Hash}>
                           <button>Add Review</button>
                       </Link>
-                      <br/>
-                      <br/>
-                      <h5> Add a message {agent.Name}:</h5>
-                      <br/>
-                      <ReviewList/>
-                      <br/>
                   </CardPanel>
                   <CardPanel className="lighten-4 black-text card-panel">
                       <h4 className="title">Other Apps in Category</h4>
