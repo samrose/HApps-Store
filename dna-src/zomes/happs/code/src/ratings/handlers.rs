@@ -7,7 +7,7 @@ use hdk::{
     error::ZomeApiResult,
     api::AGENT_ADDRESS,
 };
-use crate::entry::{
+use crate::ratings::{
     Ratings
 };
 
