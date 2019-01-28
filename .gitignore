@@ -12,6 +12,7 @@ bundle.json
 
 node_modules
 target
+tmp-storage
 
 
 # OS generated files #
