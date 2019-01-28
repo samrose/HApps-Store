@@ -23,7 +23,7 @@ path = "tmp-storage"
 [[interfaces]]
 id = "websocket_interface"
 [interfaces.driver]
-type = "websocket"
+type = "http"
 port = 3400
 [[interfaces.instances]]
 id = "happ-store"

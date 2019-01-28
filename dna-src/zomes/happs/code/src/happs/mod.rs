@@ -38,7 +38,7 @@ pub fn app_definitions() -> ValidatingEntryType{
             hdk::ValidationPackageDefinition::Entry
         },
 
-        validation: |_app: App, _ctx: hdk::ValidationData| {
+        validation: |_app: App, _validation_data: hdk::ValidationData| {
             Ok(())
         },
 
@@ -51,7 +51,7 @@ pub fn app_definitions() -> ValidatingEntryType{
                     hdk::ValidationPackageDefinition::Entry
                 },
 
-                validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                validation: |_base: Address, _target: Address, _validation_data: hdk::ValidationData| {
                     Ok(())
                 }
             ),
@@ -63,7 +63,7 @@ pub fn app_definitions() -> ValidatingEntryType{
                     hdk::ValidationPackageDefinition::Entry
                 },
 
-                validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                validation: |_base: Address, _target: Address, _validation_data: hdk::ValidationData| {
                     Ok(())
                 }
             )
@@ -81,7 +81,7 @@ pub fn dna_bundle_definitions()-> ValidatingEntryType{
             hdk::ValidationPackageDefinition::Entry
         },
 
-        validation: |_app: DnaBundle, _ctx: hdk::ValidationData| {
+        validation: |_app: DnaBundle, _validation_data: hdk::ValidationData| {
             Ok(())
         },
 
@@ -94,7 +94,7 @@ pub fn dna_bundle_definitions()-> ValidatingEntryType{
                     hdk::ValidationPackageDefinition::Entry
                 },
 
-                validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                validation: |_base: Address, _target: Address, _validation_data: hdk::ValidationData| {
                     Ok(())
                 }
             )
@@ -112,7 +112,7 @@ pub fn ui_bundle_definitions()-> ValidatingEntryType{
             hdk::ValidationPackageDefinition::Entry
         },
 
-        validation: |_app: UiBundle, _ctx: hdk::ValidationData| {
+        validation: |_app: UiBundle, _validation_data: hdk::ValidationData| {
             Ok(())
         },
 
@@ -125,7 +125,7 @@ pub fn ui_bundle_definitions()-> ValidatingEntryType{
                     hdk::ValidationPackageDefinition::Entry
                 },
 
-                validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                validation: |_base: Address, _target: Address, _validation_data: hdk::ValidationData| {
                     Ok(())
                 }
             )
