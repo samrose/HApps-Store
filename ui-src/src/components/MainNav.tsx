@@ -1,11 +1,15 @@
 import * as React from "react";
 import { connect } from 'react-redux';
-import { fetchPOST } from '../utils'
+import { fetchPOST } from '../utils';
+
+import { Whoami } from '../actions';
+
 import "./MainNav.css";
 
 class MainNav extends React.Component<any, {}> {
   constructor(props) {
     super(props);
+    this.props.fetchAgent();
   }
 
   public render() {
@@ -30,12 +34,7 @@ class MainNav extends React.Component<any, {}> {
 
 const mapStateToProps = ({ currentAgent }) => ({ currentAgent });
 const mapDispatchToProps = dispatch => ({
-fetchAgent: () => {
-  fetchPOST('/fn/whoami/getAgent')
-    .then(agent => {
-      dispatch({ type: 'FETCH_AGENT', agent })
-    })
-  },
+fetchAgent: () => dispatch(Whoami.create({})),
 searchCategories: (category) => {
   fetchPOST('/fn/bridgeToCategories/getAppByCategory', category)
     .then(apps => {

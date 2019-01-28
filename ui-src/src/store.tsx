@@ -6,7 +6,7 @@ import { connect } from '@holochain/hc-web-client'
 import reducer from './reducer';
 
 // put middleware in this array to have it applied
-const middleware: Array<any> = []// [holochainMiddleware(connect(`ws://localhost:3400`))]
+const middleware: Array<any> = [holochainMiddleware(connect(`ws://localhost:3400`))]
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
