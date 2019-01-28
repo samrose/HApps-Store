@@ -1,16 +1,16 @@
 [package]
 name = "whoami"
 version = "0.1.0"
-authors = ["zo-el <joelulahanna@gmail.com>"]
+authors = ["zo-el <joelulahanna@gmail.com>", "Willem Olding <willem.olding@holo.host>"]
 edition = "2018"
 
 [dependencies]
 serde = "1.0"
 serde_json = "1.0"
 serde_derive = "1.0"
-hdk = { git = "https://github.com/holochain/holochain-rust" , ref = "edc92f1b506e8ccac442d6bf451f34459059bde3" }
-holochain_core_types_derive= { git = "https://github.com/holochain/holochain-rust" , ref = "edc92f1b506e8ccac442d6bf451f34459059bde3" }
-
+hdk = { git = "https://github.com/holochain/holochain-rust" , tag = "v0.0.3" }
+holochain_core_types_derive= { git = "https://github.com/holochain/holochain-rust" , tag = "v0.0.3" }
+utils = { path = "../../../common/utils" }
 
 [lib]
 path = "src/lib.rs"
