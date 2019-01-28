@@ -5,7 +5,7 @@ import { HCHCAppState, AppDetailState, AppDNACode, ReviewLog, ReduxAction } from
 
 
 const defaultState: HCHCAppState = {
-  currentAgent: null,
+  currentAgent: {agent: {Hash: "a hash", Name: "a name"}},
   AllApps: null,
   AdminApps: null,
   DevApps: null,
