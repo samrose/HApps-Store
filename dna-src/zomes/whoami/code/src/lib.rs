@@ -8,7 +8,11 @@ extern crate serde_derive;
 #[macro_use]
 extern crate holochain_core_types_derive;
 
-use hdk::error::ZomeApiResult;
+use hdk::{
+    error::ZomeApiResult,
+    holochain_core_types::{cas::content::Address, entry::Entry, json::JsonString, error::HolochainError},
+    holochain_wasm_utils::api_serialization::get_links::GetLinksResult,
+};
 
 pub mod whoami_fn;
 
@@ -18,13 +22,15 @@ define_zome! {
 
     genesis: || { Ok(()) }
 
-    functions: {
-        main (Public) {
-            get_user: {
-                inputs:| |,
-                outputs: |result: ZomeApiResult<whoami_fn::UserData>|,
-                handler: whoami_fn::handle_get_agent
-            }
+    functions: [
+        get_user: {
+            inputs:| |,
+            outputs: |result: ZomeApiResult<whoami_fn::UserData>|,
+            handler: whoami_fn::handle_get_agent
         }
+    ]
+
+    capabilities: {
+        public (Public) [get_user]
     }
 }

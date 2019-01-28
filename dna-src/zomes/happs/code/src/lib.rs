@@ -11,9 +11,8 @@ extern crate utils;
 use utils::GetLinksLoadElement;
 use hdk::{
     error::ZomeApiResult,
-    holochain_core_types::{
-        cas::content::Address
-    },
+    holochain_core_types::{cas::content::Address, entry::Entry, json::JsonString, error::HolochainError},
+    holochain_wasm_utils::api_serialization::get_links::GetLinksResult,
 };
 
 mod happs;
@@ -35,73 +34,75 @@ define_zome! {
 
     genesis: || { Ok(()) }
 
-    functions: {
-        main (Public) {
-            create_app: {
-                inputs:| uuid:String,title:String,description:String,thumbnail:String |,
-                outputs: |result: ZomeApiResult<Address>|,
-                handler: happs::handlers::handle_create_app
-            }
-            get_all_apps: {
-                inputs:| |,
-                outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<happs::App>>>|,
-                handler: happs::handlers::handle_get_all_apps
-            }
-            get_app: {
-                inputs:|app_hash: Address|,
-                outputs: |result: ZomeApiResult<happs::App>|,
-                handler: happs::handlers::handle_get_app
-            }
-            add_dna: {
-                inputs:| app_hash: Address,dna_bundle:String |,
-                outputs: |result: ZomeApiResult<Address>|,
-                handler: happs::handlers::handle_add_dna
-            }
-            get_dna: {
-                inputs:| app_hash: Address|,
-                outputs: |result: ZomeApiResult<happs::DnaBundle>|,
-                handler: happs::handlers::handle_get_dna
-            }
-            add_ui: {
-                inputs:| app_hash: Address,ui_bundle:String |,
-                outputs: |result: ZomeApiResult<Address>|,
-                handler: happs::handlers::handle_add_ui
-            }
-            get_ui: {
-                inputs:| app_hash: Address|,
-                outputs: |result: ZomeApiResult<happs::UiBundle>|,
-                handler: happs::handlers::handle_get_ui
-            }
-            create_ratings: {
-                inputs:| rate:String, review:String, reviewed_hash: Address |,
-                outputs: | result: ZomeApiResult<Address> |,
-                handler: ratings::handlers::handle_creating_ratings
-            }
-            get_ratings: {
-                inputs:| reviewed_hash: Address |,
-                outputs: |result: ZomeApiResult<Vec<GetLinksLoadElement<Ratings>>>|,
-                handler: ratings::handlers::handle_get_reviews_by_hash
-            }
-            add_app_to_category: {
-                inputs:|app_address: Address, category: String|,
-                outputs: | result: ZomeApiResult<()> |,
-                handler: categories::handlers::handle_add_app_to_category
-            }
-            add_app_to_tag: {
-                inputs:|app_address: Address, tag: String|,
-                outputs: | result: ZomeApiResult<()> |,
-                handler: categories::handlers::handle_add_app_to_tag
-            }
-            get_apps_by_category: {
-                inputs:|category: String|,
-                outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>>|,
-                handler: categories::handlers::handle_get_apps_by_category
-            }
-            get_apps_by_tag: {
-                inputs:|tag: String|,
-                outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>>|,
-                handler: categories::handlers::handle_get_apps_by_tag
-            }
+    functions: [
+        create_app: {
+            inputs:| uuid:String,title:String,description:String,thumbnail:String |,
+            outputs: |result: ZomeApiResult<Address>|,
+            handler: happs::handlers::handle_create_app
         }
+        get_all_apps: {
+            inputs:| |,
+            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<happs::App>>>|,
+            handler: happs::handlers::handle_get_all_apps
+        }
+        get_app: {
+            inputs:|app_hash: Address|,
+            outputs: |result: ZomeApiResult<happs::App>|,
+            handler: happs::handlers::handle_get_app
+        }
+        add_dna: {
+            inputs:| app_hash: Address,dna_bundle:String |,
+            outputs: |result: ZomeApiResult<Address>|,
+            handler: happs::handlers::handle_add_dna
+        }
+        get_dna: {
+            inputs:| app_hash: Address|,
+            outputs: |result: ZomeApiResult<happs::DnaBundle>|,
+            handler: happs::handlers::handle_get_dna
+        }
+        add_ui: {
+            inputs:| app_hash: Address,ui_bundle:String |,
+            outputs: |result: ZomeApiResult<Address>|,
+            handler: happs::handlers::handle_add_ui
+        }
+        get_ui: {
+            inputs:| app_hash: Address|,
+            outputs: |result: ZomeApiResult<happs::UiBundle>|,
+            handler: happs::handlers::handle_get_ui
+        }
+        create_ratings: {
+            inputs:| rate:String, review:String, reviewed_hash: Address |,
+            outputs: | result: ZomeApiResult<Address> |,
+            handler: ratings::handlers::handle_creating_ratings
+        }
+        get_ratings: {
+            inputs:| reviewed_hash: Address |,
+            outputs: |result: ZomeApiResult<Vec<GetLinksLoadElement<Ratings>>>|,
+            handler: ratings::handlers::handle_get_reviews_by_hash
+        }
+        add_app_to_category: {
+            inputs:|app_address: Address, category: String|,
+            outputs: | result: ZomeApiResult<()> |,
+            handler: categories::handlers::handle_add_app_to_category
+        }
+        add_app_to_tag: {
+            inputs:|app_address: Address, tag: String|,
+            outputs: | result: ZomeApiResult<()> |,
+            handler: categories::handlers::handle_add_app_to_tag
+        }
+        get_apps_by_category: {
+            inputs:|category: String|,
+            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>>|,
+            handler: categories::handlers::handle_get_apps_by_category
+        }
+        get_apps_by_tag: {
+            inputs:|tag: String|,
+            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>>|,
+            handler: categories::handlers::handle_get_apps_by_tag
+        }
+    ]
+
+    capabilities: {
+        public (Public) [get_apps_by_tag, get_apps_by_category, add_app_to_tag, add_app_to_category, get_ratings, create_ratings, get_ui, add_ui, get_dna, add_dna, get_app, get_all_apps, create_app]
     }
 }
