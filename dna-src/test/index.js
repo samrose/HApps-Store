@@ -6,7 +6,7 @@ const agentAlice = Config.agent("alice")
 const instanceAlice = Config.instance(agentAlice, dna)
 const scenario = new Scenario([instanceAlice])
 
-require('./test_runners/happs_test')(scenario);
-require('./test_runners/categories_test')(scenario);
-require('./test_runners/ratings_test')(scenario);
-require('./test_runners/whoami_test')(scenario);
+require('./single_agent_tests/happs_test')(scenario);
+require('./single_agent_tests/categories_test')(scenario);
+require('./single_agent_tests/ratings_test')(scenario);
+require('./single_agent_tests/whoami_test')(scenario);
