@@ -26,7 +26,7 @@ interface Props {
 class AllAppsPage extends React.Component<Props, {}> {
   public componentDidMount() {
     this.props.fetchAgent();
-    this.props.fetchAllApps();
+    // this.props.fetchAllApps();
   }
 
   public render() {

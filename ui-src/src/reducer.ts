@@ -12,6 +12,7 @@ const App1 = {
   author: "Test Agent",
   description: "A better Chat",
   thumbnailUrl: "/IMG.jpg",
+  homepageUrl: "/home/page",
   dnaUrl: "/dna/url",
   uiUrl: "ui/url",
 }

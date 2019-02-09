@@ -40,32 +40,32 @@ interface Props {
 class RecipeReviewCard extends React.Component<Props> {
 
   public render() {
-    const { classes } = this.props;
+    const { classes, app } = this.props;
 
     return (
       <Card className={classes.card}>
         <CardHeader
-          title="Test App Card"
-          subheader="This will be the description I guess"
+          title={app.title}
+          subheader={app.author}
         />
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Paella dish"
+          image={app.thumbnailUrl}
+          title="hApp Image"
         />
         <CardContent>
           <Typography component="p">
-            This is the full description of the app. Here the author can talk about it and stuff. I'm not sure what they want to say but I'm sure it will be something
+            {app.description}
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing={true}>
-			<Button size="small" color="primary">
+			    <Button size="small" color="primary" href={app.dnaUrl}>
 	          Download DNA
 	        </Button>
-	        <Button size="small" color="primary">
+	        <Button size="small" color="primary" href={app.uiUrl}>
 	          Download UI
 	        </Button>
-	        <Button size="small" color="primary">
+	        <Button size="small" color="primary" href={app.homepageUrl}>
 	          Visit Homepage
 	        </Button>
         </CardActions>

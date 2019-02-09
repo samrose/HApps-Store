@@ -4,6 +4,7 @@ export interface App {
   author: string,
   description: string,
   thumbnailUrl: string,
+  homepageUrl: string,
   dnaUrl: string,
   uiUrl: string,
 }
