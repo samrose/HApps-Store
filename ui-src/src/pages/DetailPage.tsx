@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Component } from "react";
 import { connect } from 'react-redux';
 import { Hash } from "../../../holochain";
-import { App } from "../../../types";
+import { App } from "../types/app";
 import { fetchPOST } from '../utils'
 import { Row, Col, CardPanel } from 'react-materialize';
 

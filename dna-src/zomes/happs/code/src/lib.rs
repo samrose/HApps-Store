@@ -24,8 +24,6 @@ use crate::ratings::Ratings;
 define_zome! {
     entries: [
         happs::app_definitions(),
-        happs::dna_bundle_definitions(),
-        happs::ui_bundle_definitions(),
         ratings::rating_definition(),
         categories::category_anchor_entry(),
         categories::tag_anchor_entry()
@@ -35,7 +33,7 @@ define_zome! {
 
     functions: [
         create_app: {
-            inputs:| uuid:String,title:String,description:String,thumbnail:String |,
+            inputs:| title: String, description: String, thumbnail_url: String, dna_url: String, ui_url: String |,
             outputs: |result: ZomeApiResult<Address>|,
             handler: happs::handlers::handle_create_app
         }
@@ -48,26 +46,6 @@ define_zome! {
             inputs:|app_hash: Address|,
             outputs: |result: ZomeApiResult<happs::App>|,
             handler: happs::handlers::handle_get_app
-        }
-        add_dna: {
-            inputs:| app_hash: Address,dna_bundle:String |,
-            outputs: |result: ZomeApiResult<Address>|,
-            handler: happs::handlers::handle_add_dna
-        }
-        get_dna: {
-            inputs:| app_hash: Address|,
-            outputs: |result: ZomeApiResult<happs::DnaBundle>|,
-            handler: happs::handlers::handle_get_dna
-        }
-        add_ui: {
-            inputs:| app_hash: Address,ui_bundle:String |,
-            outputs: |result: ZomeApiResult<Address>|,
-            handler: happs::handlers::handle_add_ui
-        }
-        get_ui: {
-            inputs:| app_hash: Address|,
-            outputs: |result: ZomeApiResult<happs::UiBundle>|,
-            handler: happs::handlers::handle_get_ui
         }
         create_ratings: {
             inputs:| rate:String, review:String, reviewed_hash: Address |,

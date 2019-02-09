@@ -1,10 +1,11 @@
 const test = require('tape');
 
 const App1 = {
-  uuid: "762934-19234-123495-12354",
-  title: "Errand",
-  description: "A better Trello",
-  thumbnail: "/IMG.jpg"
+  title: "HoloChat",
+  description: "A better Chat",
+  thumbnail_url: "/IMG.jpg",
+  dna_url: "/dna/url",
+  ui_url: "ui/url",
 }
 
 module.exports = (scenario) => {
@@ -39,8 +40,6 @@ module.exports = (scenario) => {
       reviewed_hash: app_address
     }
 
-    alice.call("happs", "get_ratings", hash)
-    alice.call("happs", "get_ratings", hash)
     alice.call("happs", "get_ratings", hash)
     const result_1 = alice.call("happs", "get_ratings", hash)
     console.log("Returned ratings : ",result_1);

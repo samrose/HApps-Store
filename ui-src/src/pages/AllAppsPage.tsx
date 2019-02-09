@@ -12,9 +12,10 @@ import { GetAllApps, Whoami } from '../actions'
 import { Hash } from '../../../holochain';
 
 import AppCard from '../components/AppCard';
+import { App } from '../types/app'
 
-type AllAppsPageProps = {
-  allApps: Map<Hash,{ title: string, icon: string }>,
+interface Props {
+  apps: Array<App>,
   currentAgent: {agent: {Hash: Hash, Name: string}},
 
   fetchAgent: () => void,
@@ -22,15 +23,10 @@ type AllAppsPageProps = {
   fetchAppDetails: () => void
 }
 
-class AllAppsPage extends React.Component<AllAppsPageProps, {}> {
+class AllAppsPage extends React.Component<Props, {}> {
   public componentDidMount() {
     this.props.fetchAgent();
     this.props.fetchAllApps();
-  }
-
-  public handleSelectApp = () => {
-    // this.props.fetchAppDetails();
-    // navigate to details page
   }
 
   public render() {
@@ -47,9 +43,9 @@ class AllAppsPage extends React.Component<AllAppsPageProps, {}> {
               <hr/>
           </div>
           <Grid container={true} justify="center" spacing={16}>
-            {[1,2,3,4,5].map(() =>
+            {this.props.apps.map((app) =>
               (<Grid item={true}>
-                <AppCard/>
+                <AppCard app={app}/>
               </Grid>)
             )}
           </Grid>
@@ -60,7 +56,7 @@ class AllAppsPage extends React.Component<AllAppsPageProps, {}> {
 }
 
 
-const mapStateToProps = ({ allApps, currentAgent }) => ({ allApps, currentAgent });
+const mapStateToProps = ({ apps, currentAgent }) => ({ apps, currentAgent });
 const mapDispatchToProps = dispatch => ({
   fetchAgent: () => dispatch(Whoami.create({})),
   fetchAllApps: () => dispatch(GetAllApps.create({})),

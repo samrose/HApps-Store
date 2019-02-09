@@ -1,17 +1,19 @@
 const test = require('tape');
 
 const App1 = {
-  uuid: "762934-19234-123495-12354",
-  title: "Errand",
-  description: "A better Trello",
-  thumbnail: "/IMG.jpg"
+  title: "HoloChat",
+  description: "A better Chat",
+  thumbnail_url: "/IMG.jpg",
+  dna_url: "/dna/url",
+  ui_url: "ui/url",
 }
 
 const App2 = {
-  uuid: "762934-1234534-123495-12354",
-  title: "Lisa",
-  description: "A better Lisa",
-  thumbnail: "/IMG.jpg"
+  title: "Clutter",
+  description: "A better Twiter",
+  thumbnail_url: "/IMG.jpg",
+  dna_url: "/dna/url",
+  ui_url: "ui/url",
 }
 
 module.exports = (scenario) => {
@@ -34,8 +36,6 @@ module.exports = (scenario) => {
     console.log(result2)
     t.equal(result2.Ok, null)
 
-    alice.call("happs", "get_apps_by_category", {category:"good apps"})
-    alice.call("happs", "get_apps_by_category", {category:"good apps"})
     alice.call("happs", "get_apps_by_category", {category:"good apps"})
     const result3 = alice.call("happs", "get_apps_by_category", {category:"good apps"})
     t.equal(result3.Ok.length, 2)

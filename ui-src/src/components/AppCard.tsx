@@ -17,6 +17,8 @@ import ShareIcon from '@material-ui/icons/Share'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 
+import { App } from '../types/app'
+
 const styles = theme => ({
   card: {
     maxWidth: 400,
@@ -31,7 +33,8 @@ const styles = theme => ({
 });
 
 interface Props {
-	classes: any
+	classes: any,
+	app: App,
 }
 
 class RecipeReviewCard extends React.Component<Props> {

@@ -1,11 +1,20 @@
 import { Hash } from '../../holochain';
 import { Map } from "immutable"
-import { App } from "../../types";
+import { App } from "./types/app";
 
 import { ActionType, getType } from 'typesafe-actions'
 import * as appActions from './actions'
 
 export type AppAction = ActionType<typeof appActions>
+
+const App1 = {
+  title: "HoloChat",
+  author: "Test Agent",
+  description: "A better Chat",
+  thumbnailUrl: "/IMG.jpg",
+  dnaUrl: "/dna/url",
+  uiUrl: "ui/url",
+}
 
 interface State {
   readonly apps: Array<App>
@@ -15,7 +24,7 @@ interface State {
 };
 
 const defaultState: State = {
-  apps: [],
+  apps: [App1],
   currentAgent: undefined,
   currentApp: undefined,
   connected: false,
