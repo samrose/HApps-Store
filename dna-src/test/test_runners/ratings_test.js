@@ -7,12 +7,12 @@ const App1 = {
   thumbnail: "/IMG.jpg"
 }
 
-module.exports = (app) => {
+module.exports = (scenario) => {
 
-  test('Commit the ratings for a hash', (t) => {
+  scenario.runTape('Commit the ratings for a hash', (t, {alice}) => {
 
     // commit an app to review
-    const app_address = app.call("happs", "main", "create_app", App1).Ok;
+    const app_address = alice.call("happs", "create_app", App1).Ok;
     console.log(app_address)
 
     const ratings_1 = {
@@ -26,12 +26,12 @@ module.exports = (app) => {
         reviewed_hash: app_address
     }
 
-    const result_0 = app.call("happs", "main", "create_ratings", ratings_1)
+    const result_0 = alice.call("happs", "create_ratings", ratings_1)
     console.log(result_0)
     t.equal(result_0.Ok.length, 46)
     console.log("Commited Rating : ",result_0);
 
-    const result_00 = app.call("happs", "main", "create_ratings", ratings_2)
+    const result_00 = alice.call("happs", "create_ratings", ratings_2)
     t.equal(result_00.Ok.length, 46)
     console.log("Commited Rating : ",result_00);
 
@@ -39,14 +39,12 @@ module.exports = (app) => {
       reviewed_hash: app_address
     }
 
-    app.call("happs", "main", "get_ratings", hash)
-    app.call("happs", "main", "get_ratings", hash)
-    app.call("happs", "main", "get_ratings", hash)
-    const result_1 = app.call("happs", "main", "get_ratings", hash)
+    alice.call("happs", "get_ratings", hash)
+    alice.call("happs", "get_ratings", hash)
+    alice.call("happs", "get_ratings", hash)
+    const result_1 = alice.call("happs", "get_ratings", hash)
     console.log("Returned ratings : ",result_1);
     t.equal(result_1.Ok.length,2)
-
-    t.end()
   })
 
 }

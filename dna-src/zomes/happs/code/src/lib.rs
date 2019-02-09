@@ -11,8 +11,7 @@ extern crate utils;
 use utils::GetLinksLoadElement;
 use hdk::{
     error::ZomeApiResult,
-    holochain_core_types::{cas::content::Address, entry::Entry, json::JsonString, error::HolochainError},
-    holochain_wasm_utils::api_serialization::get_links::GetLinksResult,
+    holochain_core_types::{cas::content::Address, json::JsonString, error::HolochainError},
 };
 
 mod happs;
