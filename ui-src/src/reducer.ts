@@ -14,7 +14,7 @@ interface State {
 };
 
 const defaultState: State = {
-  apps: [],
+  apps: [{author: "None", description: "This app is awesome etc", title: "Awesome App", uuid: "why is this here?", thumbnail: "/path/to/img"}],
   currentAgent: {name: "None", hash: "HASH"},
   currentApp: undefined,
 }
