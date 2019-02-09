@@ -8,7 +8,7 @@
     "hc:start": "mkdir -p tmp-storage && holochain -c ./container-config.toml",
     "hc:test": "cd dna-src && hc test",
     "start": "node scripts/start.js",
-    "build": "mkdir -p build-HApps/ui build-HApps/dna; npm run hc:build && npm run ui:build",
+    "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
   "author": "",
