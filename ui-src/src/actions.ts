@@ -6,14 +6,8 @@ import store from './store'
 
 import { createAction } from 'typesafe-actions'
 import { createHolochainAsyncAction } from '@holochain/hc-redux-middleware'
+import { App } from './types/app'
 
-interface App {
-    uuid: string,
-    title: string,
-    author: string,
-    description: string,
-    thumbnail: string
-}
 
 interface DnaBundle {
     dna_bundle: string,
@@ -31,7 +25,7 @@ interface GetLinksLoadElement<T> {
 
 
 export const CreateApp = createHolochainAsyncAction<
-  {uuid: string, title: string, description: string, thumbnail: string},
+  App,
   string
 >(`happ-store`, 'happs', 'create_app')
 
@@ -53,30 +47,6 @@ export const Whoami = createHolochainAsyncAction<
 {hash: string, name: string}
 >
 (`happ-store`, 'whoami', 'get_user')
-
-export const AddDna = createHolochainAsyncAction<
-{app_hash: string, dna_bundle: string}, 
-string
->
-(`happ-store`, 'happs', 'add_dna')
-
-export const GetDna = createHolochainAsyncAction<
-{app_hash: string}, 
-DnaBundle
->
-(`happ-store`, 'happs', 'get_dna')
-
-export const AddUi = createHolochainAsyncAction<
-{app_hash: string, dna_bundle: string}, 
-string
->
-(`happ-store`, 'happs', 'add_ui')
-
-export const GetUi = createHolochainAsyncAction<
-{app_hash: string}, 
-UiBundle
->
-(`happ-store`, 'happs', 'get_ui')
 
 export const AddAppToCategory = createHolochainAsyncAction<
 {app_address: string, category: string}, 

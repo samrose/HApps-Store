@@ -33,7 +33,7 @@ define_zome! {
 
     functions: [
         create_app: {
-            inputs:| title: String, description: String, thumbnail_url: String, dna_url: String, ui_url: String |,
+            inputs:| title: String, description: String, thumbnail_url: String, homepage_url: String, dna_url: String, ui_url: String |,
             outputs: |result: ZomeApiResult<Address>|,
             handler: happs::handlers::handle_create_app
         }

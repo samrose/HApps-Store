@@ -28,7 +28,7 @@ pub fn handle_get_app(app_hash:Address) -> ZomeApiResult<happs::App> {
 /*
 Functions needed to be handeled by the HCHC
 */
-pub fn handle_create_app(title: String, description: String, thumbnail_url: String, dna_url: String, ui_url: String) -> ZomeApiResult<Address> {
+pub fn handle_create_app(title: String, description: String, thumbnail_url: String, homepage_url: String, dna_url: String, ui_url: String) -> ZomeApiResult<Address> {
     let app_entry = Entry::App(
         "app".into(),
         happs::App {
@@ -36,6 +36,7 @@ pub fn handle_create_app(title: String, description: String, thumbnail_url: Stri
             author: hdk::AGENT_ADDRESS.to_string().into(),
             description,
             thumbnail_url,
+            homepage_url,
             dna_url,
             ui_url,
         }.into()

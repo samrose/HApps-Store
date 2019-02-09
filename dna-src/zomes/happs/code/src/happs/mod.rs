@@ -18,6 +18,7 @@ pub struct App {
     pub author: String,
     pub description: String,
     pub thumbnail_url: String,
+    pub homepage_url: String,
     pub dna_url: String,
     pub ui_url: String,
 }

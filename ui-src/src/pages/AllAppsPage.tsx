@@ -26,32 +26,36 @@ interface Props {
 class AllAppsPage extends React.Component<Props, {}> {
   public componentDidMount() {
     this.props.fetchAgent();
-    // this.props.fetchAllApps();
+    this.props.fetchAllApps();
   }
 
   public render() {
-    const greeting: string = "All listed hApps";
+    
+    let greeting: string
+
     if (!this.props.currentAgent) {
-      return <div> Not currently connected to running Holochain instance! </div>
+      greeting = "Not connected to Holochain"
+    } else if (this.props.apps.length < 1) {
+      greeting = "No hApps to display"
+    } else {
+      greeting = "All listed hApps"
     }
-    else {
-      const { agent } = this.props.currentAgent;
-      return (
-        <div>
-          <div style={{ textAlign: 'center' }}>
-              <h1 className="all-apps-header">{ greeting }</h1>
-              <hr/>
-          </div>
-          <Grid container={true} justify="center" spacing={16}>
-            {this.props.apps.map((app) =>
-              (<Grid item={true}>
-                <AppCard app={app}/>
-              </Grid>)
-            )}
-          </Grid>
+    
+    return (
+      <div>
+        <div style={{ textAlign: 'center' }}>
+            <h1 className="all-apps-header">{ greeting }</h1>
+            <hr/>
         </div>
-      );
-    }
+        <Grid container={true} justify="center" spacing={16}>
+          {this.props.apps.map((app) =>
+            (<Grid item={true}>
+              <AppCard app={app}/>
+            </Grid>)
+          )}
+        </Grid>
+      </div>
+    );
   }
 }
 

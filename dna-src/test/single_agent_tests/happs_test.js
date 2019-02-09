@@ -3,6 +3,7 @@ const App1 = {
   title: "HoloChat",
   description: "A better Chat",
   thumbnail_url: "/IMG.jpg",
+  homepage_url: "home/page",
   dna_url: "/dna/url",
   ui_url: "ui/url",
 }
@@ -11,6 +12,7 @@ const App2 = {
   title: "Clutter",
   description: "A better Twiter",
   thumbnail_url: "/IMG.jpg",
+  homepage_url: "home/page",
   dna_url: "/dna/url",
   ui_url: "ui/url",
 }
