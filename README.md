@@ -4,17 +4,11 @@
 ![GitHub](https://img.shields.io/github/license/Holo-Host/HApps-Store.svg)
 
 ---
-The Holochain of Holochains Directory
-This is the App store that all the users  would use to Check out all the HApps that are Available on the HCHC
+An early version of the Holochain hApp store.
 
-> Notes:
-> Will be able to be run the HC Admin GUI for installing apps.
-> Otherwise should not control your system
+This version exists to allow participants of the Holo closed alpha program to find and install DNAs to host. 
 
 ---
-
-## Documentation
-- [HCHC/HApps-Store : Design Decisions](https://hackmd.io/uBkCcxybSWyQ-h60dEi8bg)
 
 ## Getting Started
 
@@ -22,36 +16,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
-The app can now be started for **development** purposes using
-
-**For Windows:**
-```
-npm run hc:win
-```
-**For Other OS:**
-```
-npm run hc:dev
-```
-and opening the browser to http://localhost:4141
-
----
-If you would like to persist data between sessions install to the **local holochain directory** by running the following from the project root directory:
-```
-hcadmin init <id/name string>
-hcadmin join ./build-HCHC/ HCHC
-hcd HCHC
-```
-### Prerequisites
-Ensure holochain-proto (at least version 26) is installed on your machine by running.
-
-```
-hcd -v
-```
-Subsequent steps also assumes npm/yarn is installed.
-
 ## Built With
 
-* [Holochain](https://github.com/holochain/holochain-proto)
+* [Holochain](https://github.com/holochain/holochain-rust)
 * [Typescript](https://github.com/Microsoft/TypeScript)
 * [React](https://reactjs.org/)
 * [Redux](https://redux.js.org/)
@@ -60,6 +27,7 @@ Subsequent steps also assumes npm/yarn is installed.
 
 * **Joel Ulahanna** - [Zo-El](https://github.com/zo-el)
 * **Lisa Jetton** - [JettTech](https://github.com/JettTech)
+* **Willem Olding** - [willemolding](https://github.com/willemolding/)
 
 ## License
 
