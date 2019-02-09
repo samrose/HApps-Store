@@ -1,14 +1,17 @@
 import * as React from 'react';
 import * as redux from 'redux';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Map } from 'immutable';
-import './AllAppsPage.css';
+import Grid from '@material-ui/core/Grid'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Map } from 'immutable'
+import './AllAppsPage.css'
 
 import store from '../store'
 import { GetAllApps, Whoami } from '../actions'
 
 import { Hash } from '../../../holochain';
+
+import AppCard from '../components/AppCard';
 
 type AllAppsPageProps = {
   allApps: Map<Hash,{ title: string, icon: string }>,
@@ -33,7 +36,7 @@ class AllAppsPage extends React.Component<AllAppsPageProps, {}> {
   public render() {
     const greeting: string = "All listed hApps";
     if (!this.props.currentAgent) {
-      return <div/>
+      return <div> Not currently connected to running Holochain instance! </div>
     }
     else {
       const { agent } = this.props.currentAgent;
@@ -43,6 +46,13 @@ class AllAppsPage extends React.Component<AllAppsPageProps, {}> {
               <h1 className="all-apps-header">{ greeting }</h1>
               <hr/>
           </div>
+          <Grid container={true} justify="center" spacing={16}>
+            {[1,2,3,4,5].map(() =>
+              (<Grid item={true}>
+                <AppCard/>
+              </Grid>)
+            )}
+          </Grid>
         </div>
       );
     }
