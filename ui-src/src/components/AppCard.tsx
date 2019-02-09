@@ -37,7 +37,7 @@ interface Props {
 	app: App,
 }
 
-class RecipeReviewCard extends React.Component<Props> {
+class AppCard extends React.Component<Props> {
 
   public render() {
     const { classes, app } = this.props;
@@ -75,4 +75,4 @@ class RecipeReviewCard extends React.Component<Props> {
 }
 
 
-export default withStyles(styles)(RecipeReviewCard);
+export default withStyles(styles)(AppCard);
