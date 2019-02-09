@@ -14,6 +14,7 @@ import * as path from 'path'
 //      UI Constants
 // ========================
 export const ICON_SIZE = "100px";
+export const URL = `ws://localhost:3400`
 
 // ========================
 //        API CALLS

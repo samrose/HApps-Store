@@ -33,74 +33,74 @@ interface GetLinksLoadElement<T> {
 export const CreateApp = createHolochainAsyncAction<
   {uuid: string, title: string, description: string, thumbnail: string},
   string
->(`happ-store`, 'happs', 'main', 'create_app')
+>(`happ-store`, 'happs', 'create_app')
 
 
 export const GetAllApps = createHolochainAsyncAction<
   {},
   Array<GetLinksLoadElement<App>>
->(`happ-store`, 'happs', 'main', 'get_all_apps')
+>(`happ-store`, 'happs', 'get_all_apps')
 
 
 export const GetApp = createHolochainAsyncAction<
   {address: string},
   App
->(`happ-store`, 'happs', 'main', 'get_all_apps')
+>(`happ-store`, 'happs', 'get_all_apps')
 
 
 export const Whoami = createHolochainAsyncAction<
 {}, 
 {hash: string, name: string}
 >
-(`happ-store`, 'whoami', 'main', 'get_user')
+(`happ-store`, 'whoami', 'get_user')
 
 export const AddDna = createHolochainAsyncAction<
 {app_hash: string, dna_bundle: string}, 
 string
 >
-(`happ-store`, 'happs', 'main', 'add_dna')
+(`happ-store`, 'happs', 'add_dna')
 
 export const GetDna = createHolochainAsyncAction<
 {app_hash: string}, 
 DnaBundle
 >
-(`happ-store`, 'happs', 'main', 'get_dna')
+(`happ-store`, 'happs', 'get_dna')
 
 export const AddUi = createHolochainAsyncAction<
 {app_hash: string, dna_bundle: string}, 
 string
 >
-(`happ-store`, 'happs', 'main', 'add_ui')
+(`happ-store`, 'happs', 'add_ui')
 
 export const GetUi = createHolochainAsyncAction<
 {app_hash: string}, 
 UiBundle
 >
-(`happ-store`, 'happs', 'main', 'get_ui')
+(`happ-store`, 'happs', 'get_ui')
 
 export const AddAppToCategory = createHolochainAsyncAction<
 {app_address: string, category: string}, 
 {}
 >
-(`happ-store`, 'happs', 'main', 'add_app_to_category')
+(`happ-store`, 'happs', 'add_app_to_category')
 
 export const AddAppToTag = createHolochainAsyncAction<
 {app_address: string, category: string}, 
 {}
 >
-(`happ-store`, 'happs', 'main', 'add_app_to_tag')
+(`happ-store`, 'happs', 'add_app_to_tag')
 
 export const GetAppsByCategory = createHolochainAsyncAction<
 {app_address: string, category: string}, 
 {}
 >
-(`happ-store`, 'happs', 'main', 'get_apps_by_category')
+(`happ-store`, 'happs', 'get_apps_by_category')
 
 export const GetAppsByTag = createHolochainAsyncAction<
 {app_address: string, category: string}, 
 {}
 >
-(`happ-store`, 'happs', 'main', 'get_apps_by_tag')
+(`happ-store`, 'happs', 'get_apps_by_tag')
 
 // create_ratings: {
 //     inputs:| rate:String, review:String, reviewed_hash: Address |,
@@ -114,4 +114,8 @@ export const GetAppsByTag = createHolochainAsyncAction<
 // }
 export const SetCurrentApp = createAction('SET_CURRENT_APP', resolve => {
   return (currentApp: App) => resolve(currentApp)
+})
+
+export const SetConnectionTimeout = createAction('SET_CONNECTION_TIMEOUT', resolve => {
+  return () => resolve()
 })

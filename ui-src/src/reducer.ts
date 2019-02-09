@@ -11,12 +11,14 @@ interface State {
   readonly apps: Array<App>
   readonly currentAgent?: {name: string, hash: string},
   readonly currentApp?: App,
+  readonly connected: boolean,
 };
 
 const defaultState: State = {
-  apps: [{author: "None", description: "This app is awesome etc", title: "Awesome App", uuid: "why is this here?", thumbnail: "/path/to/img"}],
-  currentAgent: {name: "None", hash: "HASH"},
+  apps: [],
+  currentAgent: undefined,
   currentApp: undefined,
+  connected: false,
 }
 
 export default (state: State = defaultState, action: AppAction): State => {
@@ -24,9 +26,15 @@ export default (state: State = defaultState, action: AppAction): State => {
     case getType(appActions.GetAllApps.success):
       return {...state, apps: action.payload}
     case getType(appActions.Whoami.success):
-      return {...state, currentAgent: action.payload}
+      const newAgent = {
+        hash: action.payload.hash, 
+        name: JSON.parse(action.payload.name).nick
+      }
+      return {...state, currentAgent: newAgent}
     case getType(appActions.GetApp.success):
       return {...state, currentApp: action.payload}
+    case 'HOLOCHAIN_WEBSOCKET_CONNECTED':
+      return { ...state, connected: true}
     default:
       return state
   }

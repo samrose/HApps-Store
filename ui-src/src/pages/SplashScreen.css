@@ -9,6 +9,15 @@
   margin-bottom: 25px;
   color: #d7e0e0; /* #a9dee4 */
   text-shadow:0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+}
+
+.app-store-header-animated {
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  padding: 20px 50px 0px 50px;
+  margin-bottom: 25px;
+  color: #d7e0e0; /* #a9dee4 */
+  text-shadow:0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
   animation: fade-in-zoom-out 3s 5s 1 ease both
 }
 

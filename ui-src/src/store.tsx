@@ -3,10 +3,12 @@ import { combineReducers, createStore, applyMiddleware, compose } from 'redux'
 import { holochainMiddleware } from '@holochain/hc-redux-middleware'
 import { connect } from '@holochain/hc-web-client'
 
-import reducer from './reducer';
+import reducer from './reducer'
+import { URL } from './utils'
+
 
 // put middleware in this array to have it applied
-const middleware: Array<any> = [holochainMiddleware(connect(`ws://localhost:3400`))]
+const middleware: Array<any> = [holochainMiddleware(connect(URL))]
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

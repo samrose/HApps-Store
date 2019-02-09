@@ -8,10 +8,12 @@ import store from '../store'
 import { fetchPOST } from '../utils'
 
 import { Hash } from '../../../holochain';
+import { URL } from '../utils';
 
 interface Props {
   currentAgent: {hash: Hash, name: string},
   currentCategory: string,
+  connected: boolean,
   
   fetchAgent: () => void,
   registerCategoryType: (category) => Promise<any>,
@@ -43,6 +45,7 @@ class SplashScreen extends React.Component<Props, State> {
   }
 
   public render() {
+
     const renderWelcomeMsgs = () => {
       const agent = this.props.currentAgent || {name: 'none', hash: 'none'};
       const waitGreeting1: string = `Hello ${agent.name}`
@@ -58,19 +61,29 @@ class SplashScreen extends React.Component<Props, State> {
       }
     }
 
-    return (
-      <div>
-        {renderWelcomeMsgs()}
-        <div className="splash-screen-container" style={{ textAlign: 'center' }}>
-          <h1 className="app-store-header">App Store</h1>
-          <hr className="app-store-header-underline"/>
+    if (this.props.connected) {
+      return (
+        <div>
+          {renderWelcomeMsgs()}
+          <div className="splash-screen-container" style={{ textAlign: 'center' }}>
+            <h1 className="app-store-header-animated">App Store</h1>
+            <hr className="app-store-header-underline"/>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+           <div className="splash-screen-container" style={{ textAlign: 'center' }}>
+            <h1 className="app-store-header">Attempting to connect to Holochain at {URL}</h1>
+            <hr className="app-store-header-underline"/>
+          </div>
+      )
+    }
+
   }
 }
 
-const mapStateToProps = ({ currentAgent, currentCategory }) => ({ currentAgent, currentCategory });
+const mapStateToProps = ({ currentAgent, currentCategory, connected }) => ({ currentAgent, currentCategory, connected });
 const mapDispatchToProps = dispatch => ({
   fetchAgent: () => true,
   registerCategoryType: (category) => {
