@@ -1,5 +1,6 @@
 import * as React from "react";
 import { render } from "react-dom";
+import { connect } from 'react-redux'
 
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import AppCard from '../components/AppCard'
+
+import { AppCreationSpec } from '../types/app'
+import snakecase from 'snakecase-keys'
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -35,20 +39,13 @@ const styles = (theme: Theme) =>
   });
 
 
-export interface Props extends WithStyles<typeof styles> {}
+export interface Props extends WithStyles<typeof styles> {
+  createApp: (app: AppCreationSpec) => Promise<string>
+}
 
 export interface State {
   previewOpen: boolean,
-  appInput: AppInput,
-}
-
-export interface AppInput {
-  title: string,
-  description: string,
-  thumbnailUrl: string,
-  homepageUrl: string,
-  dnaUrl: string,
-  uiUrl: string,
+  appInput: AppCreationSpec,
 }
 
 
@@ -75,6 +72,9 @@ class NewApp extends React.Component<Props, State> {
       <Paper className={classes.root}>
         <Typography variant="h5" component="h3">
           Provide the following details to post a new hApp to the store
+        </Typography>
+        <Typography component="p">
+          Note that all hApp will be 
         </Typography>
          <Grid container={true} spacing={24}>
            <Grid item={true} xs={12} sm={6}>
@@ -147,7 +147,7 @@ class NewApp extends React.Component<Props, State> {
           <Button variant="contained" size="large" onClick={this.handleSetPreviewState(true)}>
             Preview
           </Button>
-          <Button variant="contained" size="large" color="primary">
+          <Button variant="contained" size="large" color="primary" onClick={this.handleClickSubmit(this.state.appInput)}>
             Submit
           </Button>
 
@@ -160,9 +160,13 @@ class NewApp extends React.Component<Props, State> {
     );
   }
 
-  private handleChange = (name: keyof AppInput) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const update = { ...this.state.appInput, [name]: event.target.value } as Pick<AppInput, keyof AppInput>
+  private handleChange = (name: keyof AppCreationSpec) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const update = { ...this.state.appInput, [name]: event.target.value } as Pick<AppCreationSpec, keyof AppCreationSpec>
     this.setState({ appInput: update});
+  }
+
+  private handleClickSubmit = (app: AppCreationSpec) => (event: React.MouseEvent<HTMLElement>) => {
+    this.props.createApp(app)
   }
 
   private handleSetPreviewState = (open: boolean) => (event: any) => {
@@ -171,4 +175,10 @@ class NewApp extends React.Component<Props, State> {
 
 }
 
-export default withStyles(styles)(NewApp);
+import { CreateApp } from '../actions'
+
+const mapDispatchToProps = dispatch => ({
+  createApp: (app: AppCreationSpec) => dispatch(CreateApp.create(snakecase(app))),
+});
+
+export default connect(undefined, mapDispatchToProps)(withStyles(styles)(NewApp));

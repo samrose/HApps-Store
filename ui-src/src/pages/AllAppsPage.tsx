@@ -48,11 +48,16 @@ class AllAppsPage extends React.Component<Props, {}> {
             <hr/>
         </div>
         <Grid container={true} justify="center" spacing={16}>
-          {this.props.apps.map((app) =>
-            (<Grid item={true}>
-              <AppCard app={app}/>
-            </Grid>)
-          )}
+          {
+          this.props.apps.map((app, i) =>
+            {
+              return (
+                <Grid item={true} key={i}>
+                  <AppCard app={app}/>
+                </Grid>
+              )
+            })
+          }
         </Grid>
       </div>
     );

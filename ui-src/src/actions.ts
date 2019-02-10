@@ -6,7 +6,7 @@ import store from './store'
 
 import { createAction } from 'typesafe-actions'
 import { createHolochainAsyncAction } from '@holochain/hc-redux-middleware'
-import { App } from './types/app'
+import { AppCreationSpecSnake, App } from './types/app'
 
 
 interface DnaBundle {
@@ -23,9 +23,8 @@ interface GetLinksLoadElement<T> {
 }
 
 
-
 export const CreateApp = createHolochainAsyncAction<
-  App,
+  AppCreationSpecSnake,
   string
 >(`happ-store`, 'happs', 'create_app')
 

@@ -25,8 +25,8 @@ class MainNav extends React.Component<any, {}> {
     return (
       <nav className="nav nav-pills flex-column flex-sm-row">
           <div className="fade-in-logo"><img className="app-logo brand-logo" src="/holo-logo.png" /></div>
-          <a className="flex-sm-fill text-sm-center nav-link" href={`/profile/${agent.Hash}`}>{`${agentName}'s Profile`}</a>
-          <a className="flex-sm-fill text-sm-center nav-link" href="/apps">App Store</a>
+          <a className="flex-sm-fill text-sm-center nav-link" href={`/newapp`}>Submit hApp</a>
+          <a className="flex-sm-fill text-sm-center nav-link" href="/apps">hApp Store</a>
       </nav>
     )
   }
