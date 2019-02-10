@@ -34,13 +34,7 @@ class MainNav extends React.Component<any, {}> {
 
 const mapStateToProps = ({ currentAgent }) => ({ currentAgent });
 const mapDispatchToProps = dispatch => ({
-fetchAgent: () => dispatch(Whoami.create({})),
-searchCategories: (category) => {
-  fetchPOST('/fn/bridgeToCategories/getAppByCategory', category)
-    .then(apps => {
-      dispatch({ type: 'SEARCH_BY_CATEGORY', apps })
-    })
-    },
+  fetchAgent: () => dispatch(Whoami.create({})),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainNav);
