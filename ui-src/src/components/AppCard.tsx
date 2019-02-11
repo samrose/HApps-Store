@@ -12,10 +12,11 @@ import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import red from '@material-ui/core/colors/red'
-import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+
+import FavoriteIcon from '@material-ui/icons/FavoriteBorderOutlined';
 
 import { App } from '../types/app'
 
@@ -47,6 +48,7 @@ class AppCard extends React.Component<Props> {
         <CardHeader
           title={app.title}
           subheader={app.author}
+          action={<FavoriteIcon fontSize="large"/>}
         />
         <CardMedia
           className={classes.media}
