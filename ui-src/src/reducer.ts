@@ -7,15 +7,6 @@ import * as appActions from './actions'
 
 export type AppAction = ActionType<typeof appActions>
 
-const App1 = {
-  title: "HoloChat",
-  author: "Test Agent",
-  description: "A better Chat",
-  thumbnailUrl: "/IMG.jpg",
-  homepageUrl: "/home/page",
-  dnaUrl: "/dna/url",
-  uiUrl: "ui/url",
-}
 
 interface State {
   readonly apps: Array<App>
@@ -26,7 +17,7 @@ interface State {
 };
 
 const defaultState: State = {
-  apps: [App1],
+  apps: [],
   currentAgent: undefined,
   currentApp: undefined,
   connected: false,
