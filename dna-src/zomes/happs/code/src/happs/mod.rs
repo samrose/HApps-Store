@@ -37,15 +37,6 @@ pub fn app_definitions() -> ValidatingEntryType{
 
         validation: |_app: App, _validation_data: hdk::ValidationData| {
             {
-                // let header = validation_data.package.chain_header;
-                // match header.provenances().contains(&(Address::from(ADMIN_AUTHOR), "".into())) {
-                //     true => Ok(()),
-                //     false => Err(
-                //         format!("Permission denied. Author \"{:?}\" is not allowed to commit an app entry. Only \"{}\"", 
-                //         header.provenances(), 
-                //         ADMIN_AUTHOR)
-                //     )
-                // }
                 Ok(())
             }
         },
@@ -54,6 +45,18 @@ pub fn app_definitions() -> ValidatingEntryType{
             to!(
                 "%agent_id",
                 tag: "author_is",
+
+                validation_package: || {
+                    hdk::ValidationPackageDefinition::Entry
+                },
+
+                validation: |_base: Address, _target: Address, _validation_data: hdk::ValidationData| {
+                    Ok(())
+                }
+            ),
+            to!(
+                "%agent_id",
+                tag: "upvote",
 
                 validation_package: || {
                     hdk::ValidationPackageDefinition::Entry

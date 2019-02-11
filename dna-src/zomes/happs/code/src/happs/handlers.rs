@@ -1,4 +1,5 @@
 use hdk::{
+    AGENT_ADDRESS,
     holochain_core_types::{
         entry::Entry,
         cas::content::{Address, AddressableContent},
@@ -12,12 +13,21 @@ use crate::happs;
 Getter Functions
 ***/
 
-pub fn handle_get_all_apps() -> ZomeApiResult<Vec<utils::GetLinksLoadElement<happs::App>>> {
+pub fn handle_get_all_apps() -> ZomeApiResult<Vec<utils::GetLinksLoadElement<(happs::App, i32)>>> {
     let all_apps_anchor_addr = Entry::App(
         "category_anchor".into(),
         RawString::from("*").into(),
     ).address();
-    utils::get_links_and_load_type(&all_apps_anchor_addr, "contains")
+
+    let get_result: Vec<utils::GetLinksLoadElement<happs::App>> = utils::get_links_and_load_type(&all_apps_anchor_addr, "contains")?;
+    
+    Ok(get_result.into_iter().map(|elem| {
+        let upvotes = hdk::get_links(&elem.address, "upvote").unwrap().addresses().len();
+        utils::GetLinksLoadElement{
+            address: elem.address,
+            entry: (elem.entry, upvotes as i32)
+        }
+    }).collect())
 }
 
 pub fn handle_get_app(app_hash:Address) -> ZomeApiResult<happs::App> {
@@ -54,4 +64,9 @@ pub fn handle_create_app(title: String, description: String, thumbnail_url: Stri
     utils::link_entries_bidir(&all_apps_anchor_addr, &app_addr, "contains", "in")?;
 
     Ok(app_addr)
+}
+
+pub fn handle_upvote_app(address: Address) -> ZomeApiResult<()> {
+    hdk::link_entries(&address, &AGENT_ADDRESS, "upvote")?;
+    Ok(())
 }

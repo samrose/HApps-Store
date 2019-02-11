@@ -39,13 +39,18 @@ define_zome! {
         }
         get_all_apps: {
             inputs:| |,
-            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<happs::App>>>|,
+            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<(happs::App, i32)>>>|,
             handler: happs::handlers::handle_get_all_apps
         }
         get_app: {
             inputs:|app_hash: Address|,
             outputs: |result: ZomeApiResult<happs::App>|,
             handler: happs::handlers::handle_get_app
+        }
+        upvote_app: {
+            inputs:|address: Address|,
+            outputs: |result: ZomeApiResult<()>|,
+            handler: happs::handlers::handle_upvote_app            
         }
         create_ratings: {
             inputs:| rate:String, review:String, reviewed_hash: Address |,
@@ -80,6 +85,6 @@ define_zome! {
     ]
 
     capabilities: {
-        public (Public) [get_apps_by_tag, get_apps_by_category, add_app_to_tag, add_app_to_category, get_ratings, create_ratings, get_ui, add_ui, get_dna, add_dna, get_app, get_all_apps, create_app]
+        public (Public) [get_apps_by_tag, get_apps_by_category, add_app_to_tag, add_app_to_category, get_ratings, create_ratings, get_app, get_all_apps, create_app, upvote_app]
     }
 }
