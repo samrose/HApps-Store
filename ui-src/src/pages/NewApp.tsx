@@ -1,6 +1,7 @@
 import * as React from "react";
 import { render } from "react-dom";
 import { connect } from 'react-redux'
+import { withRouter, RouteComponentProps } from 'react-router'
 
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import AppCard from '../components/AppCard'
 
 import { AppCreationSpec } from '../types/app'
@@ -36,11 +38,15 @@ const styles = (theme: Theme) =>
     menu: {
       width: 200,
     },
+    progress: {
+      margin: theme.spacing.unit * 2,
+    },
   });
 
 
 export interface Props extends WithStyles<typeof styles> {
-  createApp: (app: AppCreationSpec) => Promise<string>
+  createApp: (app: AppCreationSpec) => Promise<string>,
+  awaitingResponse: boolean,
 }
 
 export interface State {
@@ -156,6 +162,10 @@ class NewApp extends React.Component<Props, State> {
         <Dialog open={this.state.previewOpen} onClose={this.handleSetPreviewState(false)}>
           <AppCard app={ {...this.state.appInput, author: "<your holochain ID will go here>"} }/>
         </Dialog>
+
+        <Dialog open={this.props.awaitingResponse}>          
+          <CircularProgress className={classes.progress}/>
+        </Dialog>
         </div>
     );
   }
@@ -177,8 +187,10 @@ class NewApp extends React.Component<Props, State> {
 
 import { CreateApp } from '../actions'
 
+const mapStateToProps = ({ awaitingResponse }) => ({ awaitingResponse });
+
 const mapDispatchToProps = dispatch => ({
   createApp: (app: AppCreationSpec) => dispatch(CreateApp.create(snakecase(app))),
 });
 
-export default connect(undefined, mapDispatchToProps)(withStyles(styles)(NewApp));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NewApp));
