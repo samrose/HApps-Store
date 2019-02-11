@@ -4,7 +4,7 @@ use hdk::{
         cas::content::{Address, AddressableContent},
         json::RawString,
     },
-    error::{ZomeApiResult},
+    error::{ZomeApiResult, ZomeApiError},
 };
 
 use crate::happs;
@@ -24,16 +24,19 @@ pub fn handle_get_app(app_hash:Address) -> ZomeApiResult<happs::App> {
     utils::get_as_type(app_hash)
 }
 
-
 /*
 Functions needed to be handeled by the HCHC
 */
 pub fn handle_create_app(title: String, description: String, thumbnail_url: String, homepage_url: String, dna_url: String, ui_url: String) -> ZomeApiResult<Address> {
+    let agent_data: serde_json::Value = serde_json::from_str(&hdk::AGENT_ID_STR.to_string()).map_err(|_| {
+        ZomeApiError::Internal("Error: Agent string not valid json".to_string())
+    })?;
+
     let app_entry = Entry::App(
         "app".into(),
         happs::App {
             title,
-            author: hdk::AGENT_ADDRESS.to_string().into(),
+            author: agent_data["nick"].as_str().unwrap().into(),
             description,
             thumbnail_url,
             homepage_url,

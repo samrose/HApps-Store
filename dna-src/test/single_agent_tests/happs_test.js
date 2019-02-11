@@ -37,5 +37,6 @@ module.exports = (scenario) => {
     console.log(get_all_apps_result)
     const all_app_details = get_all_apps_result.Ok
     t.equal(all_app_details.length , 2)
+    console.log(all_app_details)
   })
 }
