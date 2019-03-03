@@ -31,13 +31,11 @@ const styles = (theme: Theme) =>
       padding: theme.spacing.unit * 2,
       textAlign: 'center',
       color: theme.palette.text.secondary,
-      backgroundColor: 'transparent'
     },
     formControl: {
       margin: theme.spacing.unit,
       minWidth: 120,
-      textColor: "white"
-    },
+    }
 });
 
 const sortFunctions = {
