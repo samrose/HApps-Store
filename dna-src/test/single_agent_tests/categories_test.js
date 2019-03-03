@@ -20,26 +20,28 @@ const App2 = {
 
 module.exports = (scenario) => {
 
-  scenario.runTape('add Category ', (t, {alice}) => {
+  scenario.runTape('add Category ', async (t, {alice}) => {
 
-    const app_address = alice.call("happs", "create_app", App1).Ok;
+    const create_result = await alice.callSync("happs", "create_app", App1);
+    console.log(create_result)
+    const app_address = create_result.Ok
     t.equal(app_address.length, 46)
-    console.log("APP ADDRESS:: ",app_address);
 
-    const app_address2 = alice.call("happs", "create_app", App2).Ok;
+    const create_result2 = await alice.callSync("happs", "create_app", App2);
+    console.log(create_result2)
+    const app_address2 = create_result2.Ok
     t.equal(app_address2.length, 46)
-    console.log("APP ADDRESS:: ",app_address2);
 
-    const result1 = alice.call("happs", "add_app_to_category", {app_address: app_address, category: "good apps",})
+    const result1 = await alice.callSync("happs", "add_app_to_category", {app_address: app_address, category: "good apps"})
     console.log(result1)
     t.equal(result1.Ok, null)
 
-    const result2 = alice.call("happs", "add_app_to_category", {app_address: app_address2, category: "good apps",})
+    const result2 = await alice.callSync("happs", "add_app_to_category", {app_address: app_address2, category: "good apps"})
     console.log(result2)
     t.equal(result2.Ok, null)
 
-    alice.call("happs", "get_apps_by_category", {category:"good apps"})
-    const result3 = alice.call("happs", "get_apps_by_category", {category:"good apps"})
+    const result3 = await alice.callSync("happs", "get_apps_by_category", {category:"good apps"})
+    console.log(result3)
     t.equal(result3.Ok.length, 2)
   })
 }
