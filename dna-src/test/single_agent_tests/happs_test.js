@@ -35,7 +35,7 @@ module.exports = (scenario) => {
     const all_app_details = get_all_apps_result.Ok
     t.equal(all_app_details.length , 1)
 
-    const upvote_result = await alice.callSync('happs', 'upvote_app', {address: app_address})
+    const upvote_result = await alice.callSync('happs', 'upvote_app', {app_address: app_address})
     console.log(upvote_result)
     t.notEqual(upvote_result.Ok, undefined)
 
