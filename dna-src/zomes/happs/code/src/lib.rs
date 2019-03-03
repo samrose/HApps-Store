@@ -18,7 +18,7 @@ mod happs;
 mod ratings;
 mod categories;
 
-use crate::happs::App;
+use crate::happs::AppResponse;
 use crate::ratings::Ratings;
 
 define_zome! {
@@ -39,12 +39,12 @@ define_zome! {
         }
         get_all_apps: {
             inputs:| |,
-            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<(happs::App, i32)>>>|,
+            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>>|,
             handler: happs::handlers::handle_get_all_apps
         }
         get_app: {
             inputs:|app_hash: Address|,
-            outputs: |result: ZomeApiResult<happs::App>|,
+            outputs: |result: ZomeApiResult<AppResponse>|,
             handler: happs::handlers::handle_get_app
         }
         upvote_app: {
@@ -74,12 +74,12 @@ define_zome! {
         }
         get_apps_by_category: {
             inputs:|category: String|,
-            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>>|,
+            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>>|,
             handler: categories::handlers::handle_get_apps_by_category
         }
         get_apps_by_tag: {
             inputs:|tag: String|,
-            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>>|,
+            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>>|,
             handler: categories::handlers::handle_get_apps_by_tag
         }
     ]

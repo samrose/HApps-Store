@@ -48,7 +48,11 @@ class AppCard extends React.Component<Props> {
         <CardHeader
           title={app.title}
           subheader={app.author}
-          action={<FavoriteIcon fontSize="large"/>}
+          action={
+            <IconButton>
+              <FavoriteIcon fontSize="large"/>
+            </IconButton>
+          }
         />
         <CardMedia
           className={classes.media}

@@ -26,6 +26,7 @@ module.exports = (scenario) => {
     t.equal(app_address.length, 46)
 
     const get_app_result = await alice.callSync('happs', "get_app", {app_hash:app_address})
+    console.log(get_app_result)
     const app_details = get_app_result.Ok
     t.equal(app_details.uuid, App1.uuid)
 
@@ -40,7 +41,7 @@ module.exports = (scenario) => {
 
     const get_all_apps_result_after_upvote = await alice.callSync('happs', "get_all_apps", {})
     console.log(get_all_apps_result_after_upvote)
-    t.equal(get_all_apps_result_after_upvote.Ok[0].entry[1] , 1)
+    t.equal(get_all_apps_result_after_upvote.Ok[0].entry.upvotes , 1)
 
   })
 }

@@ -9,7 +9,7 @@ use hdk::{
     error::{ZomeApiResult},
 };
 
-use crate::happs::App;
+use crate::happs::{AppResponse, get_linked_apps};
 
 
 pub fn handle_add_app_to_category(app_address: Address, category: String) -> ZomeApiResult<()> {
@@ -32,20 +32,18 @@ pub fn handle_add_app_to_tag(app_address: Address, tag: String) -> ZomeApiResult
     Ok(())
 }
 
-pub fn handle_get_apps_by_category(category: String) -> ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>> {
+pub fn handle_get_apps_by_category(category: String) -> ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>> {
     let category_anchor_entry = Entry::App(
         "category_anchor".into(),
         RawString::from(category).into()
     );
-
-    utils::get_links_and_load_type(&category_anchor_entry.address(), "contains")
+    get_linked_apps(&category_anchor_entry.address(), "contains")
 }
 
-pub fn handle_get_apps_by_tag(tag: String) -> ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>> {
+pub fn handle_get_apps_by_tag(tag: String) -> ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>> {
     let tag_anchor_entry = Entry::App(
         "tag_anchor".into(),
         RawString::from(tag).into()
     );
-
-    utils::get_links_and_load_type(&tag_anchor_entry.address(), "contains")
+    get_linked_apps(&tag_anchor_entry.address(), "contains")
 }

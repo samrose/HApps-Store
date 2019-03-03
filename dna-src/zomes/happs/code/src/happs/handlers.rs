@@ -8,30 +8,39 @@ use hdk::{
     error::{ZomeApiResult, ZomeApiError},
 };
 
-use crate::happs;
+use crate::happs::{self, AppResponse};
 /***
 Getter Functions
 ***/
 
-pub fn handle_get_all_apps() -> ZomeApiResult<Vec<utils::GetLinksLoadElement<(happs::App, i32)>>> {
-    let all_apps_anchor_addr = Entry::App(
-        "category_anchor".into(),
-        RawString::from("*").into(),
-    ).address();
+fn get_upvotes(app_address: &Address) -> ZomeApiResult<i32> {
+    Ok(hdk::get_links(app_address, "upvote")?.addresses().len() as i32)
+}
 
-    let get_result: Vec<utils::GetLinksLoadElement<happs::App>> = utils::get_links_and_load_type(&all_apps_anchor_addr, "contains")?;
+pub fn get_linked_apps(base_addr: &Address, tag: &str) -> ZomeApiResult<Vec<utils::GetLinksLoadElement<happs::AppResponse>>> {
+    let get_result: Vec<utils::GetLinksLoadElement<happs::AppEntry>> = utils::get_links_and_load_type(base_addr, tag)?;
     
     Ok(get_result.into_iter().map(|elem| {
-        let upvotes = hdk::get_links(&elem.address, "upvote").unwrap().addresses().len();
+        let upvotes = get_upvotes(&elem.address).unwrap();
         utils::GetLinksLoadElement{
             address: elem.address,
-            entry: (elem.entry, upvotes as i32)
+            entry: happs::AppResponse::new(elem.entry, upvotes as i32)
         }
     }).collect())
 }
 
-pub fn handle_get_app(app_hash:Address) -> ZomeApiResult<happs::App> {
-    utils::get_as_type(app_hash)
+pub fn handle_get_all_apps() -> ZomeApiResult<Vec<utils::GetLinksLoadElement<happs::AppResponse>>> {
+    let all_apps_anchor_addr = Entry::App(
+        "category_anchor".into(),
+        RawString::from("*").into(),
+    ).address();
+    get_linked_apps(&all_apps_anchor_addr, "contains")
+}
+
+pub fn handle_get_app(app_hash: Address) -> ZomeApiResult<happs::AppResponse> {
+    let upvotes = get_upvotes(&app_hash)?;
+    let entry = utils::get_as_type(app_hash)?;
+    Ok(AppResponse::new(entry, upvotes))
 }
 
 /*
@@ -44,7 +53,7 @@ pub fn handle_create_app(title: String, description: String, thumbnail_url: Stri
 
     let app_entry = Entry::App(
         "app".into(),
-        happs::App {
+        happs::AppEntry {
             title,
             author: agent_data["nick"].as_str().unwrap().into(),
             description,

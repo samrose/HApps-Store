@@ -38,7 +38,7 @@ class AllAppsPage extends React.Component<Props, {}> {
     } else if (this.props.apps.length < 1) {
       greeting = "No hApps to display"
     } else {
-      greeting = "All listed hApps"
+      greeting = "All hApps"
     }
     
     return (
