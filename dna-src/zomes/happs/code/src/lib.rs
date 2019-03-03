@@ -84,7 +84,7 @@ define_zome! {
         }
     ]
 
-    capabilities: {
-        public (Public) [get_apps_by_tag, get_apps_by_category, add_app_to_tag, add_app_to_category, get_ratings, create_ratings, get_app, get_all_apps, create_app, upvote_app]
+    traits: {
+        hc_public [get_apps_by_tag, get_apps_by_category, add_app_to_tag, add_app_to_category, get_ratings, create_ratings, get_app, get_all_apps, create_app, upvote_app]
     }
 }

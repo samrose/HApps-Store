@@ -8,7 +8,7 @@ import { URL } from './utils'
 
 
 // put middleware in this array to have it applied
-const middleware: Array<any> = [holochainMiddleware(connect(URL))]
+const middleware: Array<any> = [holochainMiddleware(connect())]
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
