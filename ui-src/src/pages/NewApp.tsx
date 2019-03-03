@@ -160,7 +160,7 @@ class NewApp extends React.Component<Props, State> {
         </Paper>
 
         <Dialog open={this.state.previewOpen} onClose={this.handleSetPreviewState(false)}>
-          <AppCard app={ {...this.state.appInput, author: "<your holochain ID will go here>", address: "", upvotes: 0} }/>
+          <AppCard app={ {...this.state.appInput, author: "<your holochain ID will go here>", address: "", upvotes: 0, upvotedByMe: false} }/>
         </Dialog>
 
         <Dialog open={this.props.awaitingResponse}>          

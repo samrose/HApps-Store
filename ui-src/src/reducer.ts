@@ -27,7 +27,7 @@ const defaultState: State = {
 export default (state: State = defaultState, action: AppAction): State => {
   switch (action.type) {
     case getType(appActions.GetAllApps.success):
-      const apps = action.payload.map(response => response.entry)
+      const apps = action.payload.map(response => ({...response.entry, address: response.address}))
       return {...state, apps}
     case getType(appActions.Whoami.success):
       const newAgent = {
@@ -43,6 +43,16 @@ export default (state: State = defaultState, action: AppAction): State => {
       return { ...state, awaitingResponse: true}
     case getType(appActions.CreateApp.success):
       return { ...state, awaitingResponse: false}
+    case getType(appActions.UpvoteApp.success):
+      // do a local state refresh of the upvote status for those reactive UI feels
+      const updatedApps: Array<App> = state.apps.map((app) => {
+        if (app.address === action.payload) {
+          return {...app, upvotes: app.upvotes+1, upvotedByMe: true}
+        } else {
+          return app
+        }
+      })
+      return { ...state, apps: updatedApps}
     default:
       return state
   }

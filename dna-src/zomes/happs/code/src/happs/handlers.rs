@@ -80,7 +80,7 @@ pub fn handle_create_app(title: String, description: String, thumbnail_url: Stri
     Ok(app_addr)
 }
 
-pub fn handle_upvote_app(address: Address) -> ZomeApiResult<()> {
-    hdk::link_entries(&address, &AGENT_ADDRESS, "upvote")?;
-    Ok(())
+pub fn handle_upvote_app(app_address: Address) -> ZomeApiResult<Address> {
+    hdk::link_entries(&app_address, &AGENT_ADDRESS, "upvote")?;
+    Ok(app_address)
 }

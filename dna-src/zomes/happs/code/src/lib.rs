@@ -48,8 +48,8 @@ define_zome! {
             handler: happs::handlers::handle_get_app
         }
         upvote_app: {
-            inputs:|address: Address|,
-            outputs: |result: ZomeApiResult<()>|,
+            inputs:|app_address: Address|,
+            outputs: |result: ZomeApiResult<Address>|,
             handler: happs::handlers::handle_upvote_app            
         }
         create_ratings: {

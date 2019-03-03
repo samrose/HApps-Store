@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import classnames from 'classnames'
 import Button from '@material-ui/core/Button'
@@ -37,6 +38,7 @@ const styles = theme => ({
 interface Props {
 	classes: any,
 	app: App,
+  upvoteApp: (app: App) => Promise<string>
 }
 
 class AppCard extends React.Component<Props> {
@@ -50,8 +52,8 @@ class AppCard extends React.Component<Props> {
           title={app.title}
           subheader={app.author}
           action={
-            <IconButton>
-              <FavoriteIconShaded fontSize="large"/>
+            <IconButton onClick={this.handleUpvoteClick}>
+              {this.props.app.upvotedByMe ? <FavoriteIconShaded fontSize="large"/> : <FavoriteIconOutline fontSize="large"/>}
             </IconButton>
           }
         />
@@ -79,7 +81,20 @@ class AppCard extends React.Component<Props> {
       </Card>
     );
   }
+
+  private handleUpvoteClick = () => {
+    console.log("upvoting", this.props.app)
+    return this.props.upvoteApp(this.props.app)
+  }
+
 }
 
+import { UpvoteApp } from '../actions'
 
-export default withStyles(styles)(AppCard);
+const mapStateToProps = (state) => ({ });
+
+const mapDispatchToProps = dispatch => ({
+  upvoteApp: (app: App) => dispatch(UpvoteApp.create({app_address: app.address})),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AppCard));

@@ -22,4 +22,5 @@ export interface App extends AppCreationSpec {
   address: string,
   author: string,
   upvotes: number,
+  upvotedByMe: boolean,
 }
