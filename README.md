@@ -1,7 +1,7 @@
 # HApps-Store
 
-![GitHub last commit](https://img.shields.io/github/last-commit/Holo-Host/HApps-Store.svg)
-![GitHub](https://img.shields.io/github/license/Holo-Host/HApps-Store.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/holochain/HApps-Store.svg)
+![GitHub](https://img.shields.io/github/license/holochain/HApps-Store.svg)
 
 ---
 An early version of the Holochain hApp store.

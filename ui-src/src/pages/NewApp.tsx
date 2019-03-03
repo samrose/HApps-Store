@@ -80,7 +80,8 @@ class NewApp extends React.Component<Props, State> {
           Provide the following details to post a new hApp to the store
         </Typography>
         <Typography component="p">
-          Note that all hApp will be 
+          Keep in mind that anything submitted will be visible to all participants for the lifetime of the hApp store.<br/>
+          Please be considerate, check submissions carefully and keep cruft to a minimum.
         </Typography>
          <Grid container={true} spacing={24}>
            <Grid item={true} xs={12} sm={6}>
