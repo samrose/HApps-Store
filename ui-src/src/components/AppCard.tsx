@@ -19,6 +19,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 
 import FavoriteIconOutline from '@material-ui/icons/FavoriteBorderOutlined';
 import FavoriteIconShaded from '@material-ui/icons/Favorite';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { App } from '../types/app'
 
@@ -52,9 +53,11 @@ class AppCard extends React.Component<Props> {
           title={app.title}
           subheader={app.author}
           action={
-            <IconButton onClick={this.handleUpvoteClick}>
-              {this.props.app.upvotedByMe ? <FavoriteIconShaded fontSize="large"/> : <FavoriteIconOutline fontSize="large"/>}
-            </IconButton>
+            <Tooltip title={this.props.app.upvotes}>
+              <IconButton onClick={this.handleUpvoteClick}>
+                {this.props.app.upvotedByMe ? <FavoriteIconShaded fontSize="large"/> : <FavoriteIconOutline fontSize="large"/>}
+              </IconButton>
+            </Tooltip>
           }
         />
         <CardMedia

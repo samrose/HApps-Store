@@ -47,7 +47,7 @@ export default (state: State = defaultState, action: AppAction): State => {
       // do a local state refresh of the upvote status for those reactive UI feels
       const updatedApps: Array<App> = state.apps.map((app) => {
         if (app.address === action.payload) {
-          return {...app, upvotes: app.upvotes+1, upvotedByMe: true}
+          return {...app, upvotes: app.upvotedByMe ? app.upvotes : app.upvotes+1, upvotedByMe: true}
         } else {
           return app
         }
