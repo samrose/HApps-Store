@@ -10,11 +10,43 @@ This version exists to allow participants of the Holo closed alpha program to fi
 
 ---
 
-## Getting Started
+## Building and Running
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+### Build Holochain DNA
 
-### Installing
+The DNA builds with Holochain version 0.0.4-alpha. Ensure you have the holochain developer cli `hc` and holochain conductor `holochain` installed that match this version. Then run from the project root
+```
+npm run hc:build
+```
+
+This should build the dna in to the `dna/` directory.
+
+Holochain tests can be run using `npm run hc:test`
+
+### Build UI
+
+Ensure `npm` is installed and run
+
+```
+npm run build
+```
+
+This will build the UI into the `ui/` directory
+
+### Running in the Holochain conductor
+
+Ensure the holochain conductor binary is on your path and run the npm helper script
+
+```
+npm run hc:start
+```
+
+Alternatively you can start it using the conductor directly by running
+
+```
+holochain -c ./conductor-config.toml
+```
+
 
 ## Built With
 
