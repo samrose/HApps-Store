@@ -13,18 +13,23 @@ use crate::happs::{self, AppResponse};
 Getter Functions
 ***/
 
-fn get_upvotes(app_address: &Address) -> ZomeApiResult<i32> {
-    Ok(hdk::get_links(app_address, "upvote")?.addresses().len() as i32)
+
+// returns tuple of number of upvotes and if this agent upvoted
+fn get_upvotes(app_address: &Address) -> ZomeApiResult<(i32, bool)> {
+    let result = hdk::get_links(app_address, "upvote")?;
+    let upvoters = result.addresses();
+    Ok((upvoters.len() as i32, upvoters.contains(&AGENT_ADDRESS)))
 }
+
 
 pub fn get_linked_apps(base_addr: &Address, tag: &str) -> ZomeApiResult<Vec<utils::GetLinksLoadElement<happs::AppResponse>>> {
     let get_result: Vec<utils::GetLinksLoadElement<happs::AppEntry>> = utils::get_links_and_load_type(base_addr, tag)?;
     
     Ok(get_result.into_iter().map(|elem| {
-        let upvotes = get_upvotes(&elem.address).unwrap();
+        let (upvotes, upvoted_my_me) = get_upvotes(&elem.address).unwrap();
         utils::GetLinksLoadElement{
             address: elem.address,
-            entry: happs::AppResponse::new(elem.entry, upvotes as i32)
+            entry: happs::AppResponse::new(elem.entry, upvotes as i32, upvoted_my_me)
         }
     }).collect())
 }
@@ -38,9 +43,9 @@ pub fn handle_get_all_apps() -> ZomeApiResult<Vec<utils::GetLinksLoadElement<hap
 }
 
 pub fn handle_get_app(app_hash: Address) -> ZomeApiResult<happs::AppResponse> {
-    let upvotes = get_upvotes(&app_hash)?;
+    let (upvotes, upvoted_my_me) = get_upvotes(&app_hash)?;
     let entry = utils::get_as_type(app_hash)?;
-    Ok(AppResponse::new(entry, upvotes))
+    Ok(AppResponse::new(entry, upvotes, upvoted_my_me))
 }
 
 /*

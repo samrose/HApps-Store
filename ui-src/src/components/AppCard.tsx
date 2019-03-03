@@ -16,7 +16,8 @@ import ShareIcon from '@material-ui/icons/Share'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 
-import FavoriteIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import FavoriteIconOutline from '@material-ui/icons/FavoriteBorderOutlined';
+import FavoriteIconShaded from '@material-ui/icons/Favorite';
 
 import { App } from '../types/app'
 
@@ -50,7 +51,7 @@ class AppCard extends React.Component<Props> {
           subheader={app.author}
           action={
             <IconButton>
-              <FavoriteIcon fontSize="large"/>
+              <FavoriteIconShaded fontSize="large"/>
             </IconButton>
           }
         />

@@ -27,7 +27,7 @@ const defaultState: State = {
 export default (state: State = defaultState, action: AppAction): State => {
   switch (action.type) {
     case getType(appActions.GetAllApps.success):
-      const apps = action.payload.map(response => ({...response.entry[0], upvotes: response.entry[1]}))
+      const apps = action.payload.map(response => response.entry)
       return {...state, apps}
     case getType(appActions.Whoami.success):
       const newAgent = {
