@@ -71,6 +71,12 @@ export const GetAppsByTag = createHolochainAsyncAction<
 >
 (`happ-store`, 'happs', 'get_apps_by_tag')
 
+export const UpvoteApp = createHolochainAsyncAction<
+{app_address: string}, 
+{}
+>
+(`happ-store`, 'happs', 'upvote_app')
+
 // create_ratings: {
 //     inputs:| rate:String, review:String, reviewed_hash: Address |,
 //     outputs: | result: ZomeApiResult<Address> |,

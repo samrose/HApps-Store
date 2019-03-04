@@ -18,7 +18,7 @@ mod happs;
 mod ratings;
 mod categories;
 
-use crate::happs::App;
+use crate::happs::AppResponse;
 use crate::ratings::Ratings;
 
 define_zome! {
@@ -39,13 +39,18 @@ define_zome! {
         }
         get_all_apps: {
             inputs:| |,
-            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<happs::App>>>|,
+            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>>|,
             handler: happs::handlers::handle_get_all_apps
         }
         get_app: {
             inputs:|app_hash: Address|,
-            outputs: |result: ZomeApiResult<happs::App>|,
+            outputs: |result: ZomeApiResult<AppResponse>|,
             handler: happs::handlers::handle_get_app
+        }
+        upvote_app: {
+            inputs:|app_address: Address|,
+            outputs: |result: ZomeApiResult<Address>|,
+            handler: happs::handlers::handle_upvote_app            
         }
         create_ratings: {
             inputs:| rate:String, review:String, reviewed_hash: Address |,
@@ -69,17 +74,17 @@ define_zome! {
         }
         get_apps_by_category: {
             inputs:|category: String|,
-            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>>|,
+            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>>|,
             handler: categories::handlers::handle_get_apps_by_category
         }
         get_apps_by_tag: {
             inputs:|tag: String|,
-            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<App>>>|,
+            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>>|,
             handler: categories::handlers::handle_get_apps_by_tag
         }
     ]
 
-    capabilities: {
-        public (Public) [get_apps_by_tag, get_apps_by_category, add_app_to_tag, add_app_to_category, get_ratings, create_ratings, get_ui, add_ui, get_dna, add_dna, get_app, get_all_apps, create_app]
+    traits: {
+        hc_public [get_apps_by_tag, get_apps_by_category, add_app_to_tag, add_app_to_category, get_ratings, create_ratings, get_app, get_all_apps, create_app, upvote_app]
     }
 }

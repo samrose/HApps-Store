@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import classnames from 'classnames'
 import Button from '@material-ui/core/Button'
@@ -12,10 +13,13 @@ import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import red from '@material-ui/core/colors/red'
-import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+
+import FavoriteIconOutline from '@material-ui/icons/FavoriteBorderOutlined';
+import FavoriteIconShaded from '@material-ui/icons/Favorite';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { App } from '../types/app'
 
@@ -35,6 +39,7 @@ const styles = theme => ({
 interface Props {
 	classes: any,
 	app: App,
+  upvoteApp: (app: App) => Promise<string>
 }
 
 class AppCard extends React.Component<Props> {
@@ -47,6 +52,13 @@ class AppCard extends React.Component<Props> {
         <CardHeader
           title={app.title}
           subheader={app.author}
+          action={
+            <Tooltip title={this.props.app.upvotes}>
+              <IconButton onClick={this.handleUpvoteClick}>
+                {this.props.app.upvotedByMe ? <FavoriteIconShaded fontSize="large"/> : <FavoriteIconOutline fontSize="large"/>}
+              </IconButton>
+            </Tooltip>
+          }
         />
         <CardMedia
           className={classes.media}
@@ -72,7 +84,20 @@ class AppCard extends React.Component<Props> {
       </Card>
     );
   }
+
+  private handleUpvoteClick = () => {
+    console.log("upvoting", this.props.app)
+    return this.props.upvoteApp(this.props.app)
+  }
+
 }
 
+import { UpvoteApp } from '../actions'
 
-export default withStyles(styles)(AppCard);
+const mapStateToProps = (state) => ({ });
+
+const mapDispatchToProps = dispatch => ({
+  upvoteApp: (app: App) => dispatch(UpvoteApp.create({app_address: app.address})),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AppCard));

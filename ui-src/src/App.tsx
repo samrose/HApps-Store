@@ -14,7 +14,7 @@ const App = () =>
     <div>
       <MainNav/>
       <Switch>
-        <Route exact={exact} path="/" component={SplashScreen} />
+        <Route exact={exact} path="/" component={AllAppsPage} />
         <Route exact={exact} path="/apps" component={AllAppsPage} />
         <Route exact={exact} path="/newapp" component={NewApp} />
         <Route component={NoMatch} />
