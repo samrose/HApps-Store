@@ -2,6 +2,7 @@ use hdk::holochain_core_types::{
     dna::entry_types::Sharing,
     error::HolochainError,
     json::JsonString,
+    cas::content::Address,
 };
 use hdk::{
     self,
@@ -26,6 +27,7 @@ pub struct AppEntry {
 #[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
 #[serde(rename_all = "camelCase")]
 pub struct AppResponse {
+    pub address: Address,
     pub title: String,
     pub author: String,
     pub description: String,
@@ -38,8 +40,9 @@ pub struct AppResponse {
 }
 
 impl AppResponse {
-    pub fn new(entry: AppEntry, upvotes: i32, upvoted_by_me: bool) -> Self {
+    pub fn new(entry: AppEntry, address: Address, upvotes: i32, upvoted_by_me: bool) -> Self {
         return Self {
+            address,
             title: entry.title,
             author: entry.author,
             description: entry.description,

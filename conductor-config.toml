@@ -1,12 +1,12 @@
 [[agents]]
 id = "test_agent1"
 name = "HoloTester1"
-public_address = "sandwich--------------------------------------------------------------------------AAAEqzh28L"
-key_file = "holo_tester.key"
+public_address = "HcSCIdhnbr43tcajfgmj3NDjj9TB6wbf3Q9nakZcHtc5c5a7KupzRFMSmwvxigi"
+keystore_file = "./keystore.key"
 
 [[dnas]]
 id = "happ_store_dna"
-file = "dna/happ-store.hcpkg"
+file = "dna/happ-store.dna.json"
 hash = "Qm328wyq38924x"
 
 [[instances]]

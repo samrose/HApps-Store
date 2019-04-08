@@ -5,7 +5,7 @@ import { Hash } from '../../holochain'
 import store from './store'
 
 import { createAction } from 'typesafe-actions'
-import { createHolochainAsyncAction } from '@holochain/hc-redux-middleware'
+import { createHolochainZomeCallAsyncAction } from '@holochain/hc-redux-middleware'
 import { AppCreationSpecSnake, App } from './types/app'
 
 
@@ -17,61 +17,56 @@ interface UiBundle {
     ui_bundle: string,
 }
 
-interface GetLinksLoadElement<T> {
-  address: string,
-  entry: T
-}
 
-
-export const CreateApp = createHolochainAsyncAction<
+export const CreateApp = createHolochainZomeCallAsyncAction<
   AppCreationSpecSnake,
   string
 >(`happ-store`, 'happs', 'create_app')
 
 
-export const GetAllApps = createHolochainAsyncAction<
+export const GetAllApps = createHolochainZomeCallAsyncAction<
   {},
-  Array<GetLinksLoadElement<App>>
+  Array<App>
 >(`happ-store`, 'happs', 'get_all_apps')
 
 
-export const GetApp = createHolochainAsyncAction<
+export const GetApp = createHolochainZomeCallAsyncAction<
   {address: string},
   App
 >(`happ-store`, 'happs', 'get_all_apps')
 
 
-export const Whoami = createHolochainAsyncAction<
+export const Whoami = createHolochainZomeCallAsyncAction<
 {}, 
 {hash: string, name: string}
 >
 (`happ-store`, 'whoami', 'get_user')
 
-export const AddAppToCategory = createHolochainAsyncAction<
+export const AddAppToCategory = createHolochainZomeCallAsyncAction<
 {app_address: string, category: string}, 
 {}
 >
 (`happ-store`, 'happs', 'add_app_to_category')
 
-export const AddAppToTag = createHolochainAsyncAction<
+export const AddAppToTag = createHolochainZomeCallAsyncAction<
 {app_address: string, category: string}, 
 {}
 >
 (`happ-store`, 'happs', 'add_app_to_tag')
 
-export const GetAppsByCategory = createHolochainAsyncAction<
+export const GetAppsByCategory = createHolochainZomeCallAsyncAction<
 {app_address: string, category: string}, 
 {}
 >
 (`happ-store`, 'happs', 'get_apps_by_category')
 
-export const GetAppsByTag = createHolochainAsyncAction<
+export const GetAppsByTag = createHolochainZomeCallAsyncAction<
 {app_address: string, category: string}, 
 {}
 >
 (`happ-store`, 'happs', 'get_apps_by_tag')
 
-export const UpvoteApp = createHolochainAsyncAction<
+export const UpvoteApp = createHolochainZomeCallAsyncAction<
 {app_address: string}, 
 {}
 >
