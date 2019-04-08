@@ -41,8 +41,8 @@ module.exports = (scenario) => {
 
     const get_all_apps_result_after_upvote = await alice.callSync('happs', "get_all_apps", {})
     console.log(get_all_apps_result_after_upvote)
-    t.equal(get_all_apps_result_after_upvote.Ok[0].entry.upvotes , 1)
-    t.equal(get_all_apps_result_after_upvote.Ok[0].entry.upvotedByMe , true)
+    t.equal(get_all_apps_result_after_upvote.Ok[0].upvotes , 1)
+    t.equal(get_all_apps_result_after_upvote.Ok[0].upvotedByMe , true)
 
   })
 }

@@ -1,6 +1,7 @@
 // TODO: Get the categories of the a app hash/address
 use hdk::{
     self,
+    utils,
     holochain_core_types::{
         entry::Entry,
         json::{RawString},
@@ -32,7 +33,7 @@ pub fn handle_add_app_to_tag(app_address: Address, tag: String) -> ZomeApiResult
     Ok(())
 }
 
-pub fn handle_get_apps_by_category(category: String) -> ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>> {
+pub fn handle_get_apps_by_category(category: String) -> ZomeApiResult<Vec<AppResponse>> {
     let category_anchor_entry = Entry::App(
         "category_anchor".into(),
         RawString::from(category).into()
@@ -40,7 +41,7 @@ pub fn handle_get_apps_by_category(category: String) -> ZomeApiResult<Vec<utils:
     get_linked_apps(&category_anchor_entry.address(), "contains")
 }
 
-pub fn handle_get_apps_by_tag(tag: String) -> ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>> {
+pub fn handle_get_apps_by_tag(tag: String) -> ZomeApiResult<Vec<AppResponse>> {
     let tag_anchor_entry = Entry::App(
         "tag_anchor".into(),
         RawString::from(tag).into()

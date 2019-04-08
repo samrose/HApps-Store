@@ -1,5 +1,6 @@
 use hdk::{
     AGENT_ADDRESS,
+    utils,
     holochain_core_types::{
         entry::Entry,
         cas::content::{Address, AddressableContent},
@@ -22,19 +23,17 @@ fn get_upvotes(app_address: &Address) -> ZomeApiResult<(i32, bool)> {
 }
 
 
-pub fn get_linked_apps(base_addr: &Address, tag: &str) -> ZomeApiResult<Vec<utils::GetLinksLoadElement<happs::AppResponse>>> {
-    let get_result: Vec<utils::GetLinksLoadElement<happs::AppEntry>> = utils::get_links_and_load_type(base_addr, tag)?;
+pub fn get_linked_apps(base_addr: &Address, tag: &str) -> ZomeApiResult<Vec<happs::AppResponse>> {
+    let addrs = hdk::get_links(base_addr, tag)?.addresses().clone();
     
-    Ok(get_result.into_iter().map(|elem| {
-        let (upvotes, upvoted_my_me) = get_upvotes(&elem.address).unwrap();
-        utils::GetLinksLoadElement{
-            address: elem.address,
-            entry: happs::AppResponse::new(elem.entry, upvotes as i32, upvoted_my_me)
-        }
+    Ok(addrs.into_iter().map(|addr| {
+        let (upvotes, upvoted_my_me) = get_upvotes(&addr).unwrap();
+        let entry = utils::get_as_type(addr.to_owned()).unwrap();
+        happs::AppResponse::new(entry, upvotes as i32, upvoted_my_me)
     }).collect())
 }
 
-pub fn handle_get_all_apps() -> ZomeApiResult<Vec<utils::GetLinksLoadElement<happs::AppResponse>>> {
+pub fn handle_get_all_apps() -> ZomeApiResult<Vec<happs::AppResponse>> {
     let all_apps_anchor_addr = Entry::App(
         "category_anchor".into(),
         RawString::from("*").into(),

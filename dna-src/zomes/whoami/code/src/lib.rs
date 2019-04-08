@@ -10,8 +10,7 @@ extern crate holochain_core_types_derive;
 
 use hdk::{
     error::ZomeApiResult,
-    holochain_core_types::{cas::content::Address, entry::Entry, json::JsonString, error::HolochainError},
-    holochain_wasm_utils::api_serialization::get_links::GetLinksResult,
+    holochain_core_types::{json::JsonString, error::HolochainError},
 };
 
 pub mod whoami_fn;

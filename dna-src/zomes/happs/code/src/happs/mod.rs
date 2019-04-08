@@ -2,7 +2,6 @@ use hdk::holochain_core_types::{
     dna::entry_types::Sharing,
     error::HolochainError,
     json::JsonString,
-    cas::content::Address,
 };
 use hdk::{
     self,
@@ -61,12 +60,11 @@ pub fn app_definitions() -> ValidatingEntryType{
         name: "app",
         description: "Details of the app",
         sharing: Sharing::Public,
-        native_type: AppEntry,
         validation_package: || {
             hdk::ValidationPackageDefinition::Entry
         },
 
-        validation: |_app: AppEntry, _validation_data: hdk::ValidationData| {
+        validation: |_validation_data: hdk::EntryValidationData<AppEntry>| {
             {
                 Ok(())
             }
@@ -81,7 +79,7 @@ pub fn app_definitions() -> ValidatingEntryType{
                     hdk::ValidationPackageDefinition::Entry
                 },
 
-                validation: |_base: Address, _target: Address, _validation_data: hdk::ValidationData| {
+                validation: |_validation_data: hdk::LinkValidationData| {
                     Ok(())
                 }
             ),
@@ -93,7 +91,7 @@ pub fn app_definitions() -> ValidatingEntryType{
                     hdk::ValidationPackageDefinition::Entry
                 },
 
-                validation: |_base: Address, _target: Address, _validation_data: hdk::ValidationData| {
+                validation: |_validation_data: hdk::LinkValidationData| {
                     Ok(())
                 }
             ),
@@ -105,7 +103,7 @@ pub fn app_definitions() -> ValidatingEntryType{
                     hdk::ValidationPackageDefinition::Entry
                 },
 
-                validation: |_base: Address, _target: Address, _validation_data: hdk::ValidationData| {
+                validation: |_validation_data: hdk::LinkValidationData| {
                     Ok(())
                 }
             )
