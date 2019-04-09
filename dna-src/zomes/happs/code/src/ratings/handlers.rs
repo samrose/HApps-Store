@@ -1,5 +1,5 @@
-use utils::{get_links_and_load_type, GetLinksLoadElement};
 use hdk::{
+    utils,
     holochain_core_types::{
         cas::content::Address,
         entry::Entry,
@@ -29,6 +29,6 @@ pub fn handle_creating_ratings(rate: String, review: String, reviewed_hash: Addr
 }
 
 
-pub fn handle_get_reviews_by_hash(reviewed_hash: Address) -> ZomeApiResult<Vec<GetLinksLoadElement<Ratings>>> {
-    get_links_and_load_type(&reviewed_hash, "rating_tag")
+pub fn handle_get_reviews_by_hash(reviewed_hash: Address) -> ZomeApiResult<Vec<Ratings>> {
+    utils::get_links_and_load_type(&reviewed_hash, "rating_tag")
 }

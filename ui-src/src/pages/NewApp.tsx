@@ -1,7 +1,7 @@
 import * as React from "react";
 import { render } from "react-dom";
 import { connect } from 'react-redux'
-import { withRouter, RouteComponentProps } from 'react-router'
+import { withRouter } from 'react-router-dom'
 
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -149,24 +149,24 @@ class NewApp extends React.Component<Props, State> {
             className={classes.textField}
           />
          </Grid>
+
+        <Grid item={true} xs={6} sm={6}>
+          <AppCard app={ {...this.state.appInput, author: "<your holochain ID will go here>", address: "", upvotes: 0, upvotedByMe: false} }/>
         </Grid>
 
-          <Button variant="contained" size="large" onClick={this.handleSetPreviewState(true)}>
-            Preview
-          </Button>
+        </Grid>
+
           <Button variant="contained" size="large" color="primary" onClick={this.handleClickSubmit(this.state.appInput)}>
             Submit
           </Button>
 
         </Paper>
 
-        <Dialog open={this.state.previewOpen} onClose={this.handleSetPreviewState(false)}>
-          <AppCard app={ {...this.state.appInput, author: "<your holochain ID will go here>", address: "", upvotes: 0, upvotedByMe: false} }/>
-        </Dialog>
-
         <Dialog open={this.props.awaitingResponse}>          
           <CircularProgress className={classes.progress}/>
         </Dialog>
+
+
         </div>
     );
   }
@@ -177,7 +177,10 @@ class NewApp extends React.Component<Props, State> {
   }
 
   private handleClickSubmit = (app: AppCreationSpec) => (event: React.MouseEvent<HTMLElement>) => {
-    this.props.createApp(app)
+    this.props.createApp(app).then(() => {
+      // @ts-ignore
+      this.props.history.push('/')
+    })
   }
 
   private handleSetPreviewState = (open: boolean) => (event: any) => {
@@ -194,4 +197,4 @@ const mapDispatchToProps = dispatch => ({
   createApp: (app: AppCreationSpec) => dispatch(CreateApp.create(snakecase(app))),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NewApp));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(withRouter(NewApp)));

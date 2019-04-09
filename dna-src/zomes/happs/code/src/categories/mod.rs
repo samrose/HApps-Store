@@ -1,6 +1,5 @@
 use hdk::{
 	holochain_core_types::{
-		cas::content::Address,
 	    dna::entry_types::Sharing,
 	    json::RawString,
 	},
@@ -16,13 +15,12 @@ pub fn category_anchor_entry() -> ValidatingEntryType {
 	    name: "category_anchor",
 	    description: "",
 	    sharing: Sharing::Public,
-	    native_type: RawString,
 
 	    validation_package: || {
 	        hdk::ValidationPackageDefinition::Entry
 	    },
 
-	    validation: |_name: RawString, _ctx: hdk::ValidationData| {
+	    validation: |_validation_data: hdk::EntryValidationData<RawString>| {
 	        Ok(())
 	    },
 
@@ -35,7 +33,7 @@ pub fn category_anchor_entry() -> ValidatingEntryType {
 	                hdk::ValidationPackageDefinition::Entry
 	            },
 
-	            validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+	            validation: |_validation_data: hdk::LinkValidationData| {
 	                Ok(())
 	            }
 	        ),
@@ -47,7 +45,7 @@ pub fn category_anchor_entry() -> ValidatingEntryType {
 	                hdk::ValidationPackageDefinition::Entry
 	            },
 
-	            validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+	            validation: |_validation_data: hdk::LinkValidationData| {
 	                Ok(())
 	            }
 	        )
@@ -60,13 +58,12 @@ pub fn tag_anchor_entry() -> ValidatingEntryType {
 	    name: "tag_anchor",
 	    description: "",
 	    sharing: Sharing::Public,
-	    native_type: RawString,
 
 	    validation_package: || {
 	        hdk::ValidationPackageDefinition::Entry
 	    },
 
-	    validation: |_name: RawString, _ctx: hdk::ValidationData| {
+	    validation: |_validation_data: hdk::EntryValidationData<RawString>| {
 	        Ok(())
 	    },
 
@@ -79,7 +76,7 @@ pub fn tag_anchor_entry() -> ValidatingEntryType {
 	                hdk::ValidationPackageDefinition::Entry
 	            },
 
-	            validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+	            validation: |_validation_data: hdk::LinkValidationData| {
 	                Ok(())
 	            }
 	        ),
@@ -91,7 +88,7 @@ pub fn tag_anchor_entry() -> ValidatingEntryType {
 	                hdk::ValidationPackageDefinition::Entry
 	            },
 
-	            validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+	            validation: |_validation_data: hdk::LinkValidationData| {
 	                Ok(())
 	            }
 	        )

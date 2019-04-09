@@ -24,14 +24,14 @@ module.exports = (scenario) => {
     // bob can see it
     const bob_get_all_apps_result_after_upvote = await bob.callSync('happs', "get_all_apps", {})
     console.log(bob_get_all_apps_result_after_upvote)
-    t.equal(bob_get_all_apps_result_after_upvote.Ok[0].entry.upvotes , 1)
-    t.equal(bob_get_all_apps_result_after_upvote.Ok[0].entry.upvotedByMe , true)
+    t.equal(bob_get_all_apps_result_after_upvote.Ok[0].upvotes , 1)
+    t.equal(bob_get_all_apps_result_after_upvote.Ok[0].upvotedByMe , true)
 
     // alice can see it
     const alice_get_all_apps_result_after_upvote = await alice.callSync('happs', "get_all_apps", {})
     console.log(alice_get_all_apps_result_after_upvote)
-    t.equal(alice_get_all_apps_result_after_upvote.Ok[0].entry.upvotes , 1)
-    t.equal(alice_get_all_apps_result_after_upvote.Ok[0].entry.upvotedByMe , false)
+    t.equal(alice_get_all_apps_result_after_upvote.Ok[0].upvotes , 1)
+    t.equal(alice_get_all_apps_result_after_upvote.Ok[0].upvotedByMe , false)
   })
 
 }

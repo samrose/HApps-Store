@@ -10,9 +10,6 @@ use hdk::holochain_core_types::{
 use hdk::{
     self,
     entry_definition::ValidatingEntryType,
-    holochain_core_types::{
-        cas::content::Address
-    }
 };
 
 pub mod handlers;
@@ -22,7 +19,7 @@ pub mod handlers;
 /// to how this happens with functions parameters and zome_functions!.
 ///
 /// So this is our normative schema definition:
-#[derive(Serialize, Deserialize, Debug, DefaultJson)]
+#[derive(Clone, Serialize, Deserialize, Debug, DefaultJson)]
 pub struct Ratings {
     pub rate: String,
     pub review: String,
@@ -35,13 +32,12 @@ pub fn rating_definition() -> ValidatingEntryType {
         name: "ratings",
         description: "Ratings for a given hash",
         sharing: Sharing::Public,
-        native_type: Ratings,
 
         validation_package: || {
             hdk::ValidationPackageDefinition::Entry
         },
 
-        validation: |_ratings: Ratings, _ctx: hdk::ValidationData| {
+        validation: |_validation_data: hdk::EntryValidationData<Ratings>| {
             Ok(())
         },
 
@@ -54,7 +50,7 @@ pub fn rating_definition() -> ValidatingEntryType {
                     hdk::ValidationPackageDefinition::Entry
                 },
 
-                validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                validation: |_validation_data: hdk::LinkValidationData| {
                     Ok(())
                 }
             )

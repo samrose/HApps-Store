@@ -27,6 +27,7 @@ pub struct AppEntry {
 #[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
 #[serde(rename_all = "camelCase")]
 pub struct AppResponse {
+    pub address: Address,
     pub title: String,
     pub author: String,
     pub description: String,
@@ -39,8 +40,9 @@ pub struct AppResponse {
 }
 
 impl AppResponse {
-    pub fn new(entry: AppEntry, upvotes: i32, upvoted_by_me: bool) -> Self {
+    pub fn new(entry: AppEntry, address: Address, upvotes: i32, upvoted_by_me: bool) -> Self {
         return Self {
+            address,
             title: entry.title,
             author: entry.author,
             description: entry.description,
@@ -61,12 +63,11 @@ pub fn app_definitions() -> ValidatingEntryType{
         name: "app",
         description: "Details of the app",
         sharing: Sharing::Public,
-        native_type: AppEntry,
         validation_package: || {
             hdk::ValidationPackageDefinition::Entry
         },
 
-        validation: |_app: AppEntry, _validation_data: hdk::ValidationData| {
+        validation: |_validation_data: hdk::EntryValidationData<AppEntry>| {
             {
                 Ok(())
             }
@@ -81,7 +82,7 @@ pub fn app_definitions() -> ValidatingEntryType{
                     hdk::ValidationPackageDefinition::Entry
                 },
 
-                validation: |_base: Address, _target: Address, _validation_data: hdk::ValidationData| {
+                validation: |_validation_data: hdk::LinkValidationData| {
                     Ok(())
                 }
             ),
@@ -93,7 +94,7 @@ pub fn app_definitions() -> ValidatingEntryType{
                     hdk::ValidationPackageDefinition::Entry
                 },
 
-                validation: |_base: Address, _target: Address, _validation_data: hdk::ValidationData| {
+                validation: |_validation_data: hdk::LinkValidationData| {
                     Ok(())
                 }
             ),
@@ -105,7 +106,7 @@ pub fn app_definitions() -> ValidatingEntryType{
                     hdk::ValidationPackageDefinition::Entry
                 },
 
-                validation: |_base: Address, _target: Address, _validation_data: hdk::ValidationData| {
+                validation: |_validation_data: hdk::LinkValidationData| {
                     Ok(())
                 }
             )

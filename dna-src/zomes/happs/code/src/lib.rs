@@ -6,9 +6,7 @@ extern crate serde;
 extern crate serde_derive;
 #[macro_use]
 extern crate holochain_core_types_derive;
-extern crate utils;
 
-use utils::GetLinksLoadElement;
 use hdk::{
     error::ZomeApiResult,
     holochain_core_types::{cas::content::Address, json::JsonString, error::HolochainError},
@@ -39,7 +37,7 @@ define_zome! {
         }
         get_all_apps: {
             inputs:| |,
-            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>>|,
+            outputs: |result: ZomeApiResult<Vec<AppResponse>>|,
             handler: happs::handlers::handle_get_all_apps
         }
         get_app: {
@@ -59,7 +57,7 @@ define_zome! {
         }
         get_ratings: {
             inputs:| reviewed_hash: Address |,
-            outputs: |result: ZomeApiResult<Vec<GetLinksLoadElement<Ratings>>>|,
+            outputs: |result: ZomeApiResult<Vec<Ratings>>|,
             handler: ratings::handlers::handle_get_reviews_by_hash
         }
         add_app_to_category: {
@@ -74,12 +72,12 @@ define_zome! {
         }
         get_apps_by_category: {
             inputs:|category: String|,
-            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>>|,
+            outputs: |result: ZomeApiResult<Vec<AppResponse>>|,
             handler: categories::handlers::handle_get_apps_by_category
         }
         get_apps_by_tag: {
             inputs:|tag: String|,
-            outputs: |result: ZomeApiResult<Vec<utils::GetLinksLoadElement<AppResponse>>>|,
+            outputs: |result: ZomeApiResult<Vec<AppResponse>>|,
             handler: categories::handlers::handle_get_apps_by_tag
         }
     ]
