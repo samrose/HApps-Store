@@ -1,19 +1,18 @@
 use hdk::{
-    AGENT_ADDRESS,
-    utils,
+    error::{ZomeApiError, ZomeApiResult},
     holochain_core_types::{
-        entry::Entry,
         cas::content::{Address, AddressableContent},
+        entry::Entry,
         json::RawString,
     },
-    error::{ZomeApiResult, ZomeApiError},
+    utils, AGENT_ADDRESS,
 };
 
+use crate::happs::AppResource;
 use crate::happs::{self, AppResponse};
 /***
 Getter Functions
 ***/
-
 
 // returns tuple of number of upvotes and if this agent upvoted
 fn get_upvotes(app_address: &Address) -> ZomeApiResult<(i32, bool)> {
@@ -22,22 +21,22 @@ fn get_upvotes(app_address: &Address) -> ZomeApiResult<(i32, bool)> {
     Ok((upvoters.len() as i32, upvoters.contains(&AGENT_ADDRESS)))
 }
 
-
 pub fn get_linked_apps(base_addr: &Address, tag: &str) -> ZomeApiResult<Vec<happs::AppResponse>> {
     let addrs = hdk::get_links(base_addr, tag)?.addresses().clone();
-    
-    Ok(addrs.into_iter().map(|addr| {
-        let (upvotes, upvoted_my_me) = get_upvotes(&addr).unwrap();
-        let entry = utils::get_as_type(addr.to_owned()).unwrap();
-        happs::AppResponse::new(entry, addr, upvotes as i32, upvoted_my_me)
-    }).collect())
+
+    Ok(addrs
+        .into_iter()
+        .map(|addr| {
+            let (upvotes, upvoted_my_me) = get_upvotes(&addr).unwrap();
+            let entry = utils::get_as_type(addr.to_owned()).unwrap();
+            happs::AppResponse::new(entry, addr, upvotes as i32, upvoted_my_me)
+        })
+        .collect())
 }
 
 pub fn handle_get_all_apps() -> ZomeApiResult<Vec<happs::AppResponse>> {
-    let all_apps_anchor_addr = Entry::App(
-        "category_anchor".into(),
-        RawString::from("*").into(),
-    ).address();
+    let all_apps_anchor_addr =
+        Entry::App("category_anchor".into(), RawString::from("*").into()).address();
     get_linked_apps(&all_apps_anchor_addr, "contains")
 }
 
@@ -50,10 +49,16 @@ pub fn handle_get_app(app_hash: Address) -> ZomeApiResult<happs::AppResponse> {
 /*
 Functions needed to be handeled by the HCHC
 */
-pub fn handle_create_app(title: String, description: String, thumbnail_url: String, homepage_url: String, dna_url: String, ui_url: String) -> ZomeApiResult<Address> {
-    let agent_data: serde_json::Value = serde_json::from_str(&hdk::AGENT_ID_STR.to_string()).map_err(|_| {
-        ZomeApiError::Internal("Error: Agent string not valid json".to_string())
-    })?;
+pub fn handle_create_app(
+    title: String,
+    description: String,
+    thumbnail_url: String,
+    homepage_url: String,
+    dnas: Vec<AppResource>,
+    ui: Option<AppResource>,
+) -> ZomeApiResult<Address> {
+    let agent_data: serde_json::Value = serde_json::from_str(&hdk::AGENT_ID_STR.to_string())
+        .map_err(|_| ZomeApiError::Internal("Error: Agent string not valid json".to_string()))?;
 
     let app_entry = Entry::App(
         "app".into(),
@@ -63,16 +68,17 @@ pub fn handle_create_app(title: String, description: String, thumbnail_url: Stri
             description,
             thumbnail_url,
             homepage_url,
-            dna_url,
-            ui_url,
-        }.into()
+            dnas,
+            ui,
+        }
+        .into(),
     );
     let app_addr = hdk::commit_entry(&app_entry)?;
     utils::link_entries_bidir(&app_addr, &hdk::AGENT_ADDRESS, "author_is", "published")?;
 
     let all_apps_anchor_addr = hdk::commit_entry(&Entry::App(
         "category_anchor".into(),
-        RawString::from("*").into()
+        RawString::from("*").into(),
     ))?;
     utils::link_entries_bidir(&all_apps_anchor_addr, &app_addr, "contains", "in")?;
 

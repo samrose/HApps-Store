@@ -1,16 +1,17 @@
 use hdk::holochain_core_types::{
-    dna::entry_types::Sharing,
-    error::HolochainError,
+    cas::content::Address, dna::entry_types::Sharing, error::HolochainError, hash::HashString,
     json::JsonString,
-    cas::content::Address,
 };
-use hdk::{
-    self,
-    entry_definition::ValidatingEntryType,
-};
+use hdk::{self, entry_definition::ValidatingEntryType};
 
 pub mod handlers;
 pub use handlers::get_linked_apps;
+
+#[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
+pub struct AppResource {
+    pub location: String,
+    pub hash: HashString,
+}
 
 #[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
 #[serde(rename_all = "camelCase")]
@@ -20,21 +21,15 @@ pub struct AppEntry {
     pub description: String,
     pub thumbnail_url: String,
     pub homepage_url: String,
-    pub dna_url: String,
-    pub ui_url: String,
+    pub dnas: Vec<AppResource>,
+    pub ui: Option<AppResource>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]
 #[serde(rename_all = "camelCase")]
 pub struct AppResponse {
     pub address: Address,
-    pub title: String,
-    pub author: String,
-    pub description: String,
-    pub thumbnail_url: String,
-    pub homepage_url: String,
-    pub dna_url: String,
-    pub ui_url: String,
+    pub app_entry: AppEntry,
     pub upvotes: i32,
     pub upvoted_by_me: bool,
 }
@@ -43,22 +38,16 @@ impl AppResponse {
     pub fn new(entry: AppEntry, address: Address, upvotes: i32, upvoted_by_me: bool) -> Self {
         return Self {
             address,
-            title: entry.title,
-            author: entry.author,
-            description: entry.description,
-            thumbnail_url: entry.thumbnail_url,
-            homepage_url: entry.homepage_url,
-            dna_url: entry.dna_url,
-            ui_url: entry.ui_url,
+            app_entry: entry,
             upvotes: upvotes,
-            upvoted_by_me
-        }
+            upvoted_by_me,
+        };
     }
 }
 
 // const ADMIN_AUTHOR: &str = "alice-----------------------------------------------------------------------------AAAIuDJb4M";
 
-pub fn app_definitions() -> ValidatingEntryType{
+pub fn app_definitions() -> ValidatingEntryType {
     entry!(
         name: "app",
         description: "Details of the app",
