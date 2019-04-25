@@ -1,11 +1,25 @@
 
+interface AppResource {
+  location: string,
+  hash: string,
+}
+
 export interface AppCreationSpec {
   title: string,
   description: string,
   thumbnailUrl: string,
   homepageUrl: string,
-  dnaUrl: string,
-  uiUrl: string,
+  dnas: Array<AppResource>,
+  ui: AppResource | null,
+}
+
+export const defaultAppCreationSpec = {
+  title: '',
+  description: '',
+  thumbnailUrl: '',
+  homepageUrl: '',
+  dnas: [],
+  ui: null,
 }
 
 export interface AppCreationSpecSnake {
@@ -13,14 +27,14 @@ export interface AppCreationSpecSnake {
   description: string,
   thumbnail_url: string,
   homepage_url: string,
-  dna_url: string,
-  ui_url: string,
+  dnas: Array<AppResource>,
+  ui: AppResource | null,
 }
 
-
-export interface App extends AppCreationSpec {
+export interface App {
   address: string,
   author: string,
   upvotes: number,
   upvotedByMe: boolean,
+  appEntry: AppCreationSpec,
 }

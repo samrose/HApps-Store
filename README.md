@@ -14,7 +14,7 @@ This version exists to allow participants of the Holo closed alpha program to fi
 
 ### Build Holochain DNA
 
-The DNA builds with Holochain version 0.0.4-alpha. Ensure you have the holochain developer cli `hc` and holochain conductor `holochain` installed that match this version. Then run from the project root
+The DNA builds with Holochain version `0.0.12-alpha1`. Ensure you have the holochain developer cli `hc` and holochain conductor `holochain` installed that match this version. Then run from the project root
 ```
 npm run hc:build
 ```

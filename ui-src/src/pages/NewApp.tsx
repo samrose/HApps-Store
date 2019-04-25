@@ -13,7 +13,7 @@ import Dialog from '@material-ui/core/Dialog';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AppCard from '../components/AppCard'
 
-import { AppCreationSpec } from '../types/app'
+import { AppCreationSpec, defaultAppCreationSpec } from '../types/app'
 import snakecase from 'snakecase-keys'
 
 const styles = (theme: Theme) =>
@@ -59,14 +59,7 @@ class NewApp extends React.Component<Props, State> {
 
   public state: State = {
     previewOpen: false,
-    appInput: {
-      title: '',
-      description: '',
-      thumbnailUrl: '',
-      homepageUrl: '',
-      dnaUrl: '',
-      uiUrl: '',
-    }
+    appInput: defaultAppCreationSpec
   }
   
   public render() {
@@ -129,29 +122,37 @@ class NewApp extends React.Component<Props, State> {
           />
            </Grid>
 
+        { /* TODO: update for multiple DNAs and ability to supply or detect hash */}
         <Grid item={true} xs={12} sm={6}>
           <TextField
             id="dna-field"
             required={true}
             label="DNA hcpkg URL"
-            value={this.state.appInput.dnaUrl}
+            value={(this.state.appInput.dnas[0] || {location: ''} as any).location}
             onChange={this.handleChange('dnaUrl')}
             className={classes.textField}
           />
-           </Grid>
+        </Grid>
 
+        { /* TODO: update for ability to supply or detect hash */}
         <Grid item={true} xs={12} sm={6}>
           <TextField
             id="ui-field"
             label="UI static folder URL"
-            value={this.state.appInput.uiUrl}
+            value={(this.state.appInput.ui || {location: ''} as any).location}
             onChange={this.handleChange('uiUrl')}
             className={classes.textField}
           />
-         </Grid>
+        </Grid>
 
         <Grid item={true} xs={6} sm={6}>
-          <AppCard app={ {...this.state.appInput, author: "<your holochain ID will go here>", address: "", upvotes: 0, upvotedByMe: false} }/>
+          <AppCard app={ {
+            author: "<your holochain ID will go here>", 
+            address: "", 
+            upvotes: 0, 
+            upvotedByMe: false,
+            appEntry: this.state.appInput 
+          } }/>
         </Grid>
 
         </Grid>
@@ -171,9 +172,17 @@ class NewApp extends React.Component<Props, State> {
     );
   }
 
-  private handleChange = (name: keyof AppCreationSpec) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const update = { ...this.state.appInput, [name]: event.target.value } as Pick<AppCreationSpec, keyof AppCreationSpec>
-    this.setState({ appInput: update});
+  private handleChange = (name: keyof AppCreationSpec | 'dnaUrl' | 'uiUrl') => (event: React.ChangeEvent<HTMLInputElement>) => {
+    let update
+    const value = event.target.value
+    if (name === 'dnaUrl') {
+      update = { ...this.state.appInput, dnas: [{ location: value, hash: 'TODO' }] }
+    } else if (name === 'uiUrl') {
+      update = { ...this.state.appInput, ui: { location: value, hash: 'TODO' } }
+    } else {
+      update = { ...this.state.appInput, [name]: value }
+    }
+    this.setState({ appInput: update as AppCreationSpec});
   }
 
   private handleClickSubmit = (app: AppCreationSpec) => (event: React.MouseEvent<HTMLElement>) => {
