@@ -175,10 +175,12 @@ class NewApp extends React.Component<Props, State> {
   private handleChange = (name: keyof AppCreationSpec | 'dnaUrl' | 'uiUrl') => (event: React.ChangeEvent<HTMLInputElement>) => {
     let update
     const value = event.target.value
+    // NB: 'TODO-FIX-HAPP-STORE' is a magic value that disables hash checking when using Holo Envoy.
+    // It will be OK to insert the valid hash here as soon as the UI is capable of asking the user for it.
     if (name === 'dnaUrl') {
-      update = { ...this.state.appInput, dnas: [{ location: value, hash: 'TODO' }] }
+      update = { ...this.state.appInput, dnas: [{ location: value, hash: 'TODO-FIX-HAPP-STORE' }] }
     } else if (name === 'uiUrl') {
-      update = { ...this.state.appInput, ui: { location: value, hash: 'TODO' } }
+      update = { ...this.state.appInput, ui: { location: value, hash: 'TODO-FIX-HAPP-STORE' } }
     } else {
       update = { ...this.state.appInput, [name]: value }
     }
