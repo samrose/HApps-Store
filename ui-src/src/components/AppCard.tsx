@@ -21,7 +21,7 @@ import FavoriteIconOutline from '@material-ui/icons/FavoriteBorderOutlined';
 import FavoriteIconShaded from '@material-ui/icons/Favorite';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { App } from '../types/app'
+import { App, defaultAppCreationSpec } from '../types/app'
 
 const styles = theme => ({
   card: {
@@ -46,11 +46,18 @@ class AppCard extends React.Component<Props> {
 
   public render() {
     const { classes, app } = this.props;
+    const appEntry = app.appEntry || defaultAppCreationSpec;
+
+    const DnaDownloadButton = (dna, key) => (
+      <Button size="small" color="primary" href={dna.location} key={key}>
+        Download DNA #{key + 1}
+      </Button>
+    )
 
     return (
       <Card className={classes.card}>
         <CardHeader
-          title={app.title}
+          title={appEntry.title}
           subheader={app.author}
           action={
             <Tooltip title={this.props.app.upvotes}>
@@ -62,22 +69,22 @@ class AppCard extends React.Component<Props> {
         />
         <CardMedia
           className={classes.media}
-          image={app.thumbnailUrl}
+          image={appEntry.thumbnailUrl}
           title="hApp Image"
         />
         <CardContent>
           <Typography component="p">
-            {app.description}
+            {appEntry.description}
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing={true}>
-			    <Button size="small" color="primary" href={app.dnaUrl}>
-	          Download DNA
-	        </Button>
-	        <Button size="small" color="primary" href={app.uiUrl}>
-	          Download UI
-	        </Button>
-	        <Button size="small" color="primary" href={app.homepageUrl}>
+          { appEntry.dnas.map(DnaDownloadButton) }
+          { appEntry.ui 
+            ? <Button size="small" color="primary" href={appEntry.ui.location}>
+    	          Download UI
+    	        </Button>
+            : null }
+	        <Button size="small" color="primary" href={appEntry.homepageUrl}>
 	          Visit Homepage
 	        </Button>
         </CardActions>

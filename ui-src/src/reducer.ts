@@ -31,7 +31,7 @@ export default (state: State = defaultState, action: AppAction): State => {
       return {...state, apps}
     case getType(appActions.Whoami.success):
       const newAgent = {
-        hash: action.payload.hash, 
+        hash: action.payload.hash,
         name: JSON.parse(action.payload.name).nick
       }
       return {...state, currentAgent: newAgent}

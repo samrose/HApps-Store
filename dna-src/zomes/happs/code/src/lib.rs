@@ -9,13 +9,14 @@ extern crate holochain_core_types_derive;
 
 use hdk::{
     error::ZomeApiResult,
-    holochain_core_types::{cas::content::Address, json::JsonString, error::HolochainError},
+    holochain_core_types::{cas::content::Address, error::HolochainError, json::JsonString},
 };
 
+mod categories;
 mod happs;
 mod ratings;
-mod categories;
 
+use crate::happs::AppResource;
 use crate::happs::AppResponse;
 use crate::ratings::Ratings;
 
@@ -31,7 +32,7 @@ define_zome! {
 
     functions: [
         create_app: {
-            inputs:| title: String, description: String, thumbnail_url: String, homepage_url: String, dna_url: String, ui_url: String |,
+            inputs:| title: String, description: String, thumbnail_url: String, homepage_url: String, dnas: Vec<AppResource>, ui: Option<AppResource> |,
             outputs: |result: ZomeApiResult<Address>|,
             handler: happs::handlers::handle_create_app
         }
@@ -48,7 +49,7 @@ define_zome! {
         upvote_app: {
             inputs:|app_address: Address|,
             outputs: |result: ZomeApiResult<Address>|,
-            handler: happs::handlers::handle_upvote_app            
+            handler: happs::handlers::handle_upvote_app
         }
         create_ratings: {
             inputs:| rate:String, review:String, reviewed_hash: Address |,
