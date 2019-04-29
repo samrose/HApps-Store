@@ -1,8 +1,8 @@
 [[agents]]
-id = "test_agent1"
-name = "HoloTester1"
-public_address = "HcSCIdhnbr43tcajfgmj3NDjj9TB6wbf3Q9nakZcHtc5c5a7KupzRFMSmwvxigi"
-keystore_file = "./keystore.key"
+id = 'hApp-agent'
+name = 'hAppStore Agent'
+keystore_file = '/home/lisa/.config/holochain/keys/HcSCj35Fgj7smCq4bxhtf7rrJS4v8pxxi66xtnwOh4mB3fvjIncm4Axaig8ng6r'
+public_address = 'HcSCj35Fgj7smCq4bxhtf7rrJS4v8pxxi66xtnwOh4mB3fvjIncm4Axaig8ng6r'
 
 [[dnas]]
 id = "happ_store_dna"
@@ -12,7 +12,7 @@ hash = "Qm328wyq38924x"
 [[instances]]
 id = "happ-store"
 dna = "happ_store_dna"
-agent = "test_agent1"
+agent = "hApp-agent"
 [instances.logger]
 type = "simple"
 file = "app_spec.log"
@@ -38,4 +38,3 @@ id = "ui-interface"
 bundle = "main"
 port = 3000
 dna_interface = "websocket_interface"
-

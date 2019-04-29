@@ -22,6 +22,8 @@ const styles = (theme: Theme) =>
       ...theme.mixins.gutters(),
       paddingTop: theme.spacing.unit * 2,
       paddingBottom: theme.spacing.unit * 2,
+      color: "#fff",
+      backgroundColor: "#016e76f7"
     },
     container: {
       display: 'flex',
@@ -61,7 +63,7 @@ class NewApp extends React.Component<Props, State> {
     previewOpen: false,
     appInput: defaultAppCreationSpec
   }
-  
+
   public render() {
 
     const { classes } = this.props
@@ -70,7 +72,7 @@ class NewApp extends React.Component<Props, State> {
       <div>
       <Paper className={classes.root}>
         <Typography variant="h5" component="h3">
-          Provide the following details to post a new hApp to the store
+          LALAL Provide the following details to post a new hApp to the store
         </Typography>
         <Typography component="p">
           Keep in mind that anything submitted will be visible to all participants for the lifetime of the hApp store.<br/>
@@ -85,7 +87,7 @@ class NewApp extends React.Component<Props, State> {
               value={this.state.appInput.title}
               onChange={this.handleChange('title')}
               className={classes.textField}
- 
+
             />
            </Grid>
 
@@ -127,18 +129,29 @@ class NewApp extends React.Component<Props, State> {
           <TextField
             id="dna-field"
             required={true}
-            label="DNA hcpkg URL"
+            label="DNA URL (dna.json file)"
             value={(this.state.appInput.dnas[0] || {location: ''} as any).location}
             onChange={this.handleChange('dnaUrl')}
             className={classes.textField}
           />
         </Grid>
 
-        { /* TODO: update for ability to supply or detect hash */}
+        { /* TODO: update for multiple DNAs and ability to supply or detect hash */}
+        <Grid item={true} xs={12} sm={6}>
+          <TextField
+            id="dna-field"
+            required={true}
+            label="DNA URL (dna.json file)"
+            value={(this.state.appInput.dnas[0] || {location: ''} as any).location}
+            onChange={this.handleChange('dnaUrl')}
+            className={classes.textField}
+          />
+        </Grid>
+
         <Grid item={true} xs={12} sm={6}>
           <TextField
             id="ui-field"
-            label="UI static folder URL"
+            label="UI URL (zip file)"
             value={(this.state.appInput.ui || {location: ''} as any).location}
             onChange={this.handleChange('uiUrl')}
             className={classes.textField}
@@ -147,11 +160,11 @@ class NewApp extends React.Component<Props, State> {
 
         <Grid item={true} xs={6} sm={6}>
           <AppCard app={ {
-            author: "<your holochain ID will go here>", 
-            address: "", 
-            upvotes: 0, 
+            author: "<your holochain ID will go here>",
+            address: "",
+            upvotes: 0,
             upvotedByMe: false,
-            appEntry: this.state.appInput 
+            appEntry: this.state.appInput
           } }/>
         </Grid>
 
@@ -163,7 +176,7 @@ class NewApp extends React.Component<Props, State> {
 
         </Paper>
 
-        <Dialog open={this.props.awaitingResponse}>          
+        <Dialog open={this.props.awaitingResponse}>
           <CircularProgress className={classes.progress}/>
         </Dialog>
 
@@ -173,6 +186,7 @@ class NewApp extends React.Component<Props, State> {
   }
 
   private handleChange = (name: keyof AppCreationSpec | 'dnaUrl' | 'uiUrl') => (event: React.ChangeEvent<HTMLInputElement>) => {
+    // UPDATE THE DNA to accept hash as well...
     let update
     const value = event.target.value
     if (name === 'dnaUrl') {
