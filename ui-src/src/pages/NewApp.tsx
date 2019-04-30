@@ -89,8 +89,7 @@ export interface State {
   uiUrl: string,
   uiHash: string,
   dnaUrl: string,
-  dnas: Array<AppResource>,
-  dnaAmount: Array<string>
+  dnas: Array<AppResource>
 }
 
 export type StateKeys = string | number | symbol | any;
@@ -100,13 +99,12 @@ class NewApp extends React.Component<Props, State> {
     previewOpen: false,
     appInput: defaultAppCreationSpec,
     uiUrl: '',
-    uiHash: '',
     dnaUrl: '',
+    uiHash: '',
     dnas: [{
       location: '',
       hash: '',
-    }],
-    dnaAmount: ['']
+    }]
   }
 
   public render() {
@@ -215,113 +213,126 @@ class NewApp extends React.Component<Props, State> {
                 </div>
 
                 <Grid container={true} direction="row" justify="flex-end">
-                  <div className={classes.rightColumn}>
-                  <Grid container={true} direction="column" justify="flex-end">
-                    <Grid item={true} xs={6}>
-                      <FormControl>
-                         {this.state.dnaAmount.map((value, i) => (
-                           <TextField
-                             key={i}
-                             id="dna-field"
-                             required={true}
-                             label="DNA URL (dna.json file)"
-                             value={(this.state.dnas[i]! || {location: ''} as any).location}
-                             onChange={this.handleDnaChange(i, "location")}
-                             className={classes.textField}
-                           />
-                         ))}
-                      </FormControl>
+                  <div>
+                    <Grid container={true} direction="column" justify="flex-end">
+                      <Grid item={true} xs={6}>
+                        <FormControl>
+                           {this.state.dnas.map((value, i) => (
+                             <TextField
+                               key={i}
+                               id="dna-field"
+                               required={true}
+                               label="DNA URL (dna.json file)"
+                               value={(this.state.dnas[i]! || {location: ''} as any).location}
+                               onChange={this.handleDnaChange(i, "location")}
+                               className={classes.textField}
+                             />
+                           ))}
+                         </FormControl>
+                      </Grid>
                     </Grid>
-                  </Grid>
-              </div>
+                  </div>
 
-              <div className={classes.rightColumn}>
-                <Grid container={true} direction="column" justify="flex-end">
-                  <Grid item={true} xs={6}>
-                    <FormControl>
-                       {this.state.dnaAmount.map((value, i) => (
-                         <TextField
-                           key={i}
-                           id="dna-field"
-                           required={true}
-                           label="DNA Hash"
-                           value={(this.state.dnas[i]! || {hash: ''} as any).hash}
-                           onChange={this.handleDnaChange(i,"hash")}
-                           className={classes.textField}
-                         />
-                       ))}
-                    </FormControl>
-                  </Grid>
-
+                  <div>
+                    <Grid container={true} direction="column" justify="flex-end">
+                      <Grid item={true} xs={6}>
+                        <FormControl>
+                           {this.state.dnas.map((value, i) => (
+                             <TextField
+                               key={i}
+                               id="dna-field"
+                               required={true}
+                               label="DNA Hash"
+                               value={(this.state.dnas[i]! || {hash: ''} as any).hash}
+                               onChange={this.handleDnaChange(i,"hash")}
+                               className={classes.textField}
+                             />
+                           ))}
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                  </div>
                 </Grid>
-              </div>
+              </Grid>
+            </form>
+
+          <br/>
+          <Grid container={true} direction="column" alignItems="center" justify="center" className={classes.btn}>
+            <Grid item={true} xs={12}>
+              <Button variant="contained" size="large" color="primary" onClick={this.handleClickSubmit(this.state.appInput)}>
+                  Submit
+              </Button>
             </Grid>
           </Grid>
-        </form>
 
-        <br/>
-        <Grid container={true} direction="column" alignItems="center" justify="center" className={classes.btn}>
-          <Grid item={true} xs={12}>
-            <Button variant="contained" size="large" color="primary" onClick={this.handleClickSubmit(this.state.appInput)}>
-                Submit
-            </Button>
           </Grid>
-        </Grid>
+        </Paper>
 
-        </Grid>
-      </Paper>
+        <Paper className={classnames(classes.root, classes.exampleCard)}>
+          <AppCard app={ {
+            author: "<your holochain ID will go here>",
+              address: "",
+              upvotes: 0,
+              upvotedByMe: false,
+              appEntry: this.state.appInput
+          }}/>
+        </Paper>
 
-      <Paper className={classnames(classes.root, classes.exampleCard)}>
-        <AppCard app={ {
-          author: "<your holochain ID will go here>",
-            address: "",
-            upvotes: 0,
-            upvotedByMe: false,
-            appEntry: this.state.appInput
-        }}/>
-      </Paper>
-
-      <Dialog open={this.props.awaitingResponse} className={classes.progressDialog}>
-        <CircularProgress className={classes.progress}/>
-      </Dialog>
-
-    </Grid>
-  );}
+        <Dialog open={this.props.awaitingResponse} className={classes.progressDialog}>
+          <CircularProgress className={classes.progress}/>
+        </Dialog>
+      </Grid>
+    );
+  }
 
   private addDnaLine = () => {
     // hack to add add'l lines... refactor
-    const newAmount:Array<string> = this.state.dnaAmount;
-    newAmount.push('i');
+    const addedDNAEntry:Array<AppResource> = this.state.dnas;
+    addedDNAEntry.push({location:'', hash:''});
+
     this.setState({
-      dnaAmount: newAmount
+      dnas: addedDNAEntry
     });
   }
   private removeDnaLine = () => {
     // hack to add add'l lines... refactor
-    if(this.state.dnaAmount.length >= 1) {
-      const newAmount:Array<string> = this.state.dnaAmount;
-      newAmount.pop();
+    if(this.state.dnas.length >= 1) {
+      const removeDNAEntry:Array<AppResource> = this.state.dnas;
+      removeDNAEntry.pop();
       this.setState({
-        dnaAmount: newAmount
+        dnas: removeDNAEntry
       });
     }
   }
 
   private handleDnaChange = (dnaNum:number, type:string ) => (event: any) => {
-    console.log("handleDnaChange event", event);
-    const newDnaList = this.state.dnas;
-    dnaNum++;
-    newDnaList[dnaNum][type] = event.target.value;
+    const value = event.target.value;
+    console.log("handleDnaChange value", value);
+    console.log("handleDnaChange dnaNum", dnaNum);
 
-    const newDNAvalue = newDnaList[dnaNum][type] = event.target.value;
-    console.log("newDNAvalue", newDNAvalue);
+    const newDnaList = this.state.dnas;
+
+    console.log("DNA: ",newDnaList)
+    // dnaNum++;
+    const currentDNA = newDnaList[dnaNum]
+
+    console.log("currentDNA: ",currentDNA)
+    currentDNA[type] = value;
+
+    const currentDNAvalue = currentDNA[type] = value;
+    console.log("currentDNA value", currentDNAvalue);
+
+    newDnaList[dnaNum]=currentDNA;
+
     this.setState({ dnas: newDnaList });
+    console.log(this.state);
   };
 
   private handleSourceCodeChange = (title:StateKeys) => (event: any) => {
-    console.log("handleSourceCodeChange event", event);
+    const value = event.target.value;
     console.log("handleSourceCodeChange title", title);
-    this.setState({ [title]: event.target.value } as Pick<State, keyof State>);
+    this.setState({ [title]: value } as Pick<State, keyof State>);
+    console.log(this.state);
   };
   private handleChange = (name: keyof AppCreationSpec) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -352,8 +363,7 @@ class NewApp extends React.Component<Props, State> {
       dnas: [{
         location: '',
         hash: '',
-      }],
-      dnaAmount: ['']
+      }]
     })
   }
 }
