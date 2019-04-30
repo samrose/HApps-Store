@@ -31,6 +31,8 @@ const styles = (theme: Theme) =>
       padding: theme.spacing.unit * 2,
       textAlign: 'center',
       color: theme.palette.text.secondary,
+      maxWidth: '250px',
+      margin: '0 auto',
     },
     formControl: {
       margin: theme.spacing.unit,
@@ -39,15 +41,13 @@ const styles = (theme: Theme) =>
 });
 
 const sortFunctions = {
-  if(this.props.apps){
-    'alphabetical': (a, b) => {
+  'alphabetical': (a, b) => {
       const textA = a.title.toUpperCase();
       const textB = b.title.toUpperCase();
       return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-    },
-    'upvotes': (a, b) => (a.upvotes > b.upvotes) ? -1 : (a.upvotes < b.upvotes) ? 1 : 0,
-    'favourites': (a, b) => a.upvotedByMe === b.upvotedByMe ? 0 : a.upvotedByMe ? -1 : 1
-  }
+  },
+  'upvotes': (a, b) => (a.upvotes > b.upvotes) ? -1 : (a.upvotes < b.upvotes) ? 1 : 0,
+  'favourites': (a, b) => a.upvotedByMe === b.upvotedByMe ? 0 : a.upvotedByMe ? -1 : 1
 }
 
 interface Props extends WithStyles<typeof styles> {
@@ -64,7 +64,6 @@ interface State {
 }
 
 class AllAppsPage extends React.Component<Props, State> {
-
   public constructor(props) {
     super(props)
     this.state = {
@@ -79,7 +78,7 @@ class AllAppsPage extends React.Component<Props, State> {
 
   public render() {
     const { classes } = this.props;
-    let greeting: string
+    let greeting: string;
 
     if (!this.props.currentAgent) {
       greeting = "Not connected to Holochain"
@@ -89,15 +88,16 @@ class AllAppsPage extends React.Component<Props, State> {
             <hr/>
         </div>
       )
-    } else if (this.props.apps.length < 1) {
-      greeting = "No hApps to display"
+    } else if (!this.props.apps) {
+      greeting = "No apps currently available.";
       return (
         <div style={{ textAlign: 'center' }}>
             <h1 className="all-apps-header">{ greeting }</h1>
             <hr/>
         </div>
       )
-    } else {
+    }
+    else {
       greeting = "All hApps"
     }
 
