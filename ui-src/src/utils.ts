@@ -1,3 +1,11 @@
+/* Test CONSTS: */
+// website: holofuel6example.org
+// domain: holofuel6example.holohost.net
+// uiUrl:`http://localhost:5555/holofuel/holofuel/ui.zip`
+// uiHash: `QMhfFakeHash`
+// dnaUrl: `http://localhost:5555/holofuel/dist/holofuel.dna.json`
+// dnaHash: `QmUrd3q8fF71VM3eA1mSEhcEzRsAiE8XiLnMZXBW6omHdV`
+
 // ======================================
 //      Type and Action Imports
 // ======================================

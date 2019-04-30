@@ -183,7 +183,7 @@ class NewApp extends React.Component<Props, State> {
                   <TextField
                     id="ui-field"
                     label="UI URL (zip file)"
-                    value={(this.state.appInput.ui! || {location: ''} as any).location}
+                    value={this.state.uiUrl || ''}
                     onChange={this.handleSourceCodeChange('uiUrl')}
                     className={classes.textField}
                   />
@@ -192,7 +192,7 @@ class NewApp extends React.Component<Props, State> {
                   <TextField
                     id="ui-field"
                     label="UI Hash"
-                    value={(this.state.appInput.ui! || {hash: ''} as any).hash}
+                    value={this.state.uiHash || ''}
                     onChange={this.handleSourceCodeChange('uiHash')}
                     className={classes.textField}
                   />
@@ -307,32 +307,19 @@ class NewApp extends React.Component<Props, State> {
 
   private handleDnaChange = (dnaNum:number, type:string ) => (event: any) => {
     const value = event.target.value;
-    console.log("handleDnaChange value", value);
-    console.log("handleDnaChange dnaNum", dnaNum);
-
     const newDnaList = this.state.dnas;
-
-    console.log("DNA: ",newDnaList)
-    // dnaNum++;
     const currentDNA = newDnaList[dnaNum]
-
-    console.log("currentDNA: ",currentDNA)
     currentDNA[type] = value;
-
-    const currentDNAvalue = currentDNA[type] = value;
-    console.log("currentDNA value", currentDNAvalue);
-
     newDnaList[dnaNum]=currentDNA;
+    // const currentDNAvalue = currentDNA[type] = value;
+    // console.log("currentDNA value", currentDNAvalue);
 
     this.setState({ dnas: newDnaList });
     console.log(this.state);
   };
-
   private handleSourceCodeChange = (title:StateKeys) => (event: any) => {
     const value = event.target.value;
-    console.log("handleSourceCodeChange title", title);
     this.setState({ [title]: value } as Pick<State, keyof State>);
-    console.log(this.state);
   };
   private handleChange = (name: keyof AppCreationSpec) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
