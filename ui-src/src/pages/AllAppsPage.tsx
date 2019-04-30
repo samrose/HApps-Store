@@ -81,12 +81,24 @@ class AllAppsPage extends React.Component<Props, State> {
 
     if (!this.props.currentAgent) {
       greeting = "Not connected to Holochain"
+      return (
+        <div style={{ textAlign: 'center' }}>
+            <h1 className="all-apps-header">{ greeting }</h1>
+            <hr/>
+        </div>
+      )
     } else if (this.props.apps.length < 1) {
       greeting = "No hApps to display"
+      return (
+        <div style={{ textAlign: 'center' }}>
+            <h1 className="all-apps-header">{ greeting }</h1>
+            <hr/>
+        </div>
+      )
     } else {
       greeting = "All hApps"
     }
-    
+
     return (
       <div className={classes.root}>
         <div style={{ textAlign: 'center' }}>
