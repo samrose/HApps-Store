@@ -39,13 +39,15 @@ const styles = (theme: Theme) =>
 });
 
 const sortFunctions = {
-  'alphabetical': (a, b) => {
+  if(this.props.apps){
+    'alphabetical': (a, b) => {
       const textA = a.title.toUpperCase();
       const textB = b.title.toUpperCase();
       return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-  },
-  'upvotes': (a, b) => (a.upvotes > b.upvotes) ? -1 : (a.upvotes < b.upvotes) ? 1 : 0,
-  'favourites': (a, b) => a.upvotedByMe === b.upvotedByMe ? 0 : a.upvotedByMe ? -1 : 1
+    },
+    'upvotes': (a, b) => (a.upvotes > b.upvotes) ? -1 : (a.upvotes < b.upvotes) ? 1 : 0,
+    'favourites': (a, b) => a.upvotedByMe === b.upvotedByMe ? 0 : a.upvotedByMe ? -1 : 1
+  }
 }
 
 interface Props extends WithStyles<typeof styles> {
