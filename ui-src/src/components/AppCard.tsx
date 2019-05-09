@@ -34,6 +34,10 @@ const styles = theme => ({
   actions: {
     display: 'flex',
   },
+  title: {
+    fontSize: 8,
+    marginTop:10
+  },
 });
 
 interface Props {
@@ -77,7 +81,11 @@ class AppCard extends React.Component<Props> {
           <Typography component="p">
             {appEntry.description}
           </Typography>
+          <Typography component="p" className={classes.title}>
+            hApp Bundle ID: {app.address || ""}
+          </Typography>
         </CardContent>
+        <hr style={{margin:"5px auto", width:"95%"}}/>
         <CardActions className={classes.actions} disableActionSpacing={true}>
           { appEntry.dnas.map(DnaDownloadButton) }
           { appEntry.ui
