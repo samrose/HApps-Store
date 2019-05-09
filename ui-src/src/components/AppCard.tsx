@@ -50,7 +50,6 @@ class AppCard extends React.Component<Props> {
 
   public render() {
     const { classes, app } = this.props;
-    // console.log(app)
     const appEntry = app.appEntry || defaultAppCreationSpec;
 
     const DnaDownloadButton = (dna, key) => (
