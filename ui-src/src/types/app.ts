@@ -1,5 +1,5 @@
 
-interface AppResource {
+export interface AppResource {
   location: string,
   hash: string,
 }

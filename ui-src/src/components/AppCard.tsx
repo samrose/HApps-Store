@@ -79,7 +79,7 @@ class AppCard extends React.Component<Props> {
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing={true}>
           { appEntry.dnas.map(DnaDownloadButton) }
-          { appEntry.ui 
+          { appEntry.ui
             ? <Button size="small" color="primary" href={appEntry.ui.location}>
     	          Download UI
     	        </Button>

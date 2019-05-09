@@ -31,6 +31,8 @@ const styles = (theme: Theme) =>
       padding: theme.spacing.unit * 2,
       textAlign: 'center',
       color: theme.palette.text.secondary,
+      maxWidth: '250px',
+      margin: '0 auto',
     },
     formControl: {
       margin: theme.spacing.unit,
@@ -62,7 +64,6 @@ interface State {
 }
 
 class AllAppsPage extends React.Component<Props, State> {
-
   public constructor(props) {
     super(props)
     this.state = {
@@ -77,16 +78,29 @@ class AllAppsPage extends React.Component<Props, State> {
 
   public render() {
     const { classes } = this.props;
-    let greeting: string
+    let greeting: string;
 
     if (!this.props.currentAgent) {
       greeting = "Not connected to Holochain"
-    } else if (this.props.apps.length < 1) {
-      greeting = "No hApps to display"
-    } else {
+      return (
+        <div style={{ textAlign: 'center' }}>
+            <h1 className="all-apps-header">{ greeting }</h1>
+            <hr/>
+        </div>
+      )
+    } else if (!this.props.apps) {
+      greeting = "No apps currently available.";
+      return (
+        <div style={{ textAlign: 'center' }}>
+            <h1 className="all-apps-header">{ greeting }</h1>
+            <hr/>
+        </div>
+      )
+    }
+    else {
       greeting = "All hApps"
     }
-    
+
     return (
       <div className={classes.root}>
         <div style={{ textAlign: 'center' }}>
