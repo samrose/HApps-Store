@@ -27,9 +27,11 @@ const defaultState: State = {
 export default (state: State = defaultState, action: AppAction): State => {
   switch (action.type) {
     case getType(appActions.GetAllApps.success):
+      console.log("get all hApps : ", action.payload);
       const apps = action.payload
       return {...state, apps}
     case getType(appActions.Whoami.success):
+      console.log("agent nickname : ", JSON.parse(action.payload.name).nick);
       const newAgent = {
         hash: action.payload.hash,
         name: JSON.parse(action.payload.name).nick
@@ -42,6 +44,7 @@ export default (state: State = defaultState, action: AppAction): State => {
     case getType(appActions.CreateApp.request):
       return { ...state, awaitingResponse: true}
     case getType(appActions.CreateApp.success):
+      console.log("create app success >> CREATE APP payload : ", action.payload);
       return { ...state, awaitingResponse: false}
     case getType(appActions.UpvoteApp.success):
       // do a local state refresh of the upvote status for those reactive UI feels

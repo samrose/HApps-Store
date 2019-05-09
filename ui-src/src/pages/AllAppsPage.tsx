@@ -41,6 +41,7 @@ const styles = (theme: Theme) =>
 });
 
 const sortFunctions = {
+  // TODO: Debug the title sorting error that occurs in alphabetical
   'alphabetical': (a, b) => {
       const textA = a.title.toUpperCase();
       const textB = b.title.toUpperCase();
@@ -74,6 +75,7 @@ class AllAppsPage extends React.Component<Props, State> {
   public componentDidMount() {
     this.props.fetchAgent();
     this.props.fetchAllApps();
+    console.log("this.props", this.props);
   }
 
   public render() {
@@ -83,62 +85,64 @@ class AllAppsPage extends React.Component<Props, State> {
     if (!this.props.currentAgent) {
       greeting = "Not connected to Holochain"
       return (
-        <div style={{ textAlign: 'center' }}>
+        <div className={classes.root}>
+          <div style={{ textAlign: 'center' }}>
             <h1 className="all-apps-header">{ greeting }</h1>
             <hr/>
+          </div>
         </div>
       )
-    } else if (!this.props.apps) {
+    } else if (!this.props.apps || this.props.apps.length <1 ) {
       greeting = "No apps currently available.";
       return (
-        <div style={{ textAlign: 'center' }}>
+        <div className={classes.root}>
+          <div style={{ textAlign: 'center' }}>
             <h1 className="all-apps-header">{ greeting }</h1>
             <hr/>
+          </div>
         </div>
       )
     }
     else {
       greeting = "All hApps"
-    }
-
-    return (
-      <div className={classes.root}>
-        <div style={{ textAlign: 'center' }}>
-            <h1 className="all-apps-header">{ greeting }</h1>
-            <hr/>
-        </div>
-        <Grid container={true} justify="center" spacing={16}>
-          <Grid item={true} xs={12}>
-            <Paper className={classes.paper}>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="sort-by-helper">Sort By:</InputLabel>
-                <Select
-                  value={this.state.sortBy}
-                  onChange={this.sortSelectChanged}
-                  input={<Input name="sort-by" id="sort-by-helper" />}
-                >
-                  <MenuItem value={'alphabetical'}>Alphabetical</MenuItem>
-                  <MenuItem value={'upvotes'}>Most Upvoted</MenuItem>
-                  <MenuItem value={'favourites'}>Your Favourites</MenuItem>
-                </Select>
-              </FormControl>
-            </Paper>
-          </Grid>
-          {
-          this.props.apps
-          .sort(sortFunctions[this.state.sortBy])
-          .map((app, i) =>
+      return (
+        <div className={classes.root}>
+          <div style={{ textAlign: 'center' }}>
+              <h1 className="all-apps-header">{ greeting }</h1>
+              <hr/>
+          </div>
+          <Grid container={true} justify="center" spacing={16}>
+            <Grid item={true} xs={12}>
+              <Paper className={classes.paper}>
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="sort-by-helper">Sort By:</InputLabel>
+                  <Select
+                    value={this.state.sortBy}
+                    onChange={this.sortSelectChanged}
+                    input={<Input name="sort-by" id="sort-by-helper" />}
+                  >
+                    <MenuItem value={'alphabetical'}>Alphabetical</MenuItem>
+                    <MenuItem value={'upvotes'}>Most Upvoted</MenuItem>
+                    <MenuItem value={'favourites'}>Your Favourites</MenuItem>
+                  </Select>
+                </FormControl>
+              </Paper>
+            </Grid>
             {
-              return (
-                <Grid item={true} key={i}>
-                  <AppCard app={app}/>
-                </Grid>
-              )
-            })
-          }
-        </Grid>
-      </div>
-    );
+            this.props.apps
+            .sort(sortFunctions[this.state.sortBy])
+            .map((app, i) =>
+              {
+                return (
+                  <Grid item={true} key={i}>
+                    <AppCard app={app}/>
+                  </Grid>
+                )
+              })
+            }
+          </Grid>
+        </div>
+    )}
   }
 
   private sortSelectChanged = (e) => {
