@@ -67,7 +67,7 @@ class AllAppsPage extends React.Component<Props, State> {
   public constructor(props) {
     super(props)
     this.state = {
-      sortBy: "alphabetical"
+      sortBy: "upvotes"
     }
   }
 
