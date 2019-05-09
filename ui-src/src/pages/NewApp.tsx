@@ -328,10 +328,8 @@ class NewApp extends React.Component<Props, State> {
   }
 
   private handleClickSubmit = (app: AppCreationSpec) => (event: any) => {
-    console.log("fn app param", app);
-
     const appWithFiles = { ...app, dnas: this.state.dnas, ui: { location: this.state.uiUrl, hash: this.state.uiHash } }
-    console.log("appWithFiles", appWithFiles);
+    console.log("app to be registered in happ store", appWithFiles);
 
     this.props.createApp(appWithFiles).then(() => {
       // @ts-ignore

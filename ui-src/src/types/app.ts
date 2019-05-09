@@ -37,4 +37,5 @@ export interface App {
   upvotes: number,
   upvotedByMe: boolean,
   appEntry: AppCreationSpec,
+  hashAddress:string
 }
