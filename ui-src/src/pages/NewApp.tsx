@@ -264,7 +264,7 @@ class NewApp extends React.Component<Props, State> {
                                id="dna-field"
                                required={true}
                                label="DNA Handle ID"
-                               value={(this.state.dnas[i]! || {hash: ''} as any).hash}
+                               value={(this.state.dnas[i]! || {handle: ''} as any).handle}
                                onChange={this.handleDnaChange(i,"handle")}
                                className={classes.textField}
                              />
