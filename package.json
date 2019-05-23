@@ -5,12 +5,13 @@
   "private": true,
   "scripts": {
     "hc:build": "rm -rf dna; mkdir -p dna && cd dna-src && hc package -o ../dna/happ-store.dna.json",
-    "FIXpath-hc:start-holo_conductor": "mkdir -p tmp-storage && holochain -c ./home/lisa/.config/.holochain/holo/conductor-config.toml",
+    "FIX-path-hc:start-holo_conductor": "mkdir -p tmp-storage && holochain -c ./home/lisa/.config/.holochain/holo/conductor-config.toml",
     "hc:start": "mkdir -p tmp-storage && holochain -c ./conductor-config.toml",
     "hc:test": "cd dna-src && hc test",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "cypress": "$(npm bin)/cypress open"
   },
   "author": "",
   "license": "GPL",
@@ -85,6 +86,7 @@
     "@types/node": "^10.5.4",
     "@types/react": "^16.4.8",
     "cpx": "^1.5.0",
+    "cypress": "^3.2.0",
     "immutable": "^3.8.2"
   },
   "jest": {

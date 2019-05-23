@@ -104,6 +104,7 @@ class NewApp extends React.Component<Props, State> {
     dnas: [{
       location: '',
       hash: '',
+      handle: ''
     }]
   }
 
@@ -143,7 +144,7 @@ class NewApp extends React.Component<Props, State> {
                     required={true}
                     label="Title"
                     value={this.state.appInput.title}
-                    onChange={this.handleChange('title')}
+                    onChange={this.handleHappInfoChange('title')}
                     className={classes.textField}
                   />
                 </Grid>
@@ -155,7 +156,7 @@ class NewApp extends React.Component<Props, State> {
                       multiline={true}
                       fullWidth={true}
                       value={this.state.appInput.description}
-                      onChange={this.handleChange('description')}
+                      onChange={this.handleHappInfoChange('description')}
                       className={classes.textField}
                     />
                 </Grid>
@@ -164,7 +165,7 @@ class NewApp extends React.Component<Props, State> {
                     id="thumburl-field"
                     label="Thumbnail URL"
                     value={this.state.appInput.thumbnailUrl}
-                    onChange={this.handleChange('thumbnailUrl')}
+                    onChange={this.handleHappInfoChange('thumbnailUrl')}
                     className={classes.textField}
                   />
                 </Grid>
@@ -174,7 +175,7 @@ class NewApp extends React.Component<Props, State> {
                     required={true}
                     label="hApp Homepage URL"
                     value={this.state.appInput.homepageUrl}
-                    onChange={this.handleChange('homepageUrl')}
+                    onChange={this.handleHappInfoChange('homepageUrl')}
                     className={classes.textField}
                   />
                 </Grid>
@@ -184,7 +185,7 @@ class NewApp extends React.Component<Props, State> {
                     id="ui-field"
                     label="UI URL (zip file)"
                     value={this.state.uiUrl || ''}
-                    onChange={this.handleSourceCodeChange('uiUrl')}
+                    onChange={this.handleUiChange('uiUrl')}
                     className={classes.textField}
                   />
                 </Grid>
@@ -193,7 +194,7 @@ class NewApp extends React.Component<Props, State> {
                     id="ui-field"
                     label="UI Hash"
                     value={this.state.uiHash || ''}
-                    onChange={this.handleSourceCodeChange('uiHash')}
+                    onChange={this.handleUiChange('uiHash')}
                     className={classes.textField}
                   />
                 </Grid>
@@ -252,6 +253,26 @@ class NewApp extends React.Component<Props, State> {
                       </Grid>
                     </Grid>
                   </div>
+
+                  <div>
+                    <Grid container={true} direction="column" justify="flex-end">
+                      <Grid item={true} xs={6}>
+                        <FormControl>
+                           {this.state.dnas.map((value, i) => (
+                             <TextField
+                               key={i}
+                               id="dna-field"
+                               required={true}
+                               label="DNA Handle ID"
+                               value={(this.state.dnas[i]! || {hash: ''} as any).hash}
+                               onChange={this.handleDnaChange(i,"handle")}
+                               className={classes.textField}
+                             />
+                           ))}
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                  </div>
                 </Grid>
               </Grid>
             </form>
@@ -288,7 +309,7 @@ class NewApp extends React.Component<Props, State> {
   private addDnaLine = () => {
     // hack to add add'l lines... refactor
     const addedDNAEntry:Array<AppResource> = this.state.dnas;
-    addedDNAEntry.push({location:'', hash:''});
+    addedDNAEntry.push({location:'', hash:'', handle:''});
 
     this.setState({
       dnas: addedDNAEntry
@@ -317,11 +338,11 @@ class NewApp extends React.Component<Props, State> {
     this.setState({ dnas: newDnaList });
     console.log(this.state);
   };
-  private handleSourceCodeChange = (title:StateKeys) => (event: any) => {
+  private handleUiChange = (title:StateKeys) => (event: any) => {
     const value = event.target.value;
     this.setState({ [title]: value } as Pick<State, keyof State>);
   };
-  private handleChange = (name: keyof AppCreationSpec) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  private handleHappInfoChange = (name: keyof AppCreationSpec) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     const update = { ...this.state.appInput, [name]: value };
     this.setState({ appInput: update as AppCreationSpec});

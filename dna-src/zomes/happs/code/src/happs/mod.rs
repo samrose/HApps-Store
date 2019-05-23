@@ -11,6 +11,7 @@ pub use handlers::get_linked_apps;
 pub struct AppResource {
     pub location: String,
     pub hash: HashString,
+    pub handle: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, DefaultJson)]

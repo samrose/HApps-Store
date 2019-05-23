@@ -7,6 +7,7 @@ const App1 = {
   dnas: [{
     location: "/dna/url",
     hash: "QmHash",
+    handle: "holochat",
   }],
   ui: {
     location: "ui/url",
@@ -22,6 +23,7 @@ const App2 = {
   dnas: [{
     location: "/dna/url",
     hash: "QmHash",
+    handle: "clutter",
   }],
   ui: null,
 }

@@ -2,6 +2,7 @@
 export interface AppResource {
   location: string,
   hash: string,
+  handle: string,
 }
 
 export interface AppCreationSpec {
