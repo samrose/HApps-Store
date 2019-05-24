@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "hc:build": "rm -rf dna; mkdir -p dna && cd dna-src && hc package -o ../dna/happ-store.dna.json",
-    "FIXpath-hc:start-holo_conductor": "mkdir -p tmp-storage && holochain -c ./home/lisa/.config/.holochain/holo/conductor-config.toml",
+    "FIX-path-hc:start-holo_conductor": "mkdir -p tmp-storage && holochain -c ./home/lisa/.config/.holochain/holo/conductor-config.toml",
     "hc:start": "mkdir -p tmp-storage && holochain -c ./conductor-config.toml",
     "hc:test": "cd dna-src && hc test",
     "start": "node scripts/start.js",

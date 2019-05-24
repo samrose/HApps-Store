@@ -6,6 +6,7 @@ const App1 = {
   dnas: [{
     location: "/dna/url",
     hash: "QmHash",
+    handle: "holochat",
   }],
   ui: {
     location: "ui/url",
