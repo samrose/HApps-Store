@@ -66,7 +66,7 @@ pub fn app_definitions() -> ValidatingEntryType {
         links: [
             to!(
                 "%agent_id",
-                tag: "author_is",
+                link_type: "author_is",
 
                 validation_package: || {
                     hdk::ValidationPackageDefinition::Entry
@@ -78,7 +78,7 @@ pub fn app_definitions() -> ValidatingEntryType {
             ),
             to!(
                 "%agent_id",
-                tag: "upvote",
+                link_type: "upvote",
 
                 validation_package: || {
                     hdk::ValidationPackageDefinition::Entry
@@ -90,7 +90,7 @@ pub fn app_definitions() -> ValidatingEntryType {
             ),
             from!(
                 "%agent_id",
-                tag: "published",
+                link_type: "published",
 
                 validation_package: || {
                     hdk::ValidationPackageDefinition::Entry

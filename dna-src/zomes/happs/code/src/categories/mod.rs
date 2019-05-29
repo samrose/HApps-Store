@@ -27,7 +27,7 @@ pub fn category_anchor_entry() -> ValidatingEntryType {
 	    links: [
 	        to!(
 	            "app",
-	            tag: "contains",
+	            link_type: "contains",
 
 	            validation_package: || {
 	                hdk::ValidationPackageDefinition::Entry
@@ -39,7 +39,7 @@ pub fn category_anchor_entry() -> ValidatingEntryType {
 	        ),
 	        from!(
 	            "app",
-	            tag: "in",
+	            link_type: "in",
 
 	            validation_package: || {
 	                hdk::ValidationPackageDefinition::Entry
@@ -70,7 +70,7 @@ pub fn tag_anchor_entry() -> ValidatingEntryType {
 	    links: [
 	        to!(
 	            "app",
-	            tag: "contains",
+	            link_type: "contains",
 
 	            validation_package: || {
 	                hdk::ValidationPackageDefinition::Entry
@@ -82,7 +82,7 @@ pub fn tag_anchor_entry() -> ValidatingEntryType {
 	        ),
 	        from!(
 	            "app",
-	            tag: "in",
+	            link_type: "in",
 
 	            validation_package: || {
 	                hdk::ValidationPackageDefinition::Entry
@@ -93,5 +93,5 @@ pub fn tag_anchor_entry() -> ValidatingEntryType {
 	            }
 	        )
 	    ]
-	)	
+	)
 }

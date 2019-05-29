@@ -44,7 +44,7 @@ pub fn rating_definition() -> ValidatingEntryType {
         links: [
             from!(
                 "app",
-                tag: "rating_tag",
+                link_type: "rating_tag",
 
                 validation_package: || {
                     hdk::ValidationPackageDefinition::Entry
