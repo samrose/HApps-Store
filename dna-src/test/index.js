@@ -16,4 +16,3 @@ require('./single_agent_tests/whoami_test')(singleUserScenario);
 
 const multiUserScenario = new Scenario([instanceAlice, instanceBob])
 require('./multi_agent_tests/upvote_test')(multiUserScenario);
-

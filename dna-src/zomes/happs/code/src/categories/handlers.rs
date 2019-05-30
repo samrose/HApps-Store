@@ -19,7 +19,7 @@ pub fn handle_add_app_to_category(app_address: Address, category: String) -> Zom
         RawString::from(category).into()
     );
     let category_anchor_addr = hdk::commit_entry(&category_anchor_entry)?;
-    utils::link_entries_bidir(&app_address, &category_anchor_addr, "in", "contains")?;
+    utils::link_entries_bidir(&app_address, &category_anchor_addr, "in", "contains","","")?;
     Ok(())
 }
 
@@ -29,7 +29,7 @@ pub fn handle_add_app_to_tag(app_address: Address, tag: String) -> ZomeApiResult
         RawString::from(tag).into()
     );
     let tag_anchor_addr = hdk::commit_entry(&tag_anchor_entry)?;
-    utils::link_entries_bidir(&app_address, &tag_anchor_addr, "in", "contains")?;
+    utils::link_entries_bidir(&app_address, &tag_anchor_addr, "in", "contains","","")?;
     Ok(())
 }
 
