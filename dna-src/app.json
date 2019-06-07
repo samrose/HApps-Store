@@ -1,14 +1,18 @@
 {
-  "name": "Holochain App Name",
-  "description": "A Holochain app",
+  "name": "hApp Store",
+  "description": "The Holochain hApp Store.",
   "authors": [
     {
-      "identifier": "Author Name <author@name.com>",
+      "identifier": [
+        "Willem Olding <willem.olding@holo.host>",
+        "Zo-El <joel.ulahanna@holo.host>",
+        "Lisa Jetton <lisa.jetton@holo.host>"
+      ],
       "public_key_source": "",
       "signature": ""
     }
   ],
-  "version": "0.1.0-alpha",
+  "version": "0.2.1-alpha1",
   "dht": {},
   "properties": null
 }
