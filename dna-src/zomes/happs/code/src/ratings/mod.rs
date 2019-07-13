@@ -1,15 +1,15 @@
 /// This file holds everything that represents the "post" entry type.
-
-use hdk::holochain_core_types::{
-    // cas::content::Address,
-    dna::entry_types::Sharing,
-    error::HolochainError,
-    json::JsonString,
-};
 // use boolinator::*;
 use hdk::{
     self,
     entry_definition::ValidatingEntryType,
+    holochain_json_api::{
+        error::JsonError,
+     json::JsonString,
+   },
+    holochain_core_types::{
+        dna::entry_types::Sharing,
+    },
 };
 
 pub mod handlers;

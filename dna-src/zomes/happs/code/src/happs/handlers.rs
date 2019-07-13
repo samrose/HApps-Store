@@ -1,12 +1,20 @@
 use hdk::{
+    utils,
+    AGENT_ADDRESS,
     error::{ZomeApiError, ZomeApiResult},
-    holochain_core_types::{
-        cas::content::{Address, AddressableContent},
-        entry::Entry,
-        json::RawString,
+    holochain_persistence_api::{
+        cas::content::Address,
+        cas::content::AddressableContent,
     },
-    utils, AGENT_ADDRESS,
+    holochain_json_api::{
+        json::{RawString},
+    },
+    holochain_core_types::{
+        entry::Entry,
+        link::LinkMatch,
+    },
 };
+
 
 use crate::happs::AppResource;
 use crate::happs::{self, AppResponse};
@@ -16,13 +24,17 @@ Getter Functions
 
 // returns tuple of number of upvotes and if this agent upvoted
 fn get_upvotes(app_address: &Address) -> ZomeApiResult<(i32, bool)> {
-    let result = hdk::get_links(app_address, Some("upvote".to_string()),Some("".to_string()))?;
+    let result = hdk::get_links(app_address,
+        LinkMatch::Exactly("upvote"),
+        LinkMatch::Any)?;
     let upvoters = result.addresses();
     Ok((upvoters.len() as i32, upvoters.contains(&AGENT_ADDRESS)))
 }
 
 pub fn get_linked_apps(base_addr: &Address, tag: &str) -> ZomeApiResult<Vec<happs::AppResponse>> {
-    let addrs = hdk::get_links(base_addr, Some(tag.to_string()),Some("".to_string()))?.addresses().clone();
+    let addrs = hdk::get_links(base_addr,
+        LinkMatch::Exactly(&tag),
+        LinkMatch::Any)?.addresses().clone();
 
     Ok(addrs
         .into_iter()

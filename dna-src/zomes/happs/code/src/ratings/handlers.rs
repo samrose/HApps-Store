@@ -1,12 +1,16 @@
 use hdk::{
     utils,
-    holochain_core_types::{
+    AGENT_ADDRESS,
+    error::{ZomeApiResult},
+    holochain_persistence_api::{
         cas::content::Address,
-        entry::Entry,
     },
-    error::ZomeApiResult,
-    api::AGENT_ADDRESS,
+    holochain_core_types::{
+        entry::Entry,
+        link::LinkMatch,
+    },
 };
+
 use crate::ratings::{
     Ratings
 };
@@ -30,5 +34,7 @@ pub fn handle_creating_ratings(rate: String, review: String, reviewed_hash: Addr
 
 
 pub fn handle_get_reviews_by_hash(reviewed_hash: Address) -> ZomeApiResult<Vec<Ratings>> {
-    utils::get_links_and_load_type(&reviewed_hash, Some("rating_tag".to_string()),Some("".to_string()))
+    utils::get_links_and_load_type(&reviewed_hash,
+        LinkMatch::Exactly("rating_tag"),
+        LinkMatch::Any)
 }

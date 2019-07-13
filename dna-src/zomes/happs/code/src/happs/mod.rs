@@ -1,8 +1,20 @@
-use hdk::holochain_core_types::{
-    cas::content::Address, dna::entry_types::Sharing, error::HolochainError, hash::HashString,
-    json::JsonString,
+use hdk::{
+    self,
+    entry_definition::ValidatingEntryType,
+    holochain_persistence_api::{
+        cas::content::Address,
+        hash::HashString,
+
+    },
+    holochain_json_api::{
+        error::JsonError,
+       json::JsonString,
+   },
+    holochain_core_types::{
+        dna::entry_types::Sharing,
+    },
 };
-use hdk::{self, entry_definition::ValidatingEntryType};
+
 
 pub mod handlers;
 pub use handlers::get_linked_apps;

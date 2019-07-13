@@ -2,13 +2,19 @@
 use hdk::{
     self,
     utils,
+    error::{ZomeApiResult},
+    holochain_persistence_api::{
+        cas::content::Address,
+        cas::content::AddressableContent,
+    },
+    holochain_json_api::{
+        json::{RawString},
+    },
     holochain_core_types::{
         entry::Entry,
-        json::{RawString},
-        cas::content::{Address, AddressableContent},
     },
-    error::{ZomeApiResult},
 };
+
 
 use crate::happs::{AppResponse, get_linked_apps};
 

@@ -1,10 +1,11 @@
 use hdk::{
-	holochain_core_types::{
-	    dna::entry_types::Sharing,
-	    json::RawString,
-	},
 	entry_definition::ValidatingEntryType,
-
+    holochain_json_api::{
+        json::{JsonString,RawString}
+    },
+	holochain_core_types::{
+		dna::entry_types::Sharing,
+	},
 };
 
 pub mod handlers;
