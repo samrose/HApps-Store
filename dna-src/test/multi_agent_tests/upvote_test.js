@@ -16,29 +16,29 @@ const App1 = {
 
 module.exports = (scenario) => {
 
-  scenario.runTape('Create an app, add dna+ui bundles and retrieve', async (t, {alice, bob}) => {
-  	// alice creates an app
-  	const create_result = await alice.callSync("happs", "create_app", App1);
+  scenario('Create an app, add dna+ui bundles and retrieve', async (s, t, {liza, jack}) => {
+  	// liza creates an app
+  	const create_result = await liza.app.call("happs", "create_app", App1);
     console.log(create_result)
     const app_address = create_result.Ok
     t.equal(app_address.length, 46)
 
-    //bob upvotes it
-    const upvote_result = await bob.callSync('happs', 'upvote_app', {app_address: app_address})
+    //jack upvotes it
+    const upvote_result = await jack.app.call('happs', 'upvote_app', {app_address: app_address})
     console.log(upvote_result)
     t.notEqual(upvote_result.Ok, undefined)
 
-    // bob can see it
-    const bob_get_all_apps_result_after_upvote = await bob.callSync('happs', "get_all_apps", {})
-    console.log(bob_get_all_apps_result_after_upvote)
-    t.equal(bob_get_all_apps_result_after_upvote.Ok[0].upvotes , 1)
-    t.equal(bob_get_all_apps_result_after_upvote.Ok[0].upvotedByMe , true)
+    // jack can see it
+    const jack_get_all_apps_result_after_upvote = await jack.app.call('happs', "get_all_apps", {})
+    console.log(jack_get_all_apps_result_after_upvote)
+    t.equal(jack_get_all_apps_result_after_upvote.Ok[0].upvotes , 1)
+    t.equal(jack_get_all_apps_result_after_upvote.Ok[0].upvotedByMe , true)
 
-    // alice can see it
-    const alice_get_all_apps_result_after_upvote = await alice.callSync('happs', "get_all_apps", {})
-    console.log(alice_get_all_apps_result_after_upvote)
-    t.equal(alice_get_all_apps_result_after_upvote.Ok[0].upvotes , 1)
-    t.equal(alice_get_all_apps_result_after_upvote.Ok[0].upvotedByMe , false)
+    // liza can see it
+    const liza_get_all_apps_result_after_upvote = await liza.app.call('happs', "get_all_apps", {})
+    console.log(liza_get_all_apps_result_after_upvote)
+    t.equal(liza_get_all_apps_result_after_upvote.Ok[0].upvotes , 1)
+    t.equal(liza_get_all_apps_result_after_upvote.Ok[0].upvotedByMe , false)
   })
 
 }

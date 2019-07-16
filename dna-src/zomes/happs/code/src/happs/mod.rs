@@ -58,7 +58,7 @@ impl AppResponse {
     }
 }
 
-// const ADMIN_AUTHOR: &str = "alice-----------------------------------------------------------------------------AAAIuDJb4M";
+// const ADMIN_AUTHOR: &str = "liza-----------------------------------------------------------------------------AAAIuDJb4M";
 
 pub fn app_definitions() -> ValidatingEntryType {
     entry!(
