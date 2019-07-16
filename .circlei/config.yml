@@ -1,0 +1,10 @@
+version: 2.0
+jobs:
+  Hello-World:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - run:
+          name: hApp Store
+          command: |
+            echo 'You still need to set up the circle CI config!'
