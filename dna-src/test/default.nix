@@ -1,11 +1,11 @@
 { pkgs }:
 let
-  name = "dk-test";
+  name = "hc-test";
 
   script = pkgs.writeShellScriptBin name
   ''
-  dk-test-unit
-  dk-test-e2e
+  hc-test-unit
+  hc-test-e2e
   '';
 in
 {
