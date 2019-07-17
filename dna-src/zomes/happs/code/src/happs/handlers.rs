@@ -1,20 +1,10 @@
 use hdk::{
-    utils,
-    AGENT_ADDRESS,
     error::{ZomeApiError, ZomeApiResult},
-    holochain_persistence_api::{
-        cas::content::Address,
-        cas::content::AddressableContent,
-    },
-    holochain_json_api::{
-        json::{RawString},
-    },
-    holochain_core_types::{
-        entry::Entry,
-        link::LinkMatch,
-    },
+    holochain_core_types::{entry::Entry, link::LinkMatch},
+    holochain_json_api::json::RawString,
+    holochain_persistence_api::{cas::content::Address, cas::content::AddressableContent},
+    utils, AGENT_ADDRESS,
 };
-
 
 use crate::happs::AppResource;
 use crate::happs::{self, AppResponse};
@@ -24,17 +14,15 @@ Getter Functions
 
 // returns tuple of number of upvotes and if this agent upvoted
 fn get_upvotes(app_address: &Address) -> ZomeApiResult<(i32, bool)> {
-    let result = hdk::get_links(app_address,
-        LinkMatch::Exactly("upvote"),
-        LinkMatch::Any)?;
+    let result = hdk::get_links(app_address, LinkMatch::Exactly("upvote"), LinkMatch::Any)?;
     let upvoters = result.addresses();
     Ok((upvoters.len() as i32, upvoters.contains(&AGENT_ADDRESS)))
 }
 
 pub fn get_linked_apps(base_addr: &Address, tag: &str) -> ZomeApiResult<Vec<happs::AppResponse>> {
-    let addrs = hdk::get_links(base_addr,
-        LinkMatch::Exactly(&tag),
-        LinkMatch::Any)?.addresses().clone();
+    let addrs = hdk::get_links(base_addr, LinkMatch::Exactly(&tag), LinkMatch::Any)?
+        .addresses()
+        .clone();
 
     Ok(addrs
         .into_iter()
@@ -86,18 +74,25 @@ pub fn handle_create_app(
         .into(),
     );
     let app_addr = hdk::commit_entry(&app_entry)?;
-    utils::link_entries_bidir(&app_addr, &hdk::AGENT_ADDRESS, "author_is", "published","","")?;
+    utils::link_entries_bidir(
+        &app_addr,
+        &hdk::AGENT_ADDRESS,
+        "author_is",
+        "published",
+        "",
+        "",
+    )?;
 
     let all_apps_anchor_addr = hdk::commit_entry(&Entry::App(
         "category_anchor".into(),
         RawString::from("*").into(),
     ))?;
-    utils::link_entries_bidir(&all_apps_anchor_addr, &app_addr, "contains", "in","","")?;
+    utils::link_entries_bidir(&all_apps_anchor_addr, &app_addr, "contains", "in", "", "")?;
 
     Ok(app_addr)
 }
 
 pub fn handle_upvote_app(app_address: Address) -> ZomeApiResult<Address> {
-    hdk::link_entries(&app_address, &AGENT_ADDRESS, "upvote","")?;
+    hdk::link_entries(&app_address, &AGENT_ADDRESS, "upvote", "")?;
     Ok(app_address)
 }

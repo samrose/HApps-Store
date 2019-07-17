@@ -2,11 +2,11 @@
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/holochain/HApps-Store.svg)
 ![GitHub](https://img.shields.io/github/license/holochain/HApps-Store.svg)
-
+**Circle CI:** [![CircleCI](https://circleci.com/gh/holochain/hApp-Store.svg?style=svg)](https://circleci.com/gh/holochain/hApp-Store)
 ---
 An early version of the Holochain hApp store.
 
-This version exists to allow participants of the Holo closed alpha program to find and install DNAs to host. 
+This version exists to allow participants of the Holo closed alpha program to find and install DNAs to host.
 
 ---
 

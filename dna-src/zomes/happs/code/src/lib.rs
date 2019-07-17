@@ -6,18 +6,11 @@ extern crate serde_derive;
 #[macro_use]
 extern crate holochain_json_derive;
 
-
 use hdk::{
-    error::{ZomeApiResult},
-    holochain_persistence_api::{
-        cas::content::Address,
-    },
-    holochain_json_api::{
-        error::JsonError,
-        json::{JsonString},
-    },
+    error::ZomeApiResult,
+    holochain_json_api::{error::JsonError, json::JsonString},
+    holochain_persistence_api::cas::content::Address,
 };
-
 
 mod categories;
 mod happs;
