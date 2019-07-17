@@ -2,13 +2,16 @@
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/holochain/HApps-Store.svg)
 ![GitHub](https://img.shields.io/github/license/holochain/HApps-Store.svg)
-**Circle CI:** [![CircleCI](https://circleci.com/gh/holochain/hApp-Store.svg?style=svg)](https://circleci.com/gh/holochain/hApp-Store)
+[![CircleCI](https://circleci.com/gh/holochain/hApp-Store.svg?style=svg)](https://circleci.com/gh/holochain/hApp-Store)
 ---
 An early version of the Holochain hApp store.
 
 This version exists to allow participants of the Holo closed alpha program to find and install DNAs to host.
 
 ---
+
+## Test DNA
+`make test`
 
 ## Building and Running
 
@@ -50,7 +53,7 @@ holochain -c ./conductor-config.toml
 
 ## Built With
 
-* [Holochain v0.0.18-alpha1](https://github.com/holochain/holochain-rust)
+* [Holochain v0.0.24-alpha2](https://github.com/holochain/holochain-rust)
 * [Typescript](https://github.com/Microsoft/TypeScript)
 * [React](https://reactjs.org/)
 * [Redux](https://redux.js.org/)
@@ -63,4 +66,8 @@ holochain -c ./conductor-config.toml
 
 ## License
 
-This project is licensed under the GPL-3 License - see the [LICENSE.md](LICENSE.md) file for details
+Copyright (C) 2017, The MetaCurrency Project (Eric Harris-Braun, Arthur Brock, et. al.)
+
+This program is free software: you can redistribute it and/or modify it under the terms of the license provided in the LICENSE file (GPLv3.0). This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Note: We are considering other 'looser' licensing options (like MIT license) but at this stage are using GPL while we're getting the matter sorted out.
