@@ -22,3 +22,4 @@ dna-src/dist
 .tags*
 .Trashes
 ehthumbs.db
+.cargo

@@ -4,8 +4,8 @@ import { App } from "./types/app";
 
 import { ActionType, getType } from 'typesafe-actions'
 import * as appActions from './actions'
-
 export type AppAction = ActionType<typeof appActions>
+
 
 
 interface State {

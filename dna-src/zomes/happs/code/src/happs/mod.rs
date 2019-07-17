@@ -1,8 +1,10 @@
-use hdk::holochain_core_types::{
-    cas::content::Address, dna::entry_types::Sharing, error::HolochainError, hash::HashString,
-    json::JsonString,
+use hdk::{
+    self,
+    entry_definition::ValidatingEntryType,
+    holochain_core_types::dna::entry_types::Sharing,
+    holochain_json_api::{error::JsonError, json::JsonString},
+    holochain_persistence_api::{cas::content::Address, hash::HashString},
 };
-use hdk::{self, entry_definition::ValidatingEntryType};
 
 pub mod handlers;
 pub use handlers::get_linked_apps;
@@ -46,7 +48,7 @@ impl AppResponse {
     }
 }
 
-// const ADMIN_AUTHOR: &str = "alice-----------------------------------------------------------------------------AAAIuDJb4M";
+// const ADMIN_AUTHOR: &str = "liza-----------------------------------------------------------------------------AAAIuDJb4M";
 
 pub fn app_definitions() -> ValidatingEntryType {
     entry!(
