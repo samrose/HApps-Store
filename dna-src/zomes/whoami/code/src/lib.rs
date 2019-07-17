@@ -8,14 +8,10 @@ extern crate holochain_json_derive;
 
 use hdk::{
     error::ZomeApiResult,
-    holochain_json_api::{
-        error::JsonError,
-        json::{JsonString},
-    },
+    holochain_json_api::{error::JsonError, json::JsonString},
 };
 
 pub mod whoami_fn;
-
 
 define_zome! {
     entries: [ ]

@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+  "dna-src/zomes/happs/code",
+  "dna-src/zomes/whoami/code"
+]
