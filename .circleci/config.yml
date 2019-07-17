@@ -8,4 +8,4 @@ jobs:
     - checkout
     - run:
         name: Starting test
-        command: nix-shell --command cd dna-src --run dk-test
+        command: nix-shell --command cd dna-src --run hc-test

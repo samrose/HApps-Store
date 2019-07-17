@@ -1,4 +1,5 @@
 const test = require('tape');
+const sleep = require('sleep');
 
 const App1 = {
   title: "HoloChat",
@@ -48,6 +49,8 @@ module.exports = (scenario) => {
     const result2 = await liza.app.call("happs", "add_app_to_category", {app_address: app_address2, category: "good apps"})
     console.log(result2)
     t.equal(result2.Ok, null)
+
+    sleep.sleep(5);
 
     const result3 = await liza.app.call("happs", "get_apps_by_category", {category:"good apps"})
     console.log(result3)
