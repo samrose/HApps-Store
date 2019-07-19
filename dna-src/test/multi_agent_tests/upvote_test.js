@@ -18,24 +18,24 @@ module.exports = (scenario) => {
 
   scenario('Create an app, add dna+ui bundles and retrieve', async (s, t, {liza, jack}) => {
   	// liza creates an app
-  	const create_result = await liza.app.call("happs", "create_app", App1);
+  	const create_result = await liza.call("happs", "create_app", App1);
     console.log(create_result)
     const app_address = create_result.Ok
     t.equal(app_address.length, 46)
 
     //jack upvotes it
-    const upvote_result = await jack.app.call('happs', 'upvote_app', {app_address: app_address})
+    const upvote_result = await jack.call('happs', 'upvote_app', {app_address: app_address})
     console.log(upvote_result)
     t.notEqual(upvote_result.Ok, undefined)
 
     // jack can see it
-    const jack_get_all_apps_result_after_upvote = await jack.app.call('happs', "get_all_apps", {})
+    const jack_get_all_apps_result_after_upvote = await jack.call('happs', "get_all_apps", {})
     console.log(jack_get_all_apps_result_after_upvote)
     t.equal(jack_get_all_apps_result_after_upvote.Ok[0].upvotes , 1)
     t.equal(jack_get_all_apps_result_after_upvote.Ok[0].upvotedByMe , true)
 
     // liza can see it
-    const liza_get_all_apps_result_after_upvote = await liza.app.call('happs', "get_all_apps", {})
+    const liza_get_all_apps_result_after_upvote = await liza.call('happs', "get_all_apps", {})
     console.log(liza_get_all_apps_result_after_upvote)
     t.equal(liza_get_all_apps_result_after_upvote.Ok[0].upvotes , 1)
     t.equal(liza_get_all_apps_result_after_upvote.Ok[0].upvotedByMe , false)
