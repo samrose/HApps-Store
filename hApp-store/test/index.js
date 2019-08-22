@@ -8,7 +8,7 @@ process.on('unhandledRejection', error => {
   console.error('got unhandledRejection:', error);
 });
 
-const dnaPath = path.join(__dirname, "../dist/dna-src.dna.json")
+const dnaPath = path.join(__dirname, "../dist/hApp-store.dna.json")
 const dna = Diorama.dna(dnaPath, 'hAS')
 
 const singleAgentConductor = new Diorama({

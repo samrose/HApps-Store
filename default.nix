@@ -3,6 +3,6 @@
 {
   hApp-store = buildDNA {
     name = "hApp-store";
-    src = gitignoreSource ./dna-src;
+    src = gitignoreSource ./hApp-store;
   };
 }

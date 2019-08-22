@@ -17,7 +17,7 @@ This version exists to allow participants of the Holo closed alpha program to fi
 
 ### Build Holochain DNA
 
-The DNA builds with Holochain. Ensure you have the holochain developer cli `hc` and holochain conductor `holochain` installed that match this version.  The simplest way to ensure this is to use holoportos' Nix configuration, and then (once a compatible Nix environment has been created), running `make install` to build into `dna-src/dist/hApp-store.dna.json`
+The DNA builds with Holochain. Ensure you have the holochain developer cli `hc` and holochain conductor `holochain` installed that match this version.  The simplest way to ensure this is to use holoportos' Nix configuration, and then (once a compatible Nix environment has been created), running `make install` to build into `hApp-store/dist/hApp-store.dna.json`
 
 ```
 $ git clone git@github.com:holochain/hApp-store.git
@@ -25,8 +25,8 @@ $ cd hApp-store
 $ nix-shell
 [nix-shell:~/src/hApp-store]$ make install
 $ make install
-mkdir -p dna-src/dist/
-cd dna-src && hc package --output dist/hApp-store.dna.json --strip-meta
+mkdir -p hApp-store/dist/
+cd hApp-store && hc package --output dist/hApp-store.dna.json --strip-meta
 > cargo build --release --target=wasm32-unknown-unknown
 ...
 Finished release [optimized] target(s) in 0.06s

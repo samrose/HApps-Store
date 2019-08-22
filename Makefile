@@ -21,26 +21,28 @@ rebuild:	clean build
 
 install:	build
 
-build:		dna-src/$(DNA)
+build:		$(DNANAME)/$(DNA)
 
 # Build the DNA; Specifying a custom --output requires the path to exist
-dna-src/$(DNA):
-	mkdir -p $(dir $(@))
-	cd dna-src \
-	  && hc package --output $(DNA) --strip-meta
+# However, if the name of the directory within which `hc` is run matches the
+# DNA's name, then this name is used by default, and the output directory is
+# created automatically.
+$(DNANAME)/$(DNA):
+	cd $(DNANAME) \
+	  && hc package --strip-meta
 
 test:		test-unit test-e2e
 
 # test-unit -- Run Rust unit tests via Cargo
 test-unit:
-	cd dna-src \
+	cd $(DNANAME) \
 	  && RUST_BACKTRACE=1 cargo test \
 	    --manifest-path Cargo.toml \
 	    -- --nocapture
 
 # test-e2e -- Uses dist/hApp-store.dna.json; install test JS dependencies, and run end-to-end Diorama tests
-test-e2e:	dna-src/$(DNA)
-	cd dna-src \
+test-e2e:	$(DNANAME)/$(DNA)
+	cd $(DNANAME) \
 	  && ( cd test && npm install ) \
 	  && RUST_BACKTRACE=1 hc test \
 	    | test/node_modules/faucet/bin/cmd.js
@@ -54,6 +56,6 @@ clean:
 	    test/node_modules \
 	    .cargo \
 	    target \
-	    dna-src/zomes/happs/code/target \
-	    dna-src/zomes/whoami/code/target
+	    $(DNANAME)/zomes/happs/code/target \
+	    $(DNANAME)/zomes/whoami/code/target
 
