@@ -24,3 +24,5 @@ dna-src/dist
 ehthumbs.db
 .cargo
 dist
+holochain-rust
+*~

@@ -28,7 +28,11 @@ define_zome! {
         categories::tag_anchor_entry()
     ]
 
-    genesis: || { Ok(()) }
+    init: || { Ok(()) }
+
+    validate_agent: |validation_data : EntryValidationData::<AgentId>| {
+        Ok(())
+    }
 
     functions: [
         create_app: {
