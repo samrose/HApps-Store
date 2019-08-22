@@ -26,21 +26,24 @@ build:		dna-src/$(DNA)
 # Build the DNA; Specifying a custom --output requires the path to exist
 dna-src/$(DNA):
 	mkdir -p $(dir $(@))
-	cd dna-src && hc package --output $(DNA) --strip-meta
+	cd dna-src \
+	  && hc package --output $(DNA) --strip-meta
 
 test:		test-unit test-e2e
 
 # test-unit -- Run Rust unit tests via Cargo
 test-unit:
-	cd dna-src && RUST_BACKTRACE=1 cargo test \
-	        --manifest-path Cargo.toml \
-	       -- --nocapture
+	cd dna-src \
+	  && RUST_BACKTRACE=1 cargo test \
+	    --manifest-path Cargo.toml \
+	    -- --nocapture
 
 # test-e2e -- Uses dist/hApp-store.dna.json; install test JS dependencies, and run end-to-end Diorama tests
 test-e2e:	dna-src/$(DNA)
-	cd dna-src && ( cd test && npm install ) && RUST_BACKTRACE=1 hc test
-
-#	    | test/node_modules/faucet/bin/cmd.js
+	cd dna-src \
+	  && ( cd test && npm install ) \
+	  && RUST_BACKTRACE=1 hc test \
+	    | test/node_modules/faucet/bin/cmd.js
 
 
 # Generic targets; does not require a Nix environment

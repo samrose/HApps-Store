@@ -17,14 +17,36 @@ This version exists to allow participants of the Holo closed alpha program to fi
 
 ### Build Holochain DNA
 
-The DNA builds with Holochain. Ensure you have the holochain developer cli `hc` and holochain conductor `holochain` installed that match this version. Then run from the project root
+The DNA builds with Holochain. Ensure you have the holochain developer cli `hc` and holochain conductor `holochain` installed that match this version.  The simplest way to ensure this is to use holoportos' Nix configuration, and then (once a compatible Nix environment has been created), running `make install` to build into `dna-src/dist/hApp-store.dna.json`
+
 ```
-npm run hc:build
+$ git clone git@github.com:holochain/hApp-store.git
+$ cd hApp-store
+$ nix-shell
+[nix-shell:~/src/hApp-store]$ make install
+$ make install
+mkdir -p dna-src/dist/
+cd dna-src && hc package --output dist/hApp-store.dna.json --strip-meta
+> cargo build --release --target=wasm32-unknown-unknown
+...
+Finished release [optimized] target(s) in 0.06s
+Created DNA package file at "dist/hApp-store.dna.json"
+DNA hash: Qmd6pArbijQ3ija5FnyrMaZirXJL83afbj8DJGuAENAdM9
 ```
 
-This should build the dna in to the `dna/` directory.
+Holochain DNA Rust Unit tests and Node Scenario tests can be run:
 
-Holochain tests can be run using `npm run hc:test`
+```
+[nix-shell:~/src/hAPp-store]$ make test
+...
+✓ add Category
+✓ Create an app, add dna+ui bundles and retrieve
+✓ Create an app, add dna+ui bundles and retrieve
+✓ get user address
+# tests 18
+# pass  18
+✓ ok
+```
 
 ### Build UI
 
