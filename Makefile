@@ -37,7 +37,10 @@ test:		test-unit test-e2e
 test-unit:
 	cd $(DNANAME) \
 	  && RUST_BACKTRACE=1 cargo test \
-	    --manifest-path Cargo.toml \
+	    --manifest-path zomes/whoami/code/Cargo.toml \
+	    -- --nocapture \
+	  && RUST_BACKTRACE=1 cargo test \
+	    --manifest-path zomes/happs/code/Cargo.toml \
 	    -- --nocapture
 
 # test-e2e -- Uses dist/hApp-store.dna.json; install test JS dependencies, and run end-to-end Diorama tests
