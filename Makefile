@@ -1,6 +1,6 @@
-# 
+#
 # Test and build hApp-store Project
-# 
+#
 SHELL		= bash
 DNANAME		= hApp-store
 DNA		= dist/$(DNANAME).dna.json
@@ -44,11 +44,18 @@ test-unit:
 	    -- --nocapture
 
 # test-e2e -- Uses dist/hApp-store.dna.json; install test JS dependencies, and run end-to-end Diorama tests
+#
+# Depends on dynamodb, if using sim1h DHT.
+test-e2e: export AWS_ACCESS_KEY_ID     ?= HoloCentral
+test-e2e: export AWS_SECRET_ACCESS_KEY ?= ...
 test-e2e:	$(DNANAME)/$(DNA)
-	cd $(DNANAME) \
-	  && ( cd test && npm install ) \
-	  && RUST_BACKTRACE=1 hc test \
-	    | test/node_modules/faucet/bin/cmd.js
+	export |grep AWS
+	@echo "Setting up Scenario test Javascript..."; \
+	    ( cd hApp-store/test && npm install );
+	@echo "Starting dynamodb-memory..."; \
+	    dynamodb-memory &
+	@echo "Starting HoloFuel Scenario tests..."; \
+	    RUST_BACKTRACE=1 cd hApp-store && hc test \
 
 
 # Generic targets; does not require a Nix environment
@@ -61,4 +68,3 @@ clean:
 	    target \
 	    $(DNANAME)/zomes/happs/code/target \
 	    $(DNANAME)/zomes/whoami/code/target
-
