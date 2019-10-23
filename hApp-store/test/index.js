@@ -1,6 +1,11 @@
-const { Orchestrator, tapeExecutor, singleConductor, combine, callSync } = require('@holochain/try-o-rama')
+//"use strict"; // locks up tests for some reason
+// This test file uses the tape testing framework.
+// To learn more, go here: https://github.com/substack/tape
 
-const { callSyncMiddleware } = require('./config')
+/*
+ * Try-o-rama
+ */
+const { Orchestrator, tapeExecutor, singleConductor, combine, callSync } = require('@holochain/try-o-rama')
 
 const MIN_EXPECTED_SCENARIOS = 1
 
@@ -25,7 +30,7 @@ let middleware = combine(
   // NB: this middleware makes a really huge difference! and it's not very well tested,
   // as of Oct 1 2019. So, keep an eye out.
   singleConductor,
-  callSyncMiddleware,
+  callSync,
   tapeExecutor(require('tape')),
 );
 
@@ -59,17 +64,18 @@ else if (APP_SPEC_NETWORK_TYPE === "sim2h")
 {
     transport_config = {
         type: 'sim2h',
-        sim2h_url: "wss://localhost:9000",
+        sim2h_url: "wss://localhost:9002",
     }
 
     // omit singleConductor
     middleware = combine(
         // dumbWaiter(1000),
-        callSyncMiddleware,
+        callSync,
         tapeExecutor(require('tape')),
     );
 }
 
+// override the transport_config if we are in the Final Exam context!
 if (process.env.HC_TRANSPORT_CONFIG) {
     transport_config=require(process.env.HC_TRANSPORT_CONFIG)
 }
