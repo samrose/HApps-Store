@@ -1,8 +1,8 @@
 # HApps-Store
 
-![GitHub last commit](https://img.shields.io/github/last-commit/holochain/HApps-Store.svg)
-![GitHub](https://img.shields.io/github/license/holochain/HApps-Store.svg)
-[![CircleCI](https://circleci.com/gh/holochain/hApp-Store.svg?style=svg)](https://circleci.com/gh/holochain/hApp-Store)
+![GitHub last commit](https://img.shields.io/github/last-commit/holo-host/happ-store.svg)
+![GitHub](https://img.shields.io/github/license/holo-host/happ-store.svg)
+[![CircleCI](https://circleci.com/gh/holo-host/happ-store?style=svg)](https://circleci.com/gh/holo-host/happ-store)
 ---
 An early version of the Holochain hApp store.
 
