@@ -1,15 +1,17 @@
-agent.txt
-priv.key
-
 build/
 build-HApps/
 ui/
 dna/
-node_modules/
 .dist/
 .cache/
 npm-debug.log
-HApps/
+bundle.json
+
+node_modules
+target
+tmp-storage
+
+hApp-store/dist
 
 # OS generated files #
 ######################
@@ -20,3 +22,7 @@ HApps/
 .tags*
 .Trashes
 ehthumbs.db
+.cargo
+dist
+holochain-rust
+*~

@@ -1,0 +1,40 @@
+[[agents]]
+id = 'hApp-agent'
+name = 'hAppStore Agent'
+keystore_file = '/home/lisa/.config/holochain/keys/HcSCj35Fgj7smCq4bxhtf7rrJS4v8pxxi66xtnwOh4mB3fvjIncm4Axaig8ng6r'
+public_address = 'HcSCj35Fgj7smCq4bxhtf7rrJS4v8pxxi66xtnwOh4mB3fvjIncm4Axaig8ng6r'
+
+[[dnas]]
+id = "happ_store_dna"
+file = "hApp-store/dist/hApp-store.dna.json"
+hash = "Qm328wyq38924x"
+
+[[instances]]
+id = "happ-store"
+dna = "happ_store_dna"
+agent = "hApp-agent"
+[instances.logger]
+type = "simple"
+file = "app_spec.log"
+[instances.storage]
+type = "file"
+path = "tmp-storage"
+
+[[interfaces]]
+id = "websocket_interface"
+[interfaces.driver]
+type = "websocket"
+port = 4000
+[[interfaces.instances]]
+id = "happ-store"
+
+[[ui_bundles]]
+id = "main"
+root_dir = "./ui"
+hash = "Qm000"
+
+[[ui_interfaces]]
+id = "ui-interface"
+bundle = "main"
+port = 3000
+dna_interface = "websocket_interface"

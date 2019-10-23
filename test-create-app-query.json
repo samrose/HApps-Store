@@ -1,0 +1,11 @@
+{
+        "jsonrpc":"2.0",
+        "method":"happ-store/happs/main/create_app",
+        "id":123,
+        "params": {
+		  "uuid": "762934-19234-123495-12354",
+		  "title": "Errand",
+		  "description": "A better Trello",
+		  "thumbnail": "/IMG.jpg"
+		}
+}

@@ -1,12 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from './components/App';
+import App from './App';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 
 import registerServiceWorker from './registerServiceWorker';
-import store from './store';
+import CreateStore from './store';
+
+const store = CreateStore()
 
 const root = <Provider store={store}>
   <App />

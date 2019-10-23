@@ -1,57 +1,81 @@
 # HApps-Store
 
-![GitHub last commit](https://img.shields.io/github/last-commit/Holo-Host/HApps-Store.svg)
-![GitHub](https://img.shields.io/github/license/Holo-Host/HApps-Store.svg)
-
+![GitHub last commit](https://img.shields.io/github/last-commit/holochain/HApps-Store.svg)
+![GitHub](https://img.shields.io/github/license/holochain/HApps-Store.svg)
+[![CircleCI](https://circleci.com/gh/holochain/hApp-Store.svg?style=svg)](https://circleci.com/gh/holochain/hApp-Store)
 ---
-The Holochain of Holochains Directory
-This is the App store that all the users  would use to Check out all the HApps that are Available on the HCHC
+An early version of the Holochain hApp store.
 
-> Notes:
-> Will be able to be run the HC Admin GUI for installing apps.
-> Otherwise should not control your system
+This version exists to allow participants of the Holo closed alpha program to find and install DNAs to host.
 
 ---
 
-## Documentation
-- [HCHC/HApps-Store : Design Decisions](https://hackmd.io/uBkCcxybSWyQ-h60dEi8bg)
+## Test DNA
+`make test`
 
-## Getting Started
+## Building and Running
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+### Build Holochain DNA
 
-### Installing
-
-The app can now be started for **development** purposes using
-
-**For Windows:**
-```
-npm run hc:win
-```
-**For Other OS:**
-```
-npm run hc:dev
-```
-and opening the browser to http://localhost:4141
-
----
-If you would like to persist data between sessions install to the **local holochain directory** by running the following from the project root directory:
-```
-hcadmin init <id/name string>
-hcadmin join ./build-HCHC/ HCHC
-hcd HCHC
-```
-### Prerequisites
-Ensure holochain-proto (at least version 26) is installed on your machine by running.
+The DNA builds with Holochain. Ensure you have the holochain developer cli `hc` and holochain conductor `holochain` installed that match this version.  The simplest way to ensure this is to use holoportos' Nix configuration, and then (once a compatible Nix environment has been created), running `make install` to build into `hApp-store/dist/hApp-store.dna.json`
 
 ```
-hcd -v
+$ git clone git@github.com:holochain/hApp-store.git
+$ cd hApp-store
+$ nix-shell
+[nix-shell:~/src/hApp-store]$ make install
+$ make install
+mkdir -p hApp-store/dist/
+cd hApp-store && hc package --output dist/hApp-store.dna.json --strip-meta
+> cargo build --release --target=wasm32-unknown-unknown
+...
+Finished release [optimized] target(s) in 0.06s
+Created DNA package file at "dist/hApp-store.dna.json"
+DNA hash: Qmd6pArbijQ3ija5FnyrMaZirXJL83afbj8DJGuAENAdM9
 ```
-Subsequent steps also assumes npm/yarn is installed.
+
+Holochain DNA Rust Unit tests and Node Scenario tests can be run:
+
+```
+[nix-shell:~/src/hAPp-store]$ make test
+...
+✓ add Category
+✓ Create an app, add dna+ui bundles and retrieve
+✓ Create an app, add dna+ui bundles and retrieve
+✓ get user address
+# tests 18
+# pass  18
+✓ ok
+```
+
+### Build UI
+
+Ensure `npm` is installed and run
+
+```
+npm run build
+```
+
+This will build the UI into the `ui/` directory
+
+### Running in the Holochain conductor
+
+Ensure the holochain conductor binary is on your path and run the npm helper script
+
+```
+npm run hc:start
+```
+
+Alternatively you can start it using the conductor directly by running
+
+```
+holochain -c ./conductor-config.toml
+```
+
 
 ## Built With
 
-* [Holochain](https://github.com/holochain/holochain-proto)
+* [Holochain v0.0.24-alpha2](https://github.com/holochain/holochain-rust)
 * [Typescript](https://github.com/Microsoft/TypeScript)
 * [React](https://reactjs.org/)
 * [Redux](https://redux.js.org/)
@@ -60,7 +84,12 @@ Subsequent steps also assumes npm/yarn is installed.
 
 * **Joel Ulahanna** - [Zo-El](https://github.com/zo-el)
 * **Lisa Jetton** - [JettTech](https://github.com/JettTech)
+* **Willem Olding** - [willemolding](https://github.com/willemolding/)
 
 ## License
 
-This project is licensed under the GPL-3 License - see the [LICENSE.md](LICENSE.md) file for details
+Copyright (C) 2017, The MetaCurrency Project (Eric Harris-Braun, Arthur Brock, et. al.)
+
+This program is free software: you can redistribute it and/or modify it under the terms of the license provided in the LICENSE file (GPLv3.0). This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Note: We are considering other 'looser' licensing options (like MIT license) but at this stage are using GPL while we're getting the matter sorted out.
