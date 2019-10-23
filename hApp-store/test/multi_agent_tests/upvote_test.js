@@ -22,7 +22,7 @@ module.exports = (scenario) => {
     const { liza, jack } = await s.players({liza: one('liza'),jack: one('jack')}, true)
 
   	// liza creates an app
-  	const create_result = await liza.callSync( "app", "happs", "create_app", App1);
+    const create_result = await liza.call( "app", "happs", "create_app", App1);
     console.log(create_result)
     const app_address = create_result.Ok
     t.equal(app_address.length, 46)

@@ -34,7 +34,7 @@ module.exports = (scenario) => {
   scenario('Create an app, add dna+ui bundles and retrieve', async (s, t) => {
     const { liza } = await s.players({liza: one('liza')}, true)
 
-    const create_result = await liza.callSync( "app", "happs", "create_app", App1);
+    const create_result = await liza.call( "app", "happs", "create_app", App1);
     console.log(create_result)
     const app_address = create_result.Ok
     t.equal(app_address.length, 46)
@@ -49,7 +49,7 @@ module.exports = (scenario) => {
     const all_app_details = get_all_apps_result.Ok
     t.equal(all_app_details.length , 1)
 
-    const upvote_result = await liza.callSync( "app", 'happs', 'upvote_app', {app_address: app_address})
+    const upvote_result = await liza.call( "app", 'happs', 'upvote_app', {app_address: app_address})
     console.log(upvote_result)
     t.notEqual(upvote_result.Ok, undefined)
 
