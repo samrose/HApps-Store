@@ -1,12 +1,16 @@
 # HApps-Store
 
-![GitHub last commit](https://img.shields.io/github/last-commit/holo-host/happ-store.svg)
-![GitHub](https://img.shields.io/github/license/holo-host/happ-store.svg)
-[![CircleCI](https://circleci.com/gh/holo-host/happ-store?style=svg)](https://circleci.com/gh/holo-host/happ-store)
+[![Project](https://img.shields.io/badge/project-holochain-blue.svg?style=flat-square)](http://holochain.org/)
+[![Chat](https://img.shields.io/badge/chat-chat%2eholochain%2enet-blue.svg?style=flat-square)](https://chat.holochain.org)
+
+[![Twitter Follow](https://img.shields.io/twitter/follow/holochain.svg?style=social&label=Follow)](https://twitter.com/holochain)
+
+License: [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+
+![GitHub last commit](https://img.shields.io/github/last-commit/holochain/happ-store.svg)
+[![CircleCI](https://circleci.com/gh/holochain/happ-store?style=svg)](https://circleci.com/gh/holochain/happ-store)
 ---
 An early version of the Holochain hApp store.
-
-This version exists to allow participants of the Holo closed alpha program to find and install DNAs to host.
 
 ---
 
@@ -87,9 +91,13 @@ holochain -c ./conductor-config.toml
 * **Willem Olding** - [willemolding](https://github.com/willemolding/)
 
 ## License
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
-Copyright (C) 2017, The MetaCurrency Project (Eric Harris-Braun, Arthur Brock, et. al.)
+Copyright (C) 2017 - 2019, Holochain Foundation
 
-This program is free software: you can redistribute it and/or modify it under the terms of the license provided in the LICENSE file (GPLv3.0). This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This program is free software: you can redistribute it and/or modify it under the terms of the license p
+rovided in the LICENSE file (GPLv3).  This program is distributed in the hope that it will be useful, bu
+t WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ PURPOSE.
 
-Note: We are considering other 'looser' licensing options (like MIT license) but at this stage are using GPL while we're getting the matter sorted out.
+**Note:** We are considering other 'looser' licensing options (like MIT license) but at this stage are using GPL while we're getting the matter sorted out.  See [this article](https://medium.com/holochain/licensing-needs-for-truly-p2p-software-a3e0fa42be6c) for some of our thinking on licensing for distributed application frameworks.
