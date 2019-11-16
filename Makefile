@@ -29,7 +29,7 @@ build:		$(DNANAME)/$(DNA)
 # created automatically.
 $(DNANAME)/$(DNA):
 	cd $(DNANAME) \
-	  && hc package --strip-meta
+	  && hc package
 
 test:		test-unit test-e2e
 
@@ -43,20 +43,15 @@ test-unit:
 	    --manifest-path zomes/happs/code/Cargo.toml \
 	    -- --nocapture
 
-# test-e2e -- Uses dist/hApp-store.dna.json; install test JS dependencies, and run end-to-end Diorama tests
-#
-# Depends on dynamodb, if using sim1h DHT.
-test-e2e: export AWS_ACCESS_KEY_ID     ?= HoloCentral
-test-e2e: export AWS_SECRET_ACCESS_KEY ?= ...
+# End-to-end test of DNA.  Runs a sim2h_server on localhost:9000; the default expected by `hc test`
 test-e2e:	$(DNANAME)/$(DNA)
-	export |grep AWS
 	@echo "Setting up Scenario test Javascript..."; \
-	    ( cd hApp-store/test && npm install );
-	@echo "Starting dynamodb-memory..."; \
-	    dynamodb-memory &
-	@echo "Starting HoloFuel Scenario tests..."; \
-	    RUST_BACKTRACE=1 cd hApp-store && hc test \
-
+	    ( cd $(DNANAME)/test && npm install )
+	@echo "Starting sim2h_server on localhost:9000 (may already be running)..."; \
+	    sim2h_server -p 9000 &
+	@echo "Starting Scenario tests..."; \
+	    cd $(DNANAME) && RUST_BACKTRACE=1 hc test \
+	        | test/node_modules/faucet/bin/cmd.js
 
 # Generic targets; does not require a Nix environment
 .PHONY: clean
@@ -66,5 +61,4 @@ clean:
 	    test/node_modules \
 	    .cargo \
 	    target \
-	    $(DNANAME)/zomes/happs/code/target \
-	    $(DNANAME)/zomes/whoami/code/target
+	    $(DNANAME)/zomes/*/code/target

@@ -29,7 +29,7 @@ let middleware = combine(
   tapeExecutor(require('tape')),
 );
 
-const APP_SPEC_NETWORK_TYPE = process.env.APP_SPEC_NETWORK_TYPE || "sim1h"
+const APP_SPEC_NETWORK_TYPE = process.env.APP_SPEC_NETWORK_TYPE || "sim2h"
 
 if (APP_SPEC_NETWORK_TYPE === "websocket")
 {
@@ -41,7 +41,7 @@ if (APP_SPEC_NETWORK_TYPE === "websocket")
     tapeExecutor(require('tape')),
   );
 }
-else if (APP_SPEC_NETWORK_TYPE === "sim1h") // default
+else if (APP_SPEC_NETWORK_TYPE === "sim1h")
 {
     transport_config = {
 	type: 'sim1h',
@@ -55,7 +55,7 @@ else if (APP_SPEC_NETWORK_TYPE === "sim1h") // default
 	tapeExecutor(require('tape')),
     );
 }
-else if (APP_SPEC_NETWORK_TYPE === "sim2h")
+else if (APP_SPEC_NETWORK_TYPE === "sim2h") // default
 {
     transport_config = {
         type: 'sim2h',

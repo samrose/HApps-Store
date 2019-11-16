@@ -1,7 +1,7 @@
 use hdk::{
     entry_definition::ValidatingEntryType,
     holochain_core_types::dna::entry_types::Sharing,
-    holochain_json_api::json::{JsonString, RawString},
+    holochain_json_api::json::RawString,
 };
 
 pub mod handlers;

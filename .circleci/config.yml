@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          nix-env -f pkgs.nix -iA git
+          nix-env -f pkgs.nix -iA git bash gnumake
       - run: |
           nix-shell \
             --option substituters 'https://cache.holo.host https://cache.nixos.org' \
