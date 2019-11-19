@@ -61,7 +61,7 @@ test-e2e:	$(DNANAME)/$(DNA)
 .PHONY: clean
 clean:
 	rm -rf \
-	    dist \
+	    $(DNANAME)/dist \
 	    test/node_modules \
 	    .cargo \
 	    target \
