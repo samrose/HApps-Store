@@ -11,7 +11,6 @@ in
     name = "hApp-store";
     src = gitignoreSource ./hApp-store;
 
-
     nativeBuildInputs = []
     ++ lib.optionals stdenv.isDarwin [ CoreServices ];
   };

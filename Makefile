@@ -6,6 +6,10 @@ DNANAME		= hApp-store
 DNA		= dist/$(DNANAME).dna.json
 
 # External targets; Uses a nix-shell environment to obtain Holochain runtimes, run tests, etc.
+# See CONTRIBUTING.md for details of how to develop against a local copy of holochain-rust, eg.:
+# 
+#     nix-shell -I holochain-rust=../holochain-rust
+# 
 .PHONY: all
 all: nix-test
 
