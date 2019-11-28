@@ -15,7 +15,13 @@ DNA		= dist/$(DNANAME).dna.json
 #     nix-shell -I holochain-rust=../holochain-rust
 # 
 .PHONY: all
-all: nix-test
+all: nix-test nix-happ-store-ui.zip
+
+# Always rebuild the ui/ and refresh the target .zip, as there is no simple way to detect changes
+.PHONY: happ-store-ui.zip
+happ-store-ui.zip:
+	npm run build
+	cd ui && zip -r ../happ-store-ui.zip ./
 
 # nix-test, nix-install, ...
 nix-%:
