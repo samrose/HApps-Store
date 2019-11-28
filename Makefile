@@ -30,7 +30,7 @@ nix-%:
 # Internal targets; require a Nix environment in order to be deterministic.
 # - Uses the version of `hc`, `holochain` on the system PATH.
 # - Normally called from within a Nix environment, eg. run `nix-shell` from within holofuel
-.PHONY:		rebuild install build test test-unit test-e2e
+.PHONY:		rebuild install build
 rebuild:	clean build
 
 install:	build
@@ -45,7 +45,7 @@ $(DNANAME)/$(DNA):
 	cd $(DNANAME) \
 	  && hc package
 
-.PHONY: test-unit test-e2e test-stress test-sim2h test-node
+.PHONY: test test-unit test-e2e test-stress test-sim2h test-node
 test:		test-unit test-e2e
 
 # test-unit -- Run Rust unit tests via Cargo
