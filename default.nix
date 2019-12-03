@@ -3,19 +3,17 @@
 with pkgs;
 
 let
-  emacs-with-htmlize = emacsWithPackages (epkgs: with epkgs; [
-    htmlize
-  ]);
   inherit (darwin.apple_sdk.frameworks) CoreServices Security;
 in
 
 {
   hApp-store = buildDNA {
     name = "hApp-store";
-    src = gitignoreSource ./.;
+    src = gitignoreSource ./hApp-store;
 
-    nativeBuildInputs = []
-    ++ (callPackage ./dynamodb {}).buildInputs
+    nativeBuildInputs = [
+      zip
+    ]
     ++ lib.optionals stdenv.isDarwin [ CoreServices ];
   };
 }
