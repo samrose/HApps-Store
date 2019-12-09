@@ -1,7 +1,7 @@
 [package]
-workspace = "../../../.."
+workspace = "../../.."
 name = "happs"
-version = "0.4.1"
+version = "0.5.0"
 authors = [
   "Willem Olding <willem.olding@holo.host>",
   "Zo-El <joel.ulahanna@holo.host>",
@@ -14,7 +14,7 @@ serde = "1.0"
 serde_json = "1.0"
 serde_derive = "1.0"
 syn = "=0.15.31"
-hdk = { path = "../../../../holochain-rust/crates/hdk" }
+hdk = { path = "../../../holochain-rust/crates/hdk" }
 holochain_json_derive = "=0.0.17"
 
 [lib]

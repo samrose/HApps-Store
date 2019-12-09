@@ -1,6 +1,0 @@
-dist
-test
-common
-Cargo.lock
-Cargo.toml
-vendor

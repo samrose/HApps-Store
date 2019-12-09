@@ -10,3 +10,4 @@ package.json
 tsconfig.json
 tsconfig.test.json
 package-lock.json
+holochain-rust

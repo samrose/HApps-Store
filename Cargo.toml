@@ -1,8 +1,8 @@
 [workspace]
 
 members = [
-  "hApp-store/zomes/whoami/code",
-  "hApp-store/zomes/happs/code",
+  "zomes/whoami/code",
+  "zomes/happs/code",
 ]
 
 exclude = [

@@ -289,7 +289,7 @@ dependencies = [
 
 [[package]]
 name = "happs"
-version = "0.4.1"
+version = "0.5.0"
 dependencies = [
  "hdk 0.0.39-alpha4",
  "holochain_json_derive 0.0.17 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1185,7 +1185,7 @@ dependencies = [
 
 [[package]]
 name = "whoami"
-version = "0.4.1"
+version = "0.5.0"
 dependencies = [
  "hdk 0.0.39-alpha4",
  "holochain_json_derive 0.0.17 (registry+https://github.com/rust-lang/crates.io-index)",
