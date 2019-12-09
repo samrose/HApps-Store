@@ -7,9 +7,9 @@ let
 in
 
 {
-  hApp-store = buildDNA {
-    name = "hApp-store";
-    src = gitignoreSource ./hApp-store;
+  happ-store = buildDNA {
+    name = "happ-store";
+    src = gitignoreSource ./.;
 
     nativeBuildInputs = [
       zip

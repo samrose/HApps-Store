@@ -1,0 +1,10 @@
+[workspace]
+
+members = [
+  "hApp-store/zomes/whoami/code",
+  "hApp-store/zomes/happs/code",
+]
+
+exclude = [
+"holochain-rust",
+]

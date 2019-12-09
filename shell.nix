@@ -1,1 +1,1 @@
-(import ./. {}).hApp-store.override { shell = true; }
+(import ./. {}).happ-store.override { shell = true; }

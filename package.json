@@ -1,13 +1,13 @@
 {
   "name": "HApps-Store",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "private": true,
   "scripts": {
     "hc:build": "nix-shell --run 'make build'",
     "FIX-path-hc:start-holo_conductor": "mkdir -p tmp-storage && holochain -c ./home/lisa/.config/.holochain/holo/conductor-config.toml",
     "hc:start": "mkdir -p tmp-storage && holochain -c ./conductor-config.toml",
-    "hc:test": "cd hApp-store && hc test",
+    "hc:test": "hc test",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"

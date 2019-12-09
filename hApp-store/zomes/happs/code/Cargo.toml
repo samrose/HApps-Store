@@ -1,4 +1,5 @@
 [package]
+workspace = "../../../.."
 name = "happs"
 version = "0.4.1"
 authors = [

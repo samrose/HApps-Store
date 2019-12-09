@@ -7,11 +7,12 @@ dna/
 npm-debug.log
 bundle.json
 
-node_modules
-target
-tmp-storage
+/dist
+/holochain-rust
+node_modules/
+/target
 
-hApp-store/dist
+tmp-storage
 
 # OS generated files #
 ######################
@@ -23,6 +24,3 @@ hApp-store/dist
 .Trashes
 ehthumbs.db
 .cargo
-dist
-holochain-rust
-*~
