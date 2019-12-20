@@ -1,6 +1,6 @@
 ## Build release DNA build
 
-Run `nix-build -A hApp-store`.
+Run `nix-build -A happ-store`.
 
 ## Develop against a local `holochain-rust` version
 

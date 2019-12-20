@@ -4,8 +4,8 @@ jobs:
   build:
     docker:
       - image: nixos/nix
-    # Not required, because DNA is build in .../hApp-store sub-directory
-    working_directory: ~/hApp-store
+    # Required because hc package default DNA name is working directory name
+    working_directory: ~/happ-store
     steps:
       - checkout
       - run: |

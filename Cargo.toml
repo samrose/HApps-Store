@@ -1,0 +1,10 @@
+[workspace]
+
+members = [
+  "zomes/whoami/code",
+  "zomes/happs/code",
+]
+
+exclude = [
+"holochain-rust",
+]

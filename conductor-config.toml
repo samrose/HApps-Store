@@ -1,12 +1,12 @@
 [[agents]]
-id = 'hApp-agent'
-name = 'hAppStore Agent'
+id = 'happ-agent'
+name = 'hApp Store Agent'
 keystore_file = '/home/lisa/.config/holochain/keys/HcSCj35Fgj7smCq4bxhtf7rrJS4v8pxxi66xtnwOh4mB3fvjIncm4Axaig8ng6r'
 public_address = 'HcSCj35Fgj7smCq4bxhtf7rrJS4v8pxxi66xtnwOh4mB3fvjIncm4Axaig8ng6r'
 
 [[dnas]]
 id = "happ_store_dna"
-file = "hApp-store/dist/hApp-store.dna.json"
+file = "dist/happ-store.dna.json"
 hash = "Qm328wyq38924x"
 
 [[instances]]
