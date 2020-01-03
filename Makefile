@@ -44,7 +44,7 @@ build:		$(DNA)
 $(DNA):
 	hc package
 
-.PHONY: test test-unit test-e2e test-stress test-sim2h test-node
+.PHONY: test test-unit test-e2e test-dna test-stress test-sim2h test-node
 test:		test-unit test-e2e
 
 # test-unit -- Run Rust unit tests via Cargo
@@ -52,19 +52,21 @@ test-unit:
 	 RUST_BACKTRACE=1 cargo test \
 	    -- --nocapture
 
+test-dna:	$(DNA)
+
 # End-to-end test of DNA.  Runs a sim2h_server on localhost:9000; the default expected by `hc test`
-test-e2e:	$(DNA) test-sim2h test-node
+test-e2e:	test-dna test-sim2h test-node
 	@echo "Starting Scenario tests..."; \
 	    RUST_BACKTRACE=1 hc test \
 	        | test/node_modules/faucet/bin/cmd.js
 
 test-node:
 	@echo "Setting up Scenario/Stress test Javascript..."; \
-	    cd test && npm install
+	    cd test && [ -d test/node_modules ] || npm install
 
 test-sim2h:
 	@echo "Starting sim2h_server on localhost:9000 (may already be running)..."; \
-	    sim2h_server -p 9000 &
+	    sim2h_server -p 9000 >sim2h_server.log 2>&1 &
 
 # Generic targets; does not require a Nix environment
 .PHONY: clean
