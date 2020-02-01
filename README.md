@@ -1,12 +1,13 @@
-# HApps-Store
+# happ-store
 
-![GitHub last commit](https://img.shields.io/github/last-commit/holochain/HApps-Store.svg)
-![GitHub](https://img.shields.io/github/license/holochain/HApps-Store.svg)
-[![CircleCI](https://circleci.com/gh/holochain/hApp-Store.svg?style=svg)](https://circleci.com/gh/holochain/hApp-Store)
+[![Project](https://img.shields.io/badge/project-holochain-blue.svg?style=flat-square)](http://holochain.org/)
+[![Chat](https://img.shields.io/badge/chat-chat%2eholochain%2enet-blue.svg?style=flat-square)](https://chat.holochain.org)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+[![Twitter Follow](https://img.shields.io/twitter/follow/holochain.svg?style=social&label=Follow)](https://twitter.com/holochain)
+![GitHub last commit](https://img.shields.io/github/last-commit/holochain/happ-store.svg)
+[![CircleCI](https://circleci.com/gh/holochain/happ-store?style=svg)](https://circleci.com/gh/holochain/happ-store)
 ---
-An early version of the Holochain hApp store.
-
-This version exists to allow participants of the Holo closed alpha program to find and install DNAs to host.
+An early version of the Holochain happ store.
 
 ---
 
@@ -17,27 +18,26 @@ This version exists to allow participants of the Holo closed alpha program to fi
 
 ### Build Holochain DNA
 
-The DNA builds with Holochain. Ensure you have the holochain developer cli `hc` and holochain conductor `holochain` installed that match this version.  The simplest way to ensure this is to use holoportos' Nix configuration, and then (once a compatible Nix environment has been created), running `make install` to build into `hApp-store/dist/hApp-store.dna.json`
+The DNA builds with Holochain. Ensure you have the holochain developer cli `hc` and holochain conductor `holochain` installed that match this version.  The simplest way to ensure this is to use holoportos' Nix configuration, and then (once a compatible Nix environment has been created), running `make install` to build into `dist/happ-store.dna.json`
 
 ```
-$ git clone git@github.com:holochain/hApp-store.git
-$ cd hApp-store
+$ git clone git@github.com:holochain/happ-store.git
+$ cd happ-store
 $ nix-shell
-[nix-shell:~/src/hApp-store]$ make install
+[nix-shell:~/src/happ-store]$ make install
 $ make install
-mkdir -p hApp-store/dist/
-cd hApp-store && hc package --output dist/hApp-store.dna.json --strip-meta
+hc package 
 > cargo build --release --target=wasm32-unknown-unknown
 ...
 Finished release [optimized] target(s) in 0.06s
-Created DNA package file at "dist/hApp-store.dna.json"
+Created DNA package file at "dist/happ-store.dna.json"
 DNA hash: Qmd6pArbijQ3ija5FnyrMaZirXJL83afbj8DJGuAENAdM9
 ```
 
 Holochain DNA Rust Unit tests and Node Scenario tests can be run:
 
 ```
-[nix-shell:~/src/hAPp-store]$ make test
+[nix-shell:~/src/happ-store]$ make test
 ...
 ✓ add Category
 ✓ Create an app, add dna+ui bundles and retrieve
@@ -87,9 +87,13 @@ holochain -c ./conductor-config.toml
 * **Willem Olding** - [willemolding](https://github.com/willemolding/)
 
 ## License
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
-Copyright (C) 2017, The MetaCurrency Project (Eric Harris-Braun, Arthur Brock, et. al.)
+Copyright (C) 2017 - 2019, Holochain Foundation
 
-This program is free software: you can redistribute it and/or modify it under the terms of the license provided in the LICENSE file (GPLv3.0). This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This program is free software: you can redistribute it and/or modify it under the terms of the license p
+rovided in the LICENSE file (GPLv3).  This program is distributed in the hope that it will be useful, bu
+t WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ PURPOSE.
 
-Note: We are considering other 'looser' licensing options (like MIT license) but at this stage are using GPL while we're getting the matter sorted out.
+**Note:** We are considering other 'looser' licensing options (like MIT license) but at this stage are using GPL while we're getting the matter sorted out.  See [this article](https://medium.com/holochain/licensing-needs-for-truly-p2p-software-a3e0fa42be6c) for some of our thinking on licensing for distributed application frameworks.

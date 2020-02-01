@@ -1,5 +1,5 @@
 const test = require('tape');
-const sleep = require('sleep');
+const { one } = require('../config')
 
 const App1 = {
   title: "HoloChat",
@@ -30,30 +30,32 @@ const App2 = {
 
 module.exports = (scenario) => {
 
-  scenario('add Category ', async (s, t, {liza}) => {
+  scenario('add Category ', async (s, t) => {
 
-    const create_result = await liza.call("happs", "create_app", App1);
+    const { liza } = await s.players({liza: one('liza')}, true)
+
+    const create_result = await liza.callSync( "app", "happs", "create_app", App1);
     console.log(create_result)
     const app_address = create_result.Ok
     t.equal(app_address.length, 46)
 
-    const create_result2 = await liza.call("happs", "create_app", App2);
+    const create_result2 = await liza.callSync( "app", "happs", "create_app", App2);
     console.log(create_result2)
     const app_address2 = create_result2.Ok
     t.equal(app_address2.length, 46)
 
-    const result1 = await liza.call("happs", "add_app_to_category", {app_address: app_address, category: "good apps"})
+    const result1 = await liza.callSync( "app", "happs", "add_app_to_category", {app_address: app_address, category: "good apps"})
     console.log(result1)
     t.equal(result1.Ok, null)
 
-    const result2 = await liza.call("happs", "add_app_to_category", {app_address: app_address2, category: "good apps"})
+    const result2 = await liza.callSync( "app", "happs", "add_app_to_category", {app_address: app_address2, category: "good apps"})
     console.log(result2)
     t.equal(result2.Ok, null)
 
-    sleep.sleep(5);
-
-    const result3 = await liza.call("happs", "get_apps_by_category", {category:"good apps"})
+    const result3 = await liza.callSync( "app", "happs", "get_apps_by_category", {category:"good apps"})
     console.log(result3)
     t.equal(result3.Ok.length, 2)
+
+    await liza.kill()
   })
 }

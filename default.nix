@@ -1,8 +1,21 @@
-{ pkgs ? import ./pkgs.nix {} }: with pkgs;
+{ pkgs ? import ./pkgs.nix {}, shell ? false }:
+
+with pkgs;
+
+let
+  inherit (darwin.apple_sdk.frameworks) CoreServices Security;
+in
 
 {
-  hApp-store = buildDNA {
-    name = "hApp-store";
-    src = gitignoreSource ./hApp-store;
+  happ-store = buildDNA {
+    inherit shell;
+
+    name = "happ-store";
+    src = gitignoreSource ./.;
+
+    nativeBuildInputs = [
+      zip
+    ]
+    ++ lib.optionals stdenv.isDarwin [ CoreServices ];
   };
 }

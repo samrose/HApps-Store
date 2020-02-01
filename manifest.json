@@ -4,15 +4,18 @@
   "authors": [
     {
       "identifier": [
-        "Willem Olding <willem.olding@holo.host>",
         "Zo-El <joel.ulahanna@holo.host>",
-        "Lisa Jetton <lisa.jetton@holo.host>"
+        "Lisa Jetton <lisa.jetton@holo.host>",
+        "Willem Olding <willem.olding@holo.host>"
       ],
       "public_key_source": "",
       "signature": ""
     }
   ],
-  "version": "0.2.3",
+  "uuid": "00000000-0000-0000-0000-000000000000",
+  "version": "0.6.0",
   "dht": {},
-  "properties": null
+  "properties": {
+      "sim2h_url": "ws://happstore.sim2h.net:9000"
+  }
 }
