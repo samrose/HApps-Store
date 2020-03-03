@@ -16,6 +16,6 @@
   "version": "0.6.0",
   "dht": {},
   "properties": {
-    "sim2h_url": "ws://hosting.sim2h.net:9000"
+    "sim2h_url": "ws://happstore.sim2h.net:9000"
 }
 }
